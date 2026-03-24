@@ -6,7 +6,6 @@
   <title>Time Tracker · Lidera tu Negocio</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: #f3f0fb; }
@@ -23,494 +22,1958 @@
 </head>
 <body>
   <div id="root"></div>
-
-  <script type="text/babel">
-    const { useState, useEffect, useRef } = React;
-
-    const DEFAULT_CLIENTES     = ["Medea","Maraver","Kawi","Academia Premium","Farmacia Curiel","Federopticos","Beatriz Zaragoza","Aflamas","Recoambiente","Otro"];
-    const DEFAULT_RESPONSABLES = ["Carli","Juli","Mati","Ele"];
-    const STATUSES = ["Realizado","Proceso","Pendiente","Pausado"];
-    const MONTH_NAMES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
-    const MONTH_SHORT = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
-
-    const SC = {
-      Realizado:{ bg:"#dcfce7", text:"#15803d", border:"#bbf7d0" },
-      Proceso:  { bg:"#fef9c3", text:"#a16207", border:"#fde68a" },
-      Pendiente:{ bg:"#ede9fe", text:"#6d28d9", border:"#ddd6fe" },
-      Pausado:  { bg:"#fee2e2", text:"#b91c1c", border:"#fecaca" },
+  <script>
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+var _React = React,
+  useState = _React.useState,
+  useEffect = _React.useEffect,
+  useRef = _React.useRef;
+var DEFAULT_CLIENTES = ["Medea", "Maraver", "Kawi", "Academia Premium", "Farmacia Curiel", "Federopticos", "Beatriz Zaragoza", "Aflamas", "Recoambiente", "Otro"];
+var DEFAULT_RESPONSABLES = ["Carli", "Juli", "Mati", "Ele"];
+var STATUSES = ["Realizado", "Proceso", "Pendiente", "Pausado"];
+var MONTH_NAMES = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+var MONTH_SHORT = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+var SC = {
+  Realizado: {
+    bg: "#dcfce7",
+    text: "#15803d",
+    border: "#bbf7d0"
+  },
+  Proceso: {
+    bg: "#fef9c3",
+    text: "#a16207",
+    border: "#fde68a"
+  },
+  Pendiente: {
+    bg: "#ede9fe",
+    text: "#6d28d9",
+    border: "#ddd6fe"
+  },
+  Pausado: {
+    bg: "#fee2e2",
+    text: "#b91c1c",
+    border: "#fecaca"
+  }
+};
+var EXCEL_DATA = [{
+  id: 1001,
+  task: "Maribel solicitó foto de video para anuncio de revista y pantalla",
+  cliente: "Farmacia Curiel",
+  responsable: "Carli",
+  status: "Realizado",
+  hours: 0.25,
+  date: "2026-03-06T00:00:00",
+  fromExcel: true
+}, {
+  id: 1002,
+  task: "Mandé el video de campaña de aniversario. Esperamos feedback.",
+  cliente: "Medea",
+  responsable: "Carli",
+  status: "Realizado",
+  hours: 0.25,
+  date: "2026-03-04T00:00:00",
+  fromExcel: true
+}, {
+  id: 1003,
+  task: "Activar campaña de aniversario en Meta y detener la de 9 euros",
+  cliente: "Medea",
+  responsable: "Carli",
+  status: "Realizado",
+  hours: 0.25,
+  date: "2026-03-06T00:00:00",
+  fromExcel: true
+}, {
+  id: 1004,
+  task: "Pregunté al cliente si quiere que le hagamos un flyer",
+  cliente: "Medea",
+  responsable: "Carli",
+  status: "Realizado",
+  hours: 0.25,
+  date: "2026-03-04T00:00:00",
+  fromExcel: true
+}, {
+  id: 1005,
+  task: "La medida es A4. Le dejo el pedido a Estefi.",
+  cliente: "Medea",
+  responsable: "Carli",
+  status: "Realizado",
+  hours: 0.25,
+  date: "2026-03-05T00:00:00",
+  fromExcel: true
+}, {
+  id: 1006,
+  task: "Enviarle el flyer a las chicas. Aprobado el 10-3.",
+  cliente: "Medea",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.02,
+  date: "2026-03-10T00:00:00",
+  fromExcel: true
+}, {
+  id: 1007,
+  task: "Pedirle a Estefi un carrusel para la nueva campaña orgánica",
+  cliente: "Medea",
+  responsable: "Carli",
+  status: "Pausado",
+  hours: 0.25,
+  date: "2026-03-04T00:00:00",
+  fromExcel: true
+}, {
+  id: 1008,
+  task: "Video campaña aniversario enviado. Activar Meta y detener la de 9 euros.",
+  cliente: "Medea",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.25,
+  date: "2026-03-04T00:00:00",
+  fromExcel: true
+}, {
+  id: 1009,
+  task: "Consulté vía correo el plan de trabajo: CRM o suspender servicio",
+  cliente: "Academia Premium",
+  responsable: "Carli",
+  status: "Realizado",
+  hours: 0.25,
+  date: "2026-03-04T00:00:00",
+  fromExcel: true
+}, {
+  id: 1010,
+  task: "Seguimiento aprobación plan campaña Flash Facial aniversario Medea",
+  cliente: "Medea",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.05,
+  date: "2026-03-05T00:00:00",
+  fromExcel: true
+}, {
+  id: 1011,
+  task: "Seguimiento informe campaña ritual Hidra Medea — Rosa y Montse",
+  cliente: "Medea",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.017,
+  date: "2026-03-18T00:00:00",
+  fromExcel: true
+}, {
+  id: 1012,
+  task: "Insistir con respuesta Academia Premium. Lidia necesita más tiempo.",
+  cliente: "Academia Premium",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.001,
+  date: "2026-03-11T00:00:00",
+  fromExcel: true
+}, {
+  id: 1013,
+  task: "Búsqueda de Sales Navigator para nuevo proceso de captación",
+  cliente: "Maraver",
+  responsable: "Juli",
+  status: "Proceso",
+  hours: 1.5,
+  date: "2026-03-12T00:00:00",
+  fromExcel: true
+}, {
+  id: 1014,
+  task: "Preguntar cómo van los leads de funerarios",
+  cliente: "Maraver",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.667,
+  date: "2026-03-03T00:00:00",
+  fromExcel: true
+}, {
+  id: 1015,
+  task: "Revisar CRM para ver resultados",
+  cliente: "Maraver",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.333,
+  date: "2026-03-11T00:00:00",
+  fromExcel: true
+}, {
+  id: 1016,
+  task: "Posicionamiento LinkedIn + propuesta Sales Navigator a Manuel",
+  cliente: "Maraver",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.675,
+  date: "2026-03-17T00:00:00",
+  fromExcel: true
+}, {
+  id: 1017,
+  task: "Propuestas de mejora perfil LinkedIn Manuel. Envío a Carli y a Manuel.",
+  cliente: "Maraver",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 1.5,
+  date: null,
+  fromExcel: true
+}, {
+  id: 1018,
+  task: "Insistir a Manuel para respuesta del email de mejora de LinkedIn",
+  cliente: "Maraver",
+  responsable: "Juli",
+  status: "Proceso",
+  hours: 0.011,
+  date: "2026-03-19T00:00:00",
+  fromExcel: true
+}, {
+  id: 1019,
+  task: "Seguimiento automatización landing VSL al listado de clientes de Maraver",
+  cliente: "Maraver",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.036,
+  date: "2026-03-17T00:00:00",
+  fromExcel: true
+}, {
+  id: 1020,
+  task: "Landing auditorías empresariales. Video explicativo + tarea Morning Mate.",
+  cliente: "Maraver",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 1.008,
+  date: "2026-03-17T00:00:00",
+  fromExcel: true
+}, {
+  id: 1021,
+  task: "Enviar propuestas de guiones nuevos para tener nuevo material",
+  cliente: "Maraver",
+  responsable: "Juli",
+  status: "Proceso",
+  hours: 0.008,
+  date: "2026-03-24T00:00:00",
+  fromExcel: true
+}, {
+  id: 1022,
+  task: "Ver cómo viene campaña de recupero de leads y pasar reporte a Manuel",
+  cliente: "Maraver",
+  responsable: "Juli",
+  status: "Pendiente",
+  hours: 0.25,
+  date: null,
+  fromExcel: true
+}, {
+  id: 1023,
+  task: "Insistir con los videos personalizados a cada lead",
+  cliente: "Maraver",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.133,
+  date: "2026-03-05T00:00:00",
+  fromExcel: true
+}, {
+  id: 1024,
+  task: "Seguimiento aprobación landing page servicio de novias. Aprobada 3/03.",
+  cliente: "Medea",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.017,
+  date: "2026-03-06T00:00:00",
+  fromExcel: true
+}, {
+  id: 1025,
+  task: "Seguimiento aprobación Dossier SPD. Enviado a aprobación.",
+  cliente: "Farmacia Curiel",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.036,
+  date: "2026-03-12T00:00:00",
+  fromExcel: true
+}, {
+  id: 1026,
+  task: "Editar video Farmacia Curiel — servicio SPD, formato horizontal",
+  cliente: "Farmacia Curiel",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.5,
+  date: "2026-03-18T00:00:00",
+  fromExcel: true
+}, {
+  id: 1027,
+  task: "Enviar el video a las residencias por email",
+  cliente: "Farmacia Curiel",
+  responsable: "Juli",
+  status: "Pausado",
+  hours: 0.25,
+  date: null,
+  fromExcel: true
+}, {
+  id: 1028,
+  task: "Feedback Maribel sobre video nueva etapa funnel. Aprobado.",
+  cliente: "Farmacia Curiel",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.017,
+  date: "2026-03-20T00:00:00",
+  fromExcel: true
+}, {
+  id: 1029,
+  task: "Seguimiento nuevo anuncio campaña SPD asignado a Estefania",
+  cliente: "Farmacia Curiel",
+  responsable: "Juli",
+  status: "Proceso",
+  hours: 0.017,
+  date: "2026-03-20T00:00:00",
+  fromExcel: true
+}, {
+  id: 1030,
+  task: "Seguimiento y publicación reel SPD en redes",
+  cliente: "Farmacia Curiel",
+  responsable: "Juli",
+  status: "Pendiente",
+  hours: 0.25,
+  date: "2026-03-24T00:00:00",
+  fromExcel: true
+}, {
+  id: 1031,
+  task: "Seguimiento edición video SPD vertical. Esperando escenas faltantes.",
+  cliente: "Farmacia Curiel",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.167,
+  date: "2026-03-24T00:00:00",
+  fromExcel: true
+}, {
+  id: 1032,
+  task: "Diseño nuevo nombre y enfoque campaña Club de Diabéticos",
+  cliente: "Farmacia Curiel",
+  responsable: "Carli",
+  status: "Realizado",
+  hours: 0.25,
+  date: null,
+  fromExcel: true
+}, {
+  id: 1033,
+  task: "Consultar feedback cambio nombre Club Diabéticos. Le gusta la idea.",
+  cliente: "Farmacia Curiel",
+  responsable: "Juli",
+  status: "Proceso",
+  hours: 0.002,
+  date: "2026-03-17T00:00:00",
+  fromExcel: true
+}, {
+  id: 1034,
+  task: "Solicitar a Estefi foto para pantalla. Enviado a aprobación 11/03.",
+  cliente: "Farmacia Curiel",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.067,
+  date: "2026-03-11T00:00:00",
+  fromExcel: true
+}, {
+  id: 1035,
+  task: "Revisar y ajustar cómo se ofrece Club de Diabéticos",
+  cliente: "Farmacia Curiel",
+  responsable: "Carli",
+  status: "Pendiente",
+  hours: 0.25,
+  date: "2026-03-05T00:00:00",
+  fromExcel: true
+}, {
+  id: 1036,
+  task: "Desarrollar flyer con nuevo enfoque Club de Diabéticos",
+  cliente: "Farmacia Curiel",
+  responsable: "Juli",
+  status: "Pendiente",
+  hours: 0.25,
+  date: null,
+  fromExcel: true
+}, {
+  id: 1037,
+  task: "Adaptaciones carrusel ADS para pantalla. Enviado a aprobación.",
+  cliente: "Farmacia Curiel",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.833,
+  date: "2026-03-18T00:00:00",
+  fromExcel: true
+}, {
+  id: 1038,
+  task: "Feedback video pantalla. Cambios hechos y enviados a aprobación.",
+  cliente: "Farmacia Curiel",
+  responsable: "Juli",
+  status: "Proceso",
+  hours: 0.05,
+  date: "2026-03-24T00:00:00",
+  fromExcel: true
+}, {
+  id: 1039,
+  task: "Seguimiento aprobación creatividades campaña alquiler audífonos",
+  cliente: "Federopticos",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.033,
+  date: "2026-03-09T00:00:00",
+  fromExcel: true
+}, {
+  id: 1040,
+  task: "Enviar nueva planificación al cliente",
+  cliente: "Farmacia Curiel",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.008,
+  date: "2026-03-24T00:00:00",
+  fromExcel: true
+}, {
+  id: 1041,
+  task: "Revisar materiales campaña Meta SPD con Paola. Nueva creatividad decidida.",
+  cliente: "Farmacia Curiel",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.083,
+  date: "2026-03-20T00:00:00",
+  fromExcel: true
+}, {
+  id: 1042,
+  task: "Concretar reunión con Yoli. Cita el 23 de Marzo.",
+  cliente: "Federopticos",
+  responsable: "Carli",
+  status: "Realizado",
+  hours: 0.25,
+  date: "2026-03-19T00:00:00",
+  fromExcel: true
+}, {
+  id: 1043,
+  task: "Mandar nuevos guiones e ideas de videos para que se grabe",
+  cliente: "Federopticos",
+  responsable: "Juli",
+  status: "Pendiente",
+  hours: 0.25,
+  date: "2026-03-24T00:00:00",
+  fromExcel: true
+}, {
+  id: 1044,
+  task: "Reactivar campaña audífonos clientes potenciales",
+  cliente: "Federopticos",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.001,
+  date: "2026-03-24T00:00:00",
+  fromExcel: true
+}, {
+  id: 1045,
+  task: "Implementar campaña formulario instantáneo audífonos. Ya genera leads.",
+  cliente: "Federopticos",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.001,
+  date: "2026-03-16T00:00:00",
+  fromExcel: true
+}, {
+  id: 1046,
+  task: "Preguntar qué pondremos en perfil LinkedIn de Andrea/Recoambiente",
+  cliente: "Recoambiente",
+  responsable: "Carli",
+  status: "Pendiente",
+  hours: 0.25,
+  date: "2026-03-03T00:00:00",
+  fromExcel: true
+}, {
+  id: 1047,
+  task: "Ajustar automatización Regularizaciones: link formulario + recordatorio",
+  cliente: "Maraver",
+  responsable: "Mati",
+  status: "Realizado",
+  hours: 0.25,
+  date: "2026-03-05T00:00:00",
+  fromExcel: true
+}, {
+  id: 1048,
+  task: "Ver con Shei lo de la web de casamiento",
+  cliente: "Medea",
+  responsable: "Carli",
+  status: "Pendiente",
+  hours: 0.25,
+  date: null,
+  fromExcel: true
+}, {
+  id: 1049,
+  task: "Mirar a diario leads que entran por WhatsApp y meterlos en pipeline",
+  cliente: "Medea",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.007,
+  date: "2026-03-17T00:00:00",
+  fromExcel: true
+}, {
+  id: 1050,
+  task: "Solicitar funnel seguimiento de leads promo aniversario",
+  cliente: "Medea",
+  responsable: "Carli",
+  status: "Realizado",
+  hours: 0.5,
+  date: "2026-03-09T00:00:00",
+  fromExcel: true
+}, {
+  id: 1051,
+  task: "Revisar pendientes del mail y cargar tareas",
+  cliente: "Beatriz Zaragoza",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.25,
+  date: "2026-03-10T00:00:00",
+  fromExcel: true
+}, {
+  id: 1052,
+  task: "Asignar a Matías modificación pipeline novias — etapas Mensaje 8 al 11",
+  cliente: "Beatriz Zaragoza",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.08,
+  date: "2026-03-12T00:00:00",
+  fromExcel: true
+}, {
+  id: 1053,
+  task: "Solicitar a Beatriz mensajes para nuevas etapas pipeline novias",
+  cliente: "Beatriz Zaragoza",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.006,
+  date: "2026-03-13T00:00:00",
+  fromExcel: true
+}, {
+  id: 1054,
+  task: "Enviar insistencia a Beatriz por WhatsApp",
+  cliente: "Beatriz Zaragoza",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.25,
+  date: "2026-03-19T00:00:00",
+  fromExcel: true
+}, {
+  id: 1055,
+  task: "Agregar valor 500€ a todas las oportunidades del pipeline",
+  cliente: "Beatriz Zaragoza",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.25,
+  date: null,
+  fromExcel: true
+}, {
+  id: 1056,
+  task: "Pedirle a Beatriz video para convencer a la novia a tomar cita",
+  cliente: "Beatriz Zaragoza",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.25,
+  date: null,
+  fromExcel: true
+}, {
+  id: 1057,
+  task: "Analizar pipeline seguimiento maquilladoras equipo Bei",
+  cliente: "Beatriz Zaragoza",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.25,
+  date: null,
+  fromExcel: true
+}, {
+  id: 1058,
+  task: "Probar IA para grabar audios de automatización",
+  cliente: "Aflamas",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.675,
+  date: "2026-03-18T00:00:00",
+  fromExcel: true
+}, {
+  id: 1059,
+  task: "Cambiar automatizaciones servicios fúnebres por cambio de teléfonos",
+  cliente: "Maraver",
+  responsable: "Mati",
+  status: "Realizado",
+  hours: 1.0,
+  date: "2026-03-19T00:00:00",
+  fromExcel: true
+}, {
+  id: 1060,
+  task: "Ajustar automatizaciones y cambiar asignaciones de teléfonos",
+  cliente: "Maraver",
+  responsable: "Mati",
+  status: "Realizado",
+  hours: 1.0,
+  date: "2026-03-19T00:00:00",
+  fromExcel: true
+}, {
+  id: 1061,
+  task: "Revisar automatización de reseñas de administración",
+  cliente: "Maraver",
+  responsable: "Mati",
+  status: "Realizado",
+  hours: 0.25,
+  date: null,
+  fromExcel: true
+}, {
+  id: 1062,
+  task: "Ajuste automatización Maraver — etapa protección personal",
+  cliente: "Maraver",
+  responsable: "Mati",
+  status: "Realizado",
+  hours: 0.25,
+  date: null,
+  fromExcel: true
+}, {
+  id: 1063,
+  task: "Ajustar automatizaciones campaña de novias",
+  cliente: "Beatriz Zaragoza",
+  responsable: "Mati",
+  status: "Realizado",
+  hours: 0.5,
+  date: null,
+  fromExcel: true
+}, {
+  id: 1064,
+  task: "Revisar envíos mensajes pipeline pack de bienvenida",
+  cliente: "Maraver",
+  responsable: "Mati",
+  status: "Realizado",
+  hours: 0.5,
+  date: null,
+  fromExcel: true
+}, {
+  id: 1065,
+  task: "Enviarle resumen reunión de Rosa, Carli y Shey. Fecha 18-3.",
+  cliente: "Medea",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.25,
+  date: "2026-03-19T00:00:00",
+  fromExcel: true
+}, {
+  id: 1066,
+  task: "Pedirle a Paola planificación para reactivar campaña Meta SPD",
+  cliente: "Farmacia Curiel",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.019,
+  date: "2026-03-19T00:00:00",
+  fromExcel: true
+}, {
+  id: 1067,
+  task: "Asignar tarea a Estefania: creatividades campaña Menú de Maridaje",
+  cliente: "Aflamas",
+  responsable: "Juli",
+  status: "Proceso",
+  hours: 0.25,
+  date: "2026-03-24T00:00:00",
+  fromExcel: true
+}, {
+  id: 1068,
+  task: "Seguimiento locuciones corregidas campaña Menú Maridaje. Aprobado.",
+  cliente: "Aflamas",
+  responsable: "Juli",
+  status: "Realizado",
+  hours: 0.004,
+  date: "2026-03-19T00:00:00",
+  fromExcel: true
+}, {
+  id: 1069,
+  task: "Reunión seguimiento con Yoli. Reactivar campaña.",
+  cliente: "Federopticos",
+  responsable: "Carli",
+  status: "Realizado",
+  hours: 0.5,
+  date: "2026-03-23T00:00:00",
+  fromExcel: true
+}, {
+  id: 1070,
+  task: "Pasar microinfluencers para campaña gafas de sol y cambio de cristales",
+  cliente: "Federopticos",
+  responsable: "Carli",
+  status: "Pendiente",
+  hours: 0.25,
+  date: null,
+  fromExcel: true
+}, {
+  id: 1071,
+  task: "Conseguir todas las facturas de Meta",
+  cliente: "Federopticos",
+  responsable: "Juli",
+  status: "Pendiente",
+  hours: 0.25,
+  date: null,
+  fromExcel: true
+}, {
+  id: 1072,
+  task: "Cambio en Bios de Andrea y Recoambiente en LinkedIn",
+  cliente: "Recoambiente",
+  responsable: "Juli",
+  status: "Pendiente",
+  hours: 0.25,
+  date: null,
+  fromExcel: true
+}, {
+  id: 1073,
+  task: "Proponerle próximo paso del outreach, trabajar lo estratégico",
+  cliente: "Recoambiente",
+  responsable: "Carli",
+  status: "Pendiente",
+  hours: 0.25,
+  date: null,
+  fromExcel: true
+}, {
+  id: 1074,
+  task: "Ajustar encuesta vinculada a landing, agregar correo Serseo",
+  cliente: "Kawi",
+  responsable: "Mati",
+  status: "Realizado",
+  hours: 0.25,
+  date: "2026-03-24T00:00:00",
+  fromExcel: true
+}];
+var STORAGE_KEY = "ltn-tt-v7";
+function lsGet() {
+  try {
+    var v = localStorage.getItem(STORAGE_KEY);
+    return v ? JSON.parse(v) : null;
+  } catch (e) {
+    return null;
+  }
+}
+function lsSet(data) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch (e) {}
+}
+function getYear(iso) {
+  if (!iso) return null;
+  return new Date(iso).getFullYear();
+}
+function getMonth(iso) {
+  if (!iso) return null;
+  return new Date(iso).getMonth();
+}
+function fmtElapsed(s) {
+  return [Math.floor(s / 3600), Math.floor(s % 3600 / 60), s % 60].map(function (n) {
+    return String(n).padStart(2, "0");
+  }).join(":");
+}
+function fmtHours(h) {
+  if (!h || h === 0) return "—";
+  var m = Math.round(h * 60);
+  if (m < 1) return "<1m";
+  if (m < 60) return m + "m";
+  var hr = Math.floor(m / 60),
+    rm = m % 60;
+  return rm > 0 ? hr + "h " + rm + "m" : hr + "h";
+}
+function fmtDate(iso) {
+  if (!iso) return "Sin fecha";
+  try {
+    return new Date(iso).toLocaleDateString("es-ES", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric"
+    });
+  } catch (e) {
+    return "—";
+  }
+}
+function AddableSelect(_ref) {
+  var value = _ref.value,
+    _onChange = _ref.onChange,
+    options = _ref.options,
+    onAdd = _ref.onAdd,
+    placeholder = _ref.placeholder,
+    disabled = _ref.disabled;
+  var _useState = useState(false),
+    _useState2 = _slicedToArray(_useState, 2),
+    adding = _useState2[0],
+    setAdding = _useState2[1];
+  var _useState3 = useState(""),
+    _useState4 = _slicedToArray(_useState3, 2),
+    newVal = _useState4[0],
+    setNewVal = _useState4[1];
+  var inputRef = useRef(null);
+  useEffect(function () {
+    if (adding && inputRef.current) inputRef.current.focus();
+  }, [adding]);
+  function confirm() {
+    var v = newVal.trim();
+    if (v) {
+      onAdd(v);
+      _onChange(v);
+    }
+    setAdding(false);
+    setNewVal("");
+  }
+  var base = {
+    background: "#f8f5ff",
+    border: "1.5px solid #ddd6fe",
+    color: "#1e1035",
+    padding: "9px 12px",
+    borderRadius: "8px",
+    fontSize: "13px",
+    fontFamily: "inherit",
+    outline: "none"
+  };
+  if (adding) return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: "4px",
+      alignItems: "center"
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    ref: inputRef,
+    value: newVal,
+    onChange: function onChange(e) {
+      return setNewVal(e.target.value);
+    },
+    onKeyDown: function onKeyDown(e) {
+      if (e.key === "Enter") confirm();
+      if (e.key === "Escape") {
+        setAdding(false);
+        setNewVal("");
+      }
+    },
+    placeholder: placeholder || "Nombre…",
+    style: _objectSpread(_objectSpread({}, base), {}, {
+      cursor: "text",
+      minWidth: "130px"
+    })
+  }), /*#__PURE__*/React.createElement("button", {
+    onClick: confirm,
+    style: {
+      background: "#6d28d9",
+      color: "#fff",
+      border: "none",
+      borderRadius: "7px",
+      padding: "9px 12px",
+      fontSize: "12px",
+      fontFamily: "inherit",
+      cursor: "pointer",
+      fontWeight: 600
+    }
+  }, "\u2713"), /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      setAdding(false);
+      setNewVal("");
+    },
+    style: {
+      background: "#f3f0fb",
+      color: "#9a7cc5",
+      border: "1.5px solid #ddd6fe",
+      borderRadius: "7px",
+      padding: "9px 10px",
+      fontSize: "12px",
+      fontFamily: "inherit",
+      cursor: "pointer"
+    }
+  }, "\u2715"));
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: "4px",
+      alignItems: "center"
+    }
+  }, /*#__PURE__*/React.createElement("select", {
+    value: value,
+    onChange: function onChange(e) {
+      return _onChange(e.target.value);
+    },
+    style: _objectSpread(_objectSpread({}, base), {}, {
+      cursor: "pointer"
+    }),
+    disabled: disabled
+  }, options.map(function (o) {
+    return /*#__PURE__*/React.createElement("option", {
+      key: o
+    }, o);
+  })), !disabled && /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return setAdding(true);
+    },
+    title: "A\xF1adir nuevo",
+    style: {
+      background: "#ede9fe",
+      color: "#6d28d9",
+      border: "1.5px solid #ddd6fe",
+      borderRadius: "7px",
+      padding: "9px 11px",
+      fontSize: "15px",
+      fontFamily: "inherit",
+      cursor: "pointer",
+      lineHeight: 1,
+      fontWeight: 700
+    }
+  }, "+"));
+}
+function App() {
+  var saved = lsGet();
+  var _useState5 = useState((saved === null || saved === void 0 ? void 0 : saved.entries) || EXCEL_DATA),
+    _useState6 = _slicedToArray(_useState5, 2),
+    entries = _useState6[0],
+    setEntries = _useState6[1];
+  var _useState7 = useState((saved === null || saved === void 0 ? void 0 : saved.clientes) || DEFAULT_CLIENTES),
+    _useState8 = _slicedToArray(_useState7, 2),
+    clientes = _useState8[0],
+    setClientes = _useState8[1];
+  var _useState9 = useState((saved === null || saved === void 0 ? void 0 : saved.resps) || DEFAULT_RESPONSABLES),
+    _useState0 = _slicedToArray(_useState9, 2),
+    resps = _useState0[0],
+    setResps = _useState0[1];
+  var _useState1 = useState(false),
+    _useState10 = _slicedToArray(_useState1, 2),
+    running = _useState10[0],
+    setRunning = _useState10[1];
+  var _useState11 = useState(0),
+    _useState12 = _slicedToArray(_useState11, 2),
+    elapsed = _useState12[0],
+    setElapsed = _useState12[1];
+  var _useState13 = useState(null),
+    _useState14 = _slicedToArray(_useState13, 2),
+    startTs = _useState14[0],
+    setStartTs = _useState14[1];
+  var _useState15 = useState(""),
+    _useState16 = _slicedToArray(_useState15, 2),
+    task = _useState16[0],
+    setTask = _useState16[1];
+  var _useState17 = useState(false),
+    _useState18 = _slicedToArray(_useState17, 2),
+    taskError = _useState18[0],
+    setTaskError = _useState18[1];
+  var _useState19 = useState(DEFAULT_CLIENTES[0]),
+    _useState20 = _slicedToArray(_useState19, 2),
+    cliente = _useState20[0],
+    setCliente = _useState20[1];
+  var _useState21 = useState(DEFAULT_RESPONSABLES[0]),
+    _useState22 = _slicedToArray(_useState21, 2),
+    resp = _useState22[0],
+    setResp = _useState22[1];
+  var _useState23 = useState("Realizado"),
+    _useState24 = _slicedToArray(_useState23, 2),
+    status = _useState24[0],
+    setStatus = _useState24[1];
+  var _useState25 = useState("Todos"),
+    _useState26 = _slicedToArray(_useState25, 2),
+    fMes = _useState26[0],
+    setFMes = _useState26[1];
+  var _useState27 = useState("Todos"),
+    _useState28 = _slicedToArray(_useState27, 2),
+    fCliente = _useState28[0],
+    setFCliente = _useState28[1];
+  var _useState29 = useState("Todos"),
+    _useState30 = _slicedToArray(_useState29, 2),
+    fResp = _useState30[0],
+    setFResp = _useState30[1];
+  var _useState31 = useState("Todos"),
+    _useState32 = _slicedToArray(_useState31, 2),
+    fStatus = _useState32[0],
+    setFStatus = _useState32[1];
+  var _useState33 = useState("Todos"),
+    _useState34 = _slicedToArray(_useState33, 2),
+    t2Cliente = _useState34[0],
+    setT2Cliente = _useState34[1];
+  var _useState35 = useState("Todos"),
+    _useState36 = _slicedToArray(_useState35, 2),
+    t2Year = _useState36[0],
+    setT2Year = _useState36[1];
+  var _useState37 = useState([]),
+    _useState38 = _slicedToArray(_useState37, 2),
+    t2Months = _useState38[0],
+    setT2Months = _useState38[1];
+  var _useState39 = useState("log"),
+    _useState40 = _slicedToArray(_useState39, 2),
+    tab = _useState40[0],
+    setTab = _useState40[1];
+  var _useState41 = useState(""),
+    _useState42 = _slicedToArray(_useState41, 2),
+    toast = _useState42[0],
+    setToast = _useState42[1];
+  var timerRef = useRef(null);
+  var isFirst = useRef(true);
+  var taskRef = useRef(null);
+  useEffect(function () {
+    if (isFirst.current) {
+      isFirst.current = false;
+      return;
+    }
+    lsSet({
+      entries: entries,
+      clientes: clientes,
+      resps: resps
+    });
+  }, [entries, clientes, resps]);
+  useEffect(function () {
+    if (running) {
+      timerRef.current = setInterval(function () {
+        return setElapsed(Math.floor((Date.now() - startTs) / 1000));
+      }, 500);
+    } else clearInterval(timerRef.current);
+    return function () {
+      return clearInterval(timerRef.current);
     };
-
-    const EXCEL_DATA = [
-      {id:1001,task:"Maribel solicitó foto de video para anuncio de revista y pantalla",cliente:"Farmacia Curiel",responsable:"Carli",status:"Realizado",hours:0.25,date:"2026-03-06T00:00:00",fromExcel:true},
-      {id:1002,task:"Mandé el video de campaña de aniversario. Esperamos feedback.",cliente:"Medea",responsable:"Carli",status:"Realizado",hours:0.25,date:"2026-03-04T00:00:00",fromExcel:true},
-      {id:1003,task:"Activar campaña de aniversario en Meta y detener la de 9 euros",cliente:"Medea",responsable:"Carli",status:"Realizado",hours:0.25,date:"2026-03-06T00:00:00",fromExcel:true},
-      {id:1004,task:"Pregunté al cliente si quiere que le hagamos un flyer",cliente:"Medea",responsable:"Carli",status:"Realizado",hours:0.25,date:"2026-03-04T00:00:00",fromExcel:true},
-      {id:1005,task:"La medida es A4. Le dejo el pedido a Estefi.",cliente:"Medea",responsable:"Carli",status:"Realizado",hours:0.25,date:"2026-03-05T00:00:00",fromExcel:true},
-      {id:1006,task:"Enviarle el flyer a las chicas. Aprobado el 10-3.",cliente:"Medea",responsable:"Juli",status:"Realizado",hours:0.02,date:"2026-03-10T00:00:00",fromExcel:true},
-      {id:1007,task:"Pedirle a Estefi un carrusel para la nueva campaña orgánica",cliente:"Medea",responsable:"Carli",status:"Pausado",hours:0.25,date:"2026-03-04T00:00:00",fromExcel:true},
-      {id:1008,task:"Video campaña aniversario enviado. Activar Meta y detener la de 9 euros.",cliente:"Medea",responsable:"Juli",status:"Realizado",hours:0.25,date:"2026-03-04T00:00:00",fromExcel:true},
-      {id:1009,task:"Consulté vía correo el plan de trabajo: CRM o suspender servicio",cliente:"Academia Premium",responsable:"Carli",status:"Realizado",hours:0.25,date:"2026-03-04T00:00:00",fromExcel:true},
-      {id:1010,task:"Seguimiento aprobación plan campaña Flash Facial aniversario Medea",cliente:"Medea",responsable:"Juli",status:"Realizado",hours:0.05,date:"2026-03-05T00:00:00",fromExcel:true},
-      {id:1011,task:"Seguimiento informe campaña ritual Hidra Medea — Rosa y Montse",cliente:"Medea",responsable:"Juli",status:"Realizado",hours:0.017,date:"2026-03-18T00:00:00",fromExcel:true},
-      {id:1012,task:"Insistir con respuesta Academia Premium. Lidia necesita más tiempo.",cliente:"Academia Premium",responsable:"Juli",status:"Realizado",hours:0.001,date:"2026-03-11T00:00:00",fromExcel:true},
-      {id:1013,task:"Búsqueda de Sales Navigator para nuevo proceso de captación",cliente:"Maraver",responsable:"Juli",status:"Proceso",hours:1.5,date:"2026-03-12T00:00:00",fromExcel:true},
-      {id:1014,task:"Preguntar cómo van los leads de funerarios",cliente:"Maraver",responsable:"Juli",status:"Realizado",hours:0.667,date:"2026-03-03T00:00:00",fromExcel:true},
-      {id:1015,task:"Revisar CRM para ver resultados",cliente:"Maraver",responsable:"Juli",status:"Realizado",hours:0.333,date:"2026-03-11T00:00:00",fromExcel:true},
-      {id:1016,task:"Posicionamiento LinkedIn + propuesta Sales Navigator a Manuel",cliente:"Maraver",responsable:"Juli",status:"Realizado",hours:0.675,date:"2026-03-17T00:00:00",fromExcel:true},
-      {id:1017,task:"Propuestas de mejora perfil LinkedIn Manuel. Envío a Carli y a Manuel.",cliente:"Maraver",responsable:"Juli",status:"Realizado",hours:1.5,date:null,fromExcel:true},
-      {id:1018,task:"Insistir a Manuel para respuesta del email de mejora de LinkedIn",cliente:"Maraver",responsable:"Juli",status:"Proceso",hours:0.011,date:"2026-03-19T00:00:00",fromExcel:true},
-      {id:1019,task:"Seguimiento automatización landing VSL al listado de clientes de Maraver",cliente:"Maraver",responsable:"Juli",status:"Realizado",hours:0.036,date:"2026-03-17T00:00:00",fromExcel:true},
-      {id:1020,task:"Landing auditorías empresariales. Video explicativo + tarea Morning Mate.",cliente:"Maraver",responsable:"Juli",status:"Realizado",hours:1.008,date:"2026-03-17T00:00:00",fromExcel:true},
-      {id:1021,task:"Enviar propuestas de guiones nuevos para tener nuevo material",cliente:"Maraver",responsable:"Juli",status:"Proceso",hours:0.008,date:"2026-03-24T00:00:00",fromExcel:true},
-      {id:1022,task:"Ver cómo viene campaña de recupero de leads y pasar reporte a Manuel",cliente:"Maraver",responsable:"Juli",status:"Pendiente",hours:0.25,date:null,fromExcel:true},
-      {id:1023,task:"Insistir con los videos personalizados a cada lead",cliente:"Maraver",responsable:"Juli",status:"Realizado",hours:0.133,date:"2026-03-05T00:00:00",fromExcel:true},
-      {id:1024,task:"Seguimiento aprobación landing page servicio de novias. Aprobada 3/03.",cliente:"Medea",responsable:"Juli",status:"Realizado",hours:0.017,date:"2026-03-06T00:00:00",fromExcel:true},
-      {id:1025,task:"Seguimiento aprobación Dossier SPD. Enviado a aprobación.",cliente:"Farmacia Curiel",responsable:"Juli",status:"Realizado",hours:0.036,date:"2026-03-12T00:00:00",fromExcel:true},
-      {id:1026,task:"Editar video Farmacia Curiel — servicio SPD, formato horizontal",cliente:"Farmacia Curiel",responsable:"Juli",status:"Realizado",hours:0.5,date:"2026-03-18T00:00:00",fromExcel:true},
-      {id:1027,task:"Enviar el video a las residencias por email",cliente:"Farmacia Curiel",responsable:"Juli",status:"Pausado",hours:0.25,date:null,fromExcel:true},
-      {id:1028,task:"Feedback Maribel sobre video nueva etapa funnel. Aprobado.",cliente:"Farmacia Curiel",responsable:"Juli",status:"Realizado",hours:0.017,date:"2026-03-20T00:00:00",fromExcel:true},
-      {id:1029,task:"Seguimiento nuevo anuncio campaña SPD asignado a Estefania",cliente:"Farmacia Curiel",responsable:"Juli",status:"Proceso",hours:0.017,date:"2026-03-20T00:00:00",fromExcel:true},
-      {id:1030,task:"Seguimiento y publicación reel SPD en redes",cliente:"Farmacia Curiel",responsable:"Juli",status:"Pendiente",hours:0.25,date:"2026-03-24T00:00:00",fromExcel:true},
-      {id:1031,task:"Seguimiento edición video SPD vertical. Esperando escenas faltantes.",cliente:"Farmacia Curiel",responsable:"Juli",status:"Realizado",hours:0.167,date:"2026-03-24T00:00:00",fromExcel:true},
-      {id:1032,task:"Diseño nuevo nombre y enfoque campaña Club de Diabéticos",cliente:"Farmacia Curiel",responsable:"Carli",status:"Realizado",hours:0.25,date:null,fromExcel:true},
-      {id:1033,task:"Consultar feedback cambio nombre Club Diabéticos. Le gusta la idea.",cliente:"Farmacia Curiel",responsable:"Juli",status:"Proceso",hours:0.002,date:"2026-03-17T00:00:00",fromExcel:true},
-      {id:1034,task:"Solicitar a Estefi foto para pantalla. Enviado a aprobación 11/03.",cliente:"Farmacia Curiel",responsable:"Juli",status:"Realizado",hours:0.067,date:"2026-03-11T00:00:00",fromExcel:true},
-      {id:1035,task:"Revisar y ajustar cómo se ofrece Club de Diabéticos",cliente:"Farmacia Curiel",responsable:"Carli",status:"Pendiente",hours:0.25,date:"2026-03-05T00:00:00",fromExcel:true},
-      {id:1036,task:"Desarrollar flyer con nuevo enfoque Club de Diabéticos",cliente:"Farmacia Curiel",responsable:"Juli",status:"Pendiente",hours:0.25,date:null,fromExcel:true},
-      {id:1037,task:"Adaptaciones carrusel ADS para pantalla. Enviado a aprobación.",cliente:"Farmacia Curiel",responsable:"Juli",status:"Realizado",hours:0.833,date:"2026-03-18T00:00:00",fromExcel:true},
-      {id:1038,task:"Feedback video pantalla. Cambios hechos y enviados a aprobación.",cliente:"Farmacia Curiel",responsable:"Juli",status:"Proceso",hours:0.05,date:"2026-03-24T00:00:00",fromExcel:true},
-      {id:1039,task:"Seguimiento aprobación creatividades campaña alquiler audífonos",cliente:"Federopticos",responsable:"Juli",status:"Realizado",hours:0.033,date:"2026-03-09T00:00:00",fromExcel:true},
-      {id:1040,task:"Enviar nueva planificación al cliente",cliente:"Farmacia Curiel",responsable:"Juli",status:"Realizado",hours:0.008,date:"2026-03-24T00:00:00",fromExcel:true},
-      {id:1041,task:"Revisar materiales campaña Meta SPD con Paola. Nueva creatividad decidida.",cliente:"Farmacia Curiel",responsable:"Juli",status:"Realizado",hours:0.083,date:"2026-03-20T00:00:00",fromExcel:true},
-      {id:1042,task:"Concretar reunión con Yoli. Cita el 23 de Marzo.",cliente:"Federopticos",responsable:"Carli",status:"Realizado",hours:0.25,date:"2026-03-19T00:00:00",fromExcel:true},
-      {id:1043,task:"Mandar nuevos guiones e ideas de videos para que se grabe",cliente:"Federopticos",responsable:"Juli",status:"Pendiente",hours:0.25,date:"2026-03-24T00:00:00",fromExcel:true},
-      {id:1044,task:"Reactivar campaña audífonos clientes potenciales",cliente:"Federopticos",responsable:"Juli",status:"Realizado",hours:0.001,date:"2026-03-24T00:00:00",fromExcel:true},
-      {id:1045,task:"Implementar campaña formulario instantáneo audífonos. Ya genera leads.",cliente:"Federopticos",responsable:"Juli",status:"Realizado",hours:0.001,date:"2026-03-16T00:00:00",fromExcel:true},
-      {id:1046,task:"Preguntar qué pondremos en perfil LinkedIn de Andrea/Recoambiente",cliente:"Recoambiente",responsable:"Carli",status:"Pendiente",hours:0.25,date:"2026-03-03T00:00:00",fromExcel:true},
-      {id:1047,task:"Ajustar automatización Regularizaciones: link formulario + recordatorio",cliente:"Maraver",responsable:"Mati",status:"Realizado",hours:0.25,date:"2026-03-05T00:00:00",fromExcel:true},
-      {id:1048,task:"Ver con Shei lo de la web de casamiento",cliente:"Medea",responsable:"Carli",status:"Pendiente",hours:0.25,date:null,fromExcel:true},
-      {id:1049,task:"Mirar a diario leads que entran por WhatsApp y meterlos en pipeline",cliente:"Medea",responsable:"Juli",status:"Realizado",hours:0.007,date:"2026-03-17T00:00:00",fromExcel:true},
-      {id:1050,task:"Solicitar funnel seguimiento de leads promo aniversario",cliente:"Medea",responsable:"Carli",status:"Realizado",hours:0.5,date:"2026-03-09T00:00:00",fromExcel:true},
-      {id:1051,task:"Revisar pendientes del mail y cargar tareas",cliente:"Beatriz Zaragoza",responsable:"Juli",status:"Realizado",hours:0.25,date:"2026-03-10T00:00:00",fromExcel:true},
-      {id:1052,task:"Asignar a Matías modificación pipeline novias — etapas Mensaje 8 al 11",cliente:"Beatriz Zaragoza",responsable:"Juli",status:"Realizado",hours:0.08,date:"2026-03-12T00:00:00",fromExcel:true},
-      {id:1053,task:"Solicitar a Beatriz mensajes para nuevas etapas pipeline novias",cliente:"Beatriz Zaragoza",responsable:"Juli",status:"Realizado",hours:0.006,date:"2026-03-13T00:00:00",fromExcel:true},
-      {id:1054,task:"Enviar insistencia a Beatriz por WhatsApp",cliente:"Beatriz Zaragoza",responsable:"Juli",status:"Realizado",hours:0.25,date:"2026-03-19T00:00:00",fromExcel:true},
-      {id:1055,task:"Agregar valor 500€ a todas las oportunidades del pipeline",cliente:"Beatriz Zaragoza",responsable:"Juli",status:"Realizado",hours:0.25,date:null,fromExcel:true},
-      {id:1056,task:"Pedirle a Beatriz video para convencer a la novia a tomar cita",cliente:"Beatriz Zaragoza",responsable:"Juli",status:"Realizado",hours:0.25,date:null,fromExcel:true},
-      {id:1057,task:"Analizar pipeline seguimiento maquilladoras equipo Bei",cliente:"Beatriz Zaragoza",responsable:"Juli",status:"Realizado",hours:0.25,date:null,fromExcel:true},
-      {id:1058,task:"Probar IA para grabar audios de automatización",cliente:"Aflamas",responsable:"Juli",status:"Realizado",hours:0.675,date:"2026-03-18T00:00:00",fromExcel:true},
-      {id:1059,task:"Cambiar automatizaciones servicios fúnebres por cambio de teléfonos",cliente:"Maraver",responsable:"Mati",status:"Realizado",hours:1.0,date:"2026-03-19T00:00:00",fromExcel:true},
-      {id:1060,task:"Ajustar automatizaciones y cambiar asignaciones de teléfonos",cliente:"Maraver",responsable:"Mati",status:"Realizado",hours:1.0,date:"2026-03-19T00:00:00",fromExcel:true},
-      {id:1061,task:"Revisar automatización de reseñas de administración",cliente:"Maraver",responsable:"Mati",status:"Realizado",hours:0.25,date:null,fromExcel:true},
-      {id:1062,task:"Ajuste automatización Maraver — etapa protección personal",cliente:"Maraver",responsable:"Mati",status:"Realizado",hours:0.25,date:null,fromExcel:true},
-      {id:1063,task:"Ajustar automatizaciones campaña de novias",cliente:"Beatriz Zaragoza",responsable:"Mati",status:"Realizado",hours:0.5,date:null,fromExcel:true},
-      {id:1064,task:"Revisar envíos mensajes pipeline pack de bienvenida",cliente:"Maraver",responsable:"Mati",status:"Realizado",hours:0.5,date:null,fromExcel:true},
-      {id:1065,task:"Enviarle resumen reunión de Rosa, Carli y Shey. Fecha 18-3.",cliente:"Medea",responsable:"Juli",status:"Realizado",hours:0.25,date:"2026-03-19T00:00:00",fromExcel:true},
-      {id:1066,task:"Pedirle a Paola planificación para reactivar campaña Meta SPD",cliente:"Farmacia Curiel",responsable:"Juli",status:"Realizado",hours:0.019,date:"2026-03-19T00:00:00",fromExcel:true},
-      {id:1067,task:"Asignar tarea a Estefania: creatividades campaña Menú de Maridaje",cliente:"Aflamas",responsable:"Juli",status:"Proceso",hours:0.25,date:"2026-03-24T00:00:00",fromExcel:true},
-      {id:1068,task:"Seguimiento locuciones corregidas campaña Menú Maridaje. Aprobado.",cliente:"Aflamas",responsable:"Juli",status:"Realizado",hours:0.004,date:"2026-03-19T00:00:00",fromExcel:true},
-      {id:1069,task:"Reunión seguimiento con Yoli. Reactivar campaña.",cliente:"Federopticos",responsable:"Carli",status:"Realizado",hours:0.5,date:"2026-03-23T00:00:00",fromExcel:true},
-      {id:1070,task:"Pasar microinfluencers para campaña gafas de sol y cambio de cristales",cliente:"Federopticos",responsable:"Carli",status:"Pendiente",hours:0.25,date:null,fromExcel:true},
-      {id:1071,task:"Conseguir todas las facturas de Meta",cliente:"Federopticos",responsable:"Juli",status:"Pendiente",hours:0.25,date:null,fromExcel:true},
-      {id:1072,task:"Cambio en Bios de Andrea y Recoambiente en LinkedIn",cliente:"Recoambiente",responsable:"Juli",status:"Pendiente",hours:0.25,date:null,fromExcel:true},
-      {id:1073,task:"Proponerle próximo paso del outreach, trabajar lo estratégico",cliente:"Recoambiente",responsable:"Carli",status:"Pendiente",hours:0.25,date:null,fromExcel:true},
-      {id:1074,task:"Ajustar encuesta vinculada a landing, agregar correo Serseo",cliente:"Kawi",responsable:"Mati",status:"Realizado",hours:0.25,date:"2026-03-24T00:00:00",fromExcel:true},
-    ];
-
-    const STORAGE_KEY = "ltn-tt-v7";
-
-    function lsGet() {
-      try { const v = localStorage.getItem(STORAGE_KEY); return v ? JSON.parse(v) : null; } catch(e) { return null; }
+  }, [running, startTs]);
+  function showToast(msg) {
+    setToast(msg);
+    setTimeout(function () {
+      return setToast("");
+    }, 2400);
+  }
+  function addCliente(v) {
+    if (!clientes.includes(v)) setClientes(function (p) {
+      return [].concat(_toConsumableArray(p), [v]);
+    });
+  }
+  function addResp(v) {
+    if (!resps.includes(v)) setResps(function (p) {
+      return [].concat(_toConsumableArray(p), [v]);
+    });
+  }
+  function play() {
+    if (!task.trim()) {
+      setTaskError(true);
+      if (taskRef.current) taskRef.current.focus();
+      return;
     }
-    function lsSet(data) {
-      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
-    }
-
-    function getYear(iso)  { if (!iso) return null; return new Date(iso).getFullYear(); }
-    function getMonth(iso) { if (!iso) return null; return new Date(iso).getMonth(); }
-
-    function fmtElapsed(s) {
-      return [Math.floor(s/3600), Math.floor((s%3600)/60), s%60].map(n=>String(n).padStart(2,"0")).join(":");
-    }
-    function fmtHours(h) {
-      if (!h || h===0) return "—";
-      const m = Math.round(h*60);
-      if (m<1) return "<1m";
-      if (m<60) return m+"m";
-      const hr=Math.floor(m/60), rm=m%60;
-      return rm>0 ? hr+"h "+rm+"m" : hr+"h";
-    }
-    function fmtDate(iso) {
-      if (!iso) return "Sin fecha";
-      try { return new Date(iso).toLocaleDateString("es-ES",{day:"2-digit",month:"short",year:"numeric"}); }
-      catch(e){ return "—"; }
-    }
-
-    function AddableSelect({ value, onChange, options, onAdd, placeholder, disabled }) {
-      const [adding, setAdding] = useState(false);
-      const [newVal, setNewVal] = useState("");
-      const inputRef = useRef(null);
-      useEffect(()=>{ if(adding && inputRef.current) inputRef.current.focus(); },[adding]);
-      function confirm() {
-        const v = newVal.trim();
-        if (v) { onAdd(v); onChange(v); }
-        setAdding(false); setNewVal("");
-      }
-      const base = { background:"#f8f5ff", border:"1.5px solid #ddd6fe", color:"#1e1035", padding:"9px 12px", borderRadius:"8px", fontSize:"13px", fontFamily:"inherit", outline:"none" };
-      if (adding) return (
-        <div style={{display:"flex",gap:"4px",alignItems:"center"}}>
-          <input ref={inputRef} value={newVal} onChange={e=>setNewVal(e.target.value)}
-            onKeyDown={e=>{ if(e.key==="Enter") confirm(); if(e.key==="Escape"){setAdding(false);setNewVal("");} }}
-            placeholder={placeholder||"Nombre…"} style={{...base,cursor:"text",minWidth:"130px"}} />
-          <button onClick={confirm} style={{background:"#6d28d9",color:"#fff",border:"none",borderRadius:"7px",padding:"9px 12px",fontSize:"12px",fontFamily:"inherit",cursor:"pointer",fontWeight:600}}>✓</button>
-          <button onClick={()=>{setAdding(false);setNewVal("");}} style={{background:"#f3f0fb",color:"#9a7cc5",border:"1.5px solid #ddd6fe",borderRadius:"7px",padding:"9px 10px",fontSize:"12px",fontFamily:"inherit",cursor:"pointer"}}>✕</button>
-        </div>
-      );
-      return (
-        <div style={{display:"flex",gap:"4px",alignItems:"center"}}>
-          <select value={value} onChange={e=>onChange(e.target.value)} style={{...base,cursor:"pointer"}} disabled={disabled}>
-            {options.map(o=><option key={o}>{o}</option>)}
-          </select>
-          {!disabled && (
-            <button onClick={()=>setAdding(true)} title="Añadir nuevo"
-              style={{background:"#ede9fe",color:"#6d28d9",border:"1.5px solid #ddd6fe",borderRadius:"7px",padding:"9px 11px",fontSize:"15px",fontFamily:"inherit",cursor:"pointer",lineHeight:1,fontWeight:700}}>+</button>
-          )}
-        </div>
-      );
-    }
-
-    function App() {
-      const saved = lsGet();
-      const [entries, setEntries]   = useState(saved?.entries  || EXCEL_DATA);
-      const [clientes, setClientes] = useState(saved?.clientes || DEFAULT_CLIENTES);
-      const [resps, setResps]       = useState(saved?.resps    || DEFAULT_RESPONSABLES);
-      const [running, setRunning]   = useState(false);
-      const [elapsed, setElapsed]   = useState(0);
-      const [startTs, setStartTs]   = useState(null);
-      const [task, setTask]         = useState("");
-      const [taskError, setTaskError] = useState(false);
-      const [cliente, setCliente]   = useState(DEFAULT_CLIENTES[0]);
-      const [resp, setResp]         = useState(DEFAULT_RESPONSABLES[0]);
-      const [status, setStatus]     = useState("Realizado");
-      const [fMes, setFMes]         = useState("Todos");
-      const [fCliente, setFCliente] = useState("Todos");
-      const [fResp, setFResp]       = useState("Todos");
-      const [fStatus, setFStatus]   = useState("Todos");
-      const [t2Cliente, setT2Cliente] = useState("Todos");
-      const [t2Year, setT2Year]       = useState("Todos");
-      const [t2Months, setT2Months]   = useState([]);
-      const [tab, setTab]           = useState("log");
-      const [toast, setToast]       = useState("");
-      const timerRef = useRef(null);
-      const isFirst  = useRef(true);
-      const taskRef  = useRef(null);
-
-      useEffect(()=>{
-        if (isFirst.current) { isFirst.current=false; return; }
-        lsSet({entries,clientes,resps});
-      },[entries,clientes,resps]);
-
-      useEffect(()=>{
-        if (running) { timerRef.current = setInterval(()=>setElapsed(Math.floor((Date.now()-startTs)/1000)),500); }
-        else clearInterval(timerRef.current);
-        return ()=>clearInterval(timerRef.current);
-      },[running,startTs]);
-
-      function showToast(msg){ setToast(msg); setTimeout(()=>setToast(""),2400); }
-      function addCliente(v){ if(!clientes.includes(v)) setClientes(p=>[...p,v]); }
-      function addResp(v){ if(!resps.includes(v)) setResps(p=>[...p,v]); }
-
-      function play() {
-        if (!task.trim()) { setTaskError(true); if(taskRef.current) taskRef.current.focus(); return; }
-        setTaskError(false);
-        setStartTs(Date.now()); setElapsed(0); setRunning(true);
-      }
-      function stop(){
-        setRunning(false);
-        setEntries(p=>[{id:Date.now(),task:task.trim(),cliente,responsable:resp,status,hours:Math.max(elapsed/3600,0.004),date:new Date().toISOString(),fromExcel:false},...p]);
-        setElapsed(0); setTask(""); showToast("✓ Entrada guardada");
-      }
-      function del(id){ setEntries(p=>p.filter(e=>e.id!==id)); showToast("Entrada eliminada"); }
-      function resetLogFilters(){ setFMes("Todos"); setFCliente("Todos"); setFResp("Todos"); setFStatus("Todos"); }
-
-      const allYears = [...new Set(entries.map(e=>getYear(e.date)).filter(Boolean))].sort();
-      const availableMonths = [0,1,2,3,4,5,6,7,8,9,10,11];
-
-      function toggleMonth(m){ setT2Months(prev=>prev.includes(m)?prev.filter(x=>x!==m):[...prev,m]); }
-      function isAllMonths(){ return t2Months.length===0; }
-
-      const allLogMonths = [...new Set(entries.map(e=>{ if(!e.date) return null; return `${getYear(e.date)}-${String(getMonth(e.date)+1).padStart(2,"0")}`; }).filter(Boolean))].sort();
-      function logMonthLabel(k){ const [y,m]=k.split("-"); return MONTH_NAMES[parseInt(m)-1]+" "+y; }
-
-      const filtered = entries.filter(e=>{
-        if (fCliente!=="Todos" && e.cliente!==fCliente) return false;
-        if (fResp!=="Todos" && e.responsable!==fResp) return false;
-        if (fStatus!=="Todos" && e.status!==fStatus) return false;
-        if (fMes!=="Todos") {
-          if (!e.date) return false;
-          const k = `${getYear(e.date)}-${String(getMonth(e.date)+1).padStart(2,"0")}`;
-          if (k!==fMes) return false;
-        }
-        return true;
+    setTaskError(false);
+    setStartTs(Date.now());
+    setElapsed(0);
+    setRunning(true);
+  }
+  function stop() {
+    setRunning(false);
+    setEntries(function (p) {
+      return [{
+        id: Date.now(),
+        task: task.trim(),
+        cliente: cliente,
+        responsable: resp,
+        status: status,
+        hours: Math.max(elapsed / 3600, 0.004),
+        date: new Date().toISOString(),
+        fromExcel: false
+      }].concat(_toConsumableArray(p));
+    });
+    setElapsed(0);
+    setTask("");
+    showToast("✓ Entrada guardada");
+  }
+  function del(id) {
+    setEntries(function (p) {
+      return p.filter(function (e) {
+        return e.id !== id;
       });
-      const filtH  = filtered.reduce((a,e)=>a+(e.hours||0),0);
-      const totalH = entries.reduce((a,e)=>a+(e.hours||0),0);
-      const hasLogFilter = fMes!=="Todos"||fCliente!=="Todos"||fResp!=="Todos"||fStatus!=="Todos";
-
-      const t2List = entries.filter(e=>{
-        if (t2Cliente!=="Todos" && e.cliente!==t2Cliente) return false;
-        if (!e.date) return (t2Months.length===0 && t2Year==="Todos");
-        if (t2Year!=="Todos" && getYear(e.date)!==parseInt(t2Year)) return false;
-        if (t2Months.length>0 && !t2Months.includes(getMonth(e.date))) return false;
-        return true;
-      });
-      const t2Total = t2List.reduce((a,e)=>a+(e.hours||0),0);
-      const t2HasFilter = t2Cliente!=="Todos" || t2Year!=="Todos" || t2Months.length>0;
-
-      const t2ByCli = [...new Set(t2List.map(e=>e.cliente))].map(c=>({
-        name:c,
-        h:t2List.filter(e=>e.cliente===c).reduce((a,e)=>a+e.hours,0),
-        n:t2List.filter(e=>e.cliente===c).length
-      })).sort((a,b)=>b.h-a.h);
-
-      const sel = { background:"#f8f5ff", border:"1.5px solid #ddd6fe", color:"#1e1035", padding:"9px 12px", borderRadius:"8px", fontSize:"13px", fontFamily:"inherit", outline:"none", cursor:"pointer" };
-
-      return (
-        <div style={{minHeight:"100vh",background:"#f3f0fb",fontFamily:"system-ui,sans-serif",color:"#1e1035",paddingBottom:"60px"}}>
-          {toast && (
-            <div style={{position:"fixed",bottom:20,left:"50%",transform:"translateX(-50%)",background:"#1e1035",color:"#fff",padding:"9px 18px",borderRadius:"8px",fontSize:"13px",zIndex:999,animation:"fadein .2s ease",whiteSpace:"nowrap"}}>{toast}</div>
-          )}
-
-          {/* Topbar */}
-          <div style={{background:"#fff",borderBottom:"1px solid #ede9fe",padding:"0 20px",height:"52px",display:"flex",alignItems:"center",gap:"8px",position:"sticky",top:0,zIndex:50,boxShadow:"0 1px 4px rgba(109,40,217,.06)"}}>
-            <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#7c3aed" strokeWidth="1.5"/><path d="M10 6v4l2.5 2.5" stroke="#7c3aed" strokeWidth="1.5" strokeLinecap="round"/></svg>
-            <span style={{fontSize:"11px",fontWeight:700,letterSpacing:".15em",textTransform:"uppercase",color:"#7c3aed"}}>Lidera tu Negocio · Time Tracker</span>
-            <div style={{flex:1}}/>
-            <span style={{fontSize:"12px",color:"#9a7cc5"}}><b style={{color:"#6d28d9"}}>{fmtHours(totalH)}</b> · {entries.length} entradas</span>
-          </div>
-
-          <div style={{maxWidth:"980px",margin:"0 auto",padding:"24px 16px 0"}}>
-
-            {/* Timer card */}
-            <div style={{background:"#fff",border:"1.5px solid #ede9fe",borderRadius:"14px",padding:"18px 20px",marginBottom:"22px",boxShadow:"0 2px 12px rgba(109,40,217,.06)"}}>
-              <div style={{display:"flex",alignItems:"flex-start",gap:"10px",flexWrap:"wrap"}}>
-                <div style={{flex:"1 1 220px"}}>
-                  <div style={{fontSize:"10px",color:taskError?"#b91c1c":"#b8a8d0",fontWeight:600,textTransform:"uppercase",letterSpacing:".1em",marginBottom:"4px"}}>
-                    Descripción {taskError&&<b>— obligatorio</b>}
-                  </div>
-                  <input ref={taskRef} className={taskError?"shake":""}
-                    style={{...sel,cursor:"text",width:"100%",borderColor:taskError?"#fca5a5":"#ddd6fe",background:taskError?"#fff5f5":"#f8f5ff"}}
-                    placeholder="¿En qué estás trabajando?*"
-                    value={task} onChange={e=>{ setTask(e.target.value); if(e.target.value.trim()) setTaskError(false); }}
-                    onKeyDown={e=>e.key==="Enter"&&!running&&play()} disabled={running} />
-                </div>
-                <div>
-                  <div style={{fontSize:"10px",color:"#b8a8d0",fontWeight:600,textTransform:"uppercase",letterSpacing:".1em",marginBottom:"4px"}}>Cliente</div>
-                  <AddableSelect value={cliente} onChange={setCliente} options={clientes} onAdd={addCliente} placeholder="Nombre cliente…" disabled={running} />
-                </div>
-                <div>
-                  <div style={{fontSize:"10px",color:"#b8a8d0",fontWeight:600,textTransform:"uppercase",letterSpacing:".1em",marginBottom:"4px"}}>Responsable</div>
-                  <AddableSelect value={resp} onChange={setResp} options={resps} onAdd={addResp} placeholder="Nombre responsable…" disabled={running} />
-                </div>
-                <div>
-                  <div style={{fontSize:"10px",color:"#b8a8d0",fontWeight:600,textTransform:"uppercase",letterSpacing:".1em",marginBottom:"4px"}}>Estado</div>
-                  <select style={sel} value={status} onChange={e=>setStatus(e.target.value)} disabled={running}>
-                    {STATUSES.map(s=><option key={s}>{s}</option>)}
-                  </select>
-                </div>
-                <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"4px",alignSelf:"flex-end",paddingBottom:"1px"}}>
-                  <span style={{fontFamily:"monospace",fontSize:"20px",fontWeight:700,color:running?"#6d28d9":"#c4b5fd",letterSpacing:".04em",minWidth:"86px",textAlign:"center"}}>{fmtElapsed(elapsed)}</span>
-                  <button className="pbtn" onClick={running?stop:play}
-                    style={{width:"42px",height:"42px",borderRadius:"50%",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",background:running?"#7c3aed":"#ede9fe",boxShadow:running?"0 2px 12px rgba(124,58,237,.3)":"none",transition:"all .15s"}}>
-                    {running
-                      ?<svg width="10" height="10" viewBox="0 0 10 10" fill="white"><rect x="0" y="0" width="3.5" height="10" rx="1"/><rect x="6.5" y="0" width="3.5" height="10" rx="1"/></svg>
-                      :<svg width="10" height="12" viewBox="0 0 10 12" fill="#7c3aed"><path d="M1 1l8 5-8 5V1z"/></svg>
-                    }
-                  </button>
-                </div>
-              </div>
-              {running && (
-                <div style={{marginTop:"10px",fontSize:"12px",color:"#9a7cc5",display:"flex",alignItems:"center",gap:"6px"}}>
-                  <span style={{width:7,height:7,borderRadius:"50%",background:"#7c3aed",display:"inline-block",animation:"pulse 1.4s infinite"}}/>
-                  Registrando · <b style={{color:"#6d28d9"}}>{cliente}</b> · {resp}
-                </div>
-              )}
-            </div>
-
-            {/* Tabs */}
-            <div style={{display:"inline-flex",gap:"2px",background:"#fff",padding:"3px",borderRadius:"9px",border:"1.5px solid #ede9fe",marginBottom:"20px"}}>
-              {[["log","📋 Registro"],["tabla","📊 Por cliente y mes"]].map(([t,lbl])=>(
-                <button key={t} style={{padding:"6px 18px",borderRadius:"6px",border:"none",background:tab===t?"#ede9fe":"transparent",color:tab===t?"#6d28d9":"#9a7cc5",fontSize:"13px",fontFamily:"inherit",fontWeight:tab===t?600:400,cursor:"pointer"}} onClick={()=>setTab(t)}>{lbl}</button>
-              ))}
-            </div>
-
-            {/* LOG */}
-            {tab==="log" && (
-              <div>
-                <div style={{background:"#fff",border:"1.5px solid #ede9fe",borderRadius:"12px",padding:"16px 18px",marginBottom:"16px",display:"flex",gap:"16px",flexWrap:"wrap",alignItems:"flex-end"}}>
-                  {[
-                    ["Mes",fMes,setFMes,["Todos",...allLogMonths],k=>k==="Todos"?"Todos":logMonthLabel(k)],
-                    ["Cliente",fCliente,setFCliente,["Todos",...clientes],v=>v],
-                    ["Resp.",fResp,setFResp,["Todos",...resps],v=>v],
-                    ["Estado",fStatus,setFStatus,["Todos",...STATUSES],v=>v],
-                  ].map(([label,val,setter,opts,fmt])=>(
-                    <div key={label}>
-                      <div style={{fontSize:"10px",color:"#b8a8d0",fontWeight:600,textTransform:"uppercase",letterSpacing:".1em",marginBottom:"4px"}}>{label}</div>
-                      <select style={sel} value={val} onChange={e=>setter(e.target.value)}>
-                        {opts.map(o=><option key={o} value={o}>{fmt(o)}</option>)}
-                      </select>
-                    </div>
-                  ))}
-                  {hasLogFilter && (
-                    <button onClick={resetLogFilters}
-                      style={{background:"#f3f0fb",color:"#9a7cc5",border:"1.5px solid #ddd6fe",borderRadius:"8px",padding:"9px 14px",fontSize:"12px",fontFamily:"inherit",cursor:"pointer",alignSelf:"flex-end"}}>
-                      ✕ Limpiar
-                    </button>
-                  )}
-                </div>
-                <div style={{fontSize:"11px",fontWeight:600,color:"#c4b5fd",textTransform:"uppercase",letterSpacing:".1em",marginBottom:"10px",paddingBottom:"8px",borderBottom:"1px solid #f0ebff",display:"flex",justifyContent:"space-between"}}>
-                  <span>{filtered.length} entrada{filtered.length!==1?"s":""}</span>
-                  <span><b style={{color:"#6d28d9"}}>{fmtHours(filtH)}</b> {hasLogFilter?"filtrado":"total"}</span>
-                </div>
-                {filtered.length===0 ? (
-                  <div style={{textAlign:"center",padding:"40px",color:"#c4b5fd",background:"#fff",borderRadius:"12px",border:"1.5px dashed #e4d9f8"}}>
-                    <div style={{fontSize:"28px",marginBottom:"8px"}}>⏱</div>No hay entradas con estos filtros.
-                  </div>
-                ) : filtered.map(e=>{
-                  const s=SC[e.status]||SC.Pendiente;
-                  return (
-                    <div key={e.id} className="row"
-                      style={{display:"grid",gridTemplateColumns:"1fr auto auto auto 64px 28px",alignItems:"center",gap:"8px",padding:"11px 14px",background:"#fff",borderRadius:"9px",marginBottom:"6px",border:"1.5px solid #f0ebff",transition:"border-color .15s"}}>
-                      <div>
-                        <div style={{fontSize:"13px",color:"#1e1035",lineHeight:1.4}}>{e.task}</div>
-                        <div style={{fontSize:"11px",color:"#b8a8d0",marginTop:"2px"}}>
-                          {e.cliente} · {e.responsable} · {fmtDate(e.date)}
-                          {e.fromExcel&&<span style={{marginLeft:6,fontSize:"10px",background:"#f0fdf4",color:"#15803d",border:"1px solid #bbf7d0",padding:"1px 5px",borderRadius:"4px"}}>Excel</span>}
-                        </div>
-                      </div>
-                      <span style={{padding:"3px 8px",borderRadius:"5px",fontSize:"11px",fontWeight:600,background:s.bg,color:s.text,border:`1px solid ${s.border}`,whiteSpace:"nowrap"}}>{e.status}</span>
-                      <span style={{padding:"3px 8px",borderRadius:"5px",fontSize:"11px",background:"#f3e8ff",color:"#7c3aed",border:"1px solid #e9d5ff",whiteSpace:"nowrap"}}>{e.responsable}</span>
-                      <span style={{padding:"3px 8px",borderRadius:"5px",fontSize:"11px",background:"#eef2ff",color:"#4338ca",border:"1px solid #e0e7ff",whiteSpace:"nowrap"}}>{e.cliente}</span>
-                      <span style={{fontFamily:"monospace",fontSize:"13px",fontWeight:700,color:"#6d28d9",textAlign:"right",whiteSpace:"nowrap"}}>{fmtHours(e.hours)}</span>
-                      <button className="del" style={{background:"none",border:"none",color:"#d8c8f0",cursor:"pointer",fontSize:"16px",padding:"2px 4px",borderRadius:"5px",lineHeight:1}} onClick={()=>del(e.id)}>×</button>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-
-            {/* TABLA */}
-            {tab==="tabla" && (
-              <div>
-                <div style={{background:"#fff",border:"1.5px solid #ede9fe",borderRadius:"12px",padding:"18px 20px",marginBottom:"20px"}}>
-                  <div style={{display:"flex",gap:"16px",flexWrap:"wrap",alignItems:"flex-end",marginBottom:"18px"}}>
-                    <div>
-                      <div style={{fontSize:"10px",color:"#b8a8d0",fontWeight:600,textTransform:"uppercase",letterSpacing:".1em",marginBottom:"4px"}}>Cliente</div>
-                      <select style={sel} value={t2Cliente} onChange={e=>{ setT2Cliente(e.target.value); setT2Months([]); }}>
-                        <option value="Todos">Todos los clientes</option>
-                        {clientes.map(c=><option key={c}>{c}</option>)}
-                      </select>
-                    </div>
-                    <div>
-                      <div style={{fontSize:"10px",color:"#b8a8d0",fontWeight:600,textTransform:"uppercase",letterSpacing:".1em",marginBottom:"4px"}}>Año</div>
-                      <select style={sel} value={t2Year} onChange={e=>{ setT2Year(e.target.value); setT2Months([]); }}>
-                        <option value="Todos">Todo el año</option>
-                        {allYears.map(y=><option key={y}>{y}</option>)}
-                      </select>
-                    </div>
-                    {t2HasFilter && (
-                      <button onClick={()=>{ setT2Cliente("Todos"); setT2Year("Todos"); setT2Months([]); }}
-                        style={{background:"#f3f0fb",color:"#9a7cc5",border:"1.5px solid #ddd6fe",borderRadius:"8px",padding:"9px 14px",fontSize:"12px",fontFamily:"inherit",cursor:"pointer",alignSelf:"flex-end"}}>
-                        ✕ Limpiar
-                      </button>
-                    )}
-                  </div>
-                  <div>
-                    <div style={{fontSize:"10px",color:"#b8a8d0",fontWeight:600,textTransform:"uppercase",letterSpacing:".1em",marginBottom:"8px"}}>
-                      Meses — selecciona uno o varios, o deja en blanco para ver todo el año
-                    </div>
-                    <div style={{display:"flex",flexWrap:"wrap",gap:"6px"}}>
-                      <button className="mbtn" onClick={()=>setT2Months([])}
-                        style={{padding:"6px 14px",borderRadius:"20px",border:"1.5px solid",fontSize:"12px",fontFamily:"inherit",cursor:"pointer",transition:"all .15s",fontWeight:isAllMonths()?700:400,background:isAllMonths()?"#6d28d9":"#fff",borderColor:isAllMonths()?"#6d28d9":"#ddd6fe",color:isAllMonths()?"#fff":"#9a7cc5"}}>
-                        Todo el año
-                      </button>
-                      {availableMonths.map(m=>{
-                        const active=t2Months.includes(m);
-                        return (
-                          <button key={m} className="mbtn" onClick={()=>toggleMonth(m)}
-                            style={{padding:"6px 14px",borderRadius:"20px",border:"1.5px solid",fontSize:"12px",fontFamily:"inherit",cursor:"pointer",transition:"all .15s",fontWeight:active?700:400,background:active?"#ede9fe":"#fff",borderColor:active?"#a78bfa":"#ddd6fe",color:active?"#6d28d9":"#6b5a8e"}}>
-                            {MONTH_SHORT[m]}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
-
-                {t2List.length===0 ? (
-                  <div style={{textAlign:"center",padding:"48px 24px",color:"#c4b5fd",background:"#fff",borderRadius:"12px",border:"1.5px dashed #e4d9f8"}}>
-                    <div style={{fontSize:"28px",marginBottom:"10px"}}>📭</div>
-                    <div style={{fontSize:"14px"}}>No hay entradas para esta selección.</div>
-                  </div>
-                ) : (
-                  <div>
-                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"12px",paddingBottom:"10px",borderBottom:"1px solid #f0ebff"}}>
-                      <div style={{display:"flex",gap:"6px",flexWrap:"wrap"}}>
-                        {t2Cliente!=="Todos" && <span style={{background:"#eef2ff",color:"#4338ca",border:"1px solid #e0e7ff",borderRadius:"6px",padding:"3px 10px",fontSize:"12px",fontWeight:600}}>{t2Cliente}</span>}
-                        {t2Year!=="Todos"    && <span style={{background:"#f3e8ff",color:"#7c3aed",border:"1px solid #e9d5ff",borderRadius:"6px",padding:"3px 10px",fontSize:"12px",fontWeight:600}}>{t2Year}</span>}
-                        {t2Months.map(m=>(
-                          <span key={m} style={{background:"#ede9fe",color:"#6d28d9",border:"1px solid #ddd6fe",borderRadius:"6px",padding:"3px 10px",fontSize:"12px",fontWeight:600}}>{MONTH_NAMES[m]}</span>
-                        ))}
-                      </div>
-                      <div style={{fontSize:"13px",color:"#9a7cc5",whiteSpace:"nowrap"}}>
-                        {t2List.length} entradas ·&nbsp;
-                        <b style={{color:"#6d28d9",fontFamily:"monospace",fontSize:"14px"}}>{fmtHours(t2Total)}</b>
-                      </div>
-                    </div>
-
-                    {t2Cliente==="Todos" && t2ByCli.length>1 && (
-                      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(150px,1fr))",gap:"8px",marginBottom:"18px"}}>
-                        {t2ByCli.map(item=>(
-                          <div key={item.name} style={{background:"#fff",border:"1.5px solid #ede9fe",borderRadius:"9px",padding:"12px 14px"}}>
-                            <div style={{fontSize:"10px",color:"#c4b5fd",textTransform:"uppercase",letterSpacing:".1em",marginBottom:"4px"}}>{item.n} tarea{item.n!==1?"s":""}</div>
-                            <div style={{fontSize:"17px",fontWeight:700,color:"#6d28d9"}}>{fmtHours(item.h)}</div>
-                            <div style={{fontSize:"12px",color:"#6b5a8e",marginTop:"2px"}}>{item.name}</div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-
-                    {t2List.map(e=>{
-                      const s=SC[e.status]||SC.Pendiente;
-                      return (
-                        <div key={e.id} className="row"
-                          style={{display:"grid",gridTemplateColumns:"1fr auto auto auto 64px",alignItems:"center",gap:"8px",padding:"11px 14px",background:"#fff",borderRadius:"9px",marginBottom:"6px",border:"1.5px solid #f0ebff",transition:"border-color .15s"}}>
-                          <div>
-                            <div style={{fontSize:"13px",color:"#1e1035",lineHeight:1.4}}>{e.task}</div>
-                            <div style={{fontSize:"11px",color:"#b8a8d0",marginTop:"2px"}}>
-                              {e.cliente} · {e.responsable} · {fmtDate(e.date)}
-                              {e.fromExcel&&<span style={{marginLeft:6,fontSize:"10px",background:"#f0fdf4",color:"#15803d",border:"1px solid #bbf7d0",padding:"1px 5px",borderRadius:"4px"}}>Excel</span>}
-                            </div>
-                          </div>
-                          <span style={{padding:"3px 8px",borderRadius:"5px",fontSize:"11px",fontWeight:600,background:s.bg,color:s.text,border:`1px solid ${s.border}`,whiteSpace:"nowrap"}}>{e.status}</span>
-                          <span style={{padding:"3px 8px",borderRadius:"5px",fontSize:"11px",background:"#f3e8ff",color:"#7c3aed",border:"1px solid #e9d5ff",whiteSpace:"nowrap"}}>{e.responsable}</span>
-                          <span style={{padding:"3px 8px",borderRadius:"5px",fontSize:"11px",background:"#eef2ff",color:"#4338ca",border:"1px solid #e0e7ff",whiteSpace:"nowrap"}}>{e.cliente}</span>
-                          <span style={{fontFamily:"monospace",fontSize:"13px",fontWeight:700,color:"#6d28d9",textAlign:"right",whiteSpace:"nowrap"}}>{fmtHours(e.hours)}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            )}
-
-          </div>
-        </div>
-      );
+    });
+    showToast("Entrada eliminada");
+  }
+  function resetLogFilters() {
+    setFMes("Todos");
+    setFCliente("Todos");
+    setFResp("Todos");
+    setFStatus("Todos");
+  }
+  var allYears = _toConsumableArray(new Set(entries.map(function (e) {
+    return getYear(e.date);
+  }).filter(Boolean))).sort();
+  var availableMonths = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  function toggleMonth(m) {
+    setT2Months(function (prev) {
+      return prev.includes(m) ? prev.filter(function (x) {
+        return x !== m;
+      }) : [].concat(_toConsumableArray(prev), [m]);
+    });
+  }
+  function isAllMonths() {
+    return t2Months.length === 0;
+  }
+  var allLogMonths = _toConsumableArray(new Set(entries.map(function (e) {
+    if (!e.date) return null;
+    return "".concat(getYear(e.date), "-").concat(String(getMonth(e.date) + 1).padStart(2, "0"));
+  }).filter(Boolean))).sort();
+  function logMonthLabel(k) {
+    var _k$split = k.split("-"),
+      _k$split2 = _slicedToArray(_k$split, 2),
+      y = _k$split2[0],
+      m = _k$split2[1];
+    return MONTH_NAMES[parseInt(m) - 1] + " " + y;
+  }
+  var filtered = entries.filter(function (e) {
+    if (fCliente !== "Todos" && e.cliente !== fCliente) return false;
+    if (fResp !== "Todos" && e.responsable !== fResp) return false;
+    if (fStatus !== "Todos" && e.status !== fStatus) return false;
+    if (fMes !== "Todos") {
+      if (!e.date) return false;
+      var k = "".concat(getYear(e.date), "-").concat(String(getMonth(e.date) + 1).padStart(2, "0"));
+      if (k !== fMes) return false;
     }
+    return true;
+  });
+  var filtH = filtered.reduce(function (a, e) {
+    return a + (e.hours || 0);
+  }, 0);
+  var totalH = entries.reduce(function (a, e) {
+    return a + (e.hours || 0);
+  }, 0);
+  var hasLogFilter = fMes !== "Todos" || fCliente !== "Todos" || fResp !== "Todos" || fStatus !== "Todos";
+  var t2List = entries.filter(function (e) {
+    if (t2Cliente !== "Todos" && e.cliente !== t2Cliente) return false;
+    if (!e.date) return t2Months.length === 0 && t2Year === "Todos";
+    if (t2Year !== "Todos" && getYear(e.date) !== parseInt(t2Year)) return false;
+    if (t2Months.length > 0 && !t2Months.includes(getMonth(e.date))) return false;
+    return true;
+  });
+  var t2Total = t2List.reduce(function (a, e) {
+    return a + (e.hours || 0);
+  }, 0);
+  var t2HasFilter = t2Cliente !== "Todos" || t2Year !== "Todos" || t2Months.length > 0;
+  var t2ByCli = _toConsumableArray(new Set(t2List.map(function (e) {
+    return e.cliente;
+  }))).map(function (c) {
+    return {
+      name: c,
+      h: t2List.filter(function (e) {
+        return e.cliente === c;
+      }).reduce(function (a, e) {
+        return a + e.hours;
+      }, 0),
+      n: t2List.filter(function (e) {
+        return e.cliente === c;
+      }).length
+    };
+  }).sort(function (a, b) {
+    return b.h - a.h;
+  });
+  var sel = {
+    background: "#f8f5ff",
+    border: "1.5px solid #ddd6fe",
+    color: "#1e1035",
+    padding: "9px 12px",
+    borderRadius: "8px",
+    fontSize: "13px",
+    fontFamily: "inherit",
+    outline: "none",
+    cursor: "pointer"
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      minHeight: "100vh",
+      background: "#f3f0fb",
+      fontFamily: "system-ui,sans-serif",
+      color: "#1e1035",
+      paddingBottom: "60px"
+    }
+  }, toast && /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "fixed",
+      bottom: 20,
+      left: "50%",
+      transform: "translateX(-50%)",
+      background: "#1e1035",
+      color: "#fff",
+      padding: "9px 18px",
+      borderRadius: "8px",
+      fontSize: "13px",
+      zIndex: 999,
+      animation: "fadein .2s ease",
+      whiteSpace: "nowrap"
+    }
+  }, toast), /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "#fff",
+      borderBottom: "1px solid #ede9fe",
+      padding: "0 20px",
+      height: "52px",
+      display: "flex",
+      alignItems: "center",
+      gap: "8px",
+      position: "sticky",
+      top: 0,
+      zIndex: 50,
+      boxShadow: "0 1px 4px rgba(109,40,217,.06)"
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "18",
+    height: "18",
+    viewBox: "0 0 20 20",
+    fill: "none"
+  }, /*#__PURE__*/React.createElement("circle", {
+    cx: "10",
+    cy: "10",
+    r: "8",
+    stroke: "#7c3aed",
+    strokeWidth: "1.5"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M10 6v4l2.5 2.5",
+    stroke: "#7c3aed",
+    strokeWidth: "1.5",
+    strokeLinecap: "round"
+  })), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: "11px",
+      fontWeight: 700,
+      letterSpacing: ".15em",
+      textTransform: "uppercase",
+      color: "#7c3aed"
+    }
+  }, "Lidera tu Negocio \xB7 Time Tracker"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: "12px",
+      color: "#9a7cc5"
+    }
+  }, /*#__PURE__*/React.createElement("b", {
+    style: {
+      color: "#6d28d9"
+    }
+  }, fmtHours(totalH)), " \xB7 ", entries.length, " entradas")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      maxWidth: "980px",
+      margin: "0 auto",
+      padding: "24px 16px 0"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "#fff",
+      border: "1.5px solid #ede9fe",
+      borderRadius: "14px",
+      padding: "18px 20px",
+      marginBottom: "22px",
+      boxShadow: "0 2px 12px rgba(109,40,217,.06)"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "flex-start",
+      gap: "10px",
+      flexWrap: "wrap"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: "1 1 220px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "10px",
+      color: taskError ? "#b91c1c" : "#b8a8d0",
+      fontWeight: 600,
+      textTransform: "uppercase",
+      letterSpacing: ".1em",
+      marginBottom: "4px"
+    }
+  }, "Descripci\xF3n ", taskError && /*#__PURE__*/React.createElement("b", null, "\u2014 obligatorio")), /*#__PURE__*/React.createElement("input", {
+    ref: taskRef,
+    className: taskError ? "shake" : "",
+    style: _objectSpread(_objectSpread({}, sel), {}, {
+      cursor: "text",
+      width: "100%",
+      borderColor: taskError ? "#fca5a5" : "#ddd6fe",
+      background: taskError ? "#fff5f5" : "#f8f5ff"
+    }),
+    placeholder: "\xBFEn qu\xE9 est\xE1s trabajando?*",
+    value: task,
+    onChange: function onChange(e) {
+      setTask(e.target.value);
+      if (e.target.value.trim()) setTaskError(false);
+    },
+    onKeyDown: function onKeyDown(e) {
+      return e.key === "Enter" && !running && play();
+    },
+    disabled: running
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "10px",
+      color: "#b8a8d0",
+      fontWeight: 600,
+      textTransform: "uppercase",
+      letterSpacing: ".1em",
+      marginBottom: "4px"
+    }
+  }, "Cliente"), /*#__PURE__*/React.createElement(AddableSelect, {
+    value: cliente,
+    onChange: setCliente,
+    options: clientes,
+    onAdd: addCliente,
+    placeholder: "Nombre cliente\u2026",
+    disabled: running
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "10px",
+      color: "#b8a8d0",
+      fontWeight: 600,
+      textTransform: "uppercase",
+      letterSpacing: ".1em",
+      marginBottom: "4px"
+    }
+  }, "Responsable"), /*#__PURE__*/React.createElement(AddableSelect, {
+    value: resp,
+    onChange: setResp,
+    options: resps,
+    onAdd: addResp,
+    placeholder: "Nombre responsable\u2026",
+    disabled: running
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "10px",
+      color: "#b8a8d0",
+      fontWeight: 600,
+      textTransform: "uppercase",
+      letterSpacing: ".1em",
+      marginBottom: "4px"
+    }
+  }, "Estado"), /*#__PURE__*/React.createElement("select", {
+    style: sel,
+    value: status,
+    onChange: function onChange(e) {
+      return setStatus(e.target.value);
+    },
+    disabled: running
+  }, STATUSES.map(function (s) {
+    return /*#__PURE__*/React.createElement("option", {
+      key: s
+    }, s);
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      gap: "4px",
+      alignSelf: "flex-end",
+      paddingBottom: "1px"
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: "monospace",
+      fontSize: "20px",
+      fontWeight: 700,
+      color: running ? "#6d28d9" : "#c4b5fd",
+      letterSpacing: ".04em",
+      minWidth: "86px",
+      textAlign: "center"
+    }
+  }, fmtElapsed(elapsed)), /*#__PURE__*/React.createElement("button", {
+    className: "pbtn",
+    onClick: running ? stop : play,
+    style: {
+      width: "42px",
+      height: "42px",
+      borderRadius: "50%",
+      border: "none",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      background: running ? "#7c3aed" : "#ede9fe",
+      boxShadow: running ? "0 2px 12px rgba(124,58,237,.3)" : "none",
+      transition: "all .15s"
+    }
+  }, running ? /*#__PURE__*/React.createElement("svg", {
+    width: "10",
+    height: "10",
+    viewBox: "0 0 10 10",
+    fill: "white"
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "0",
+    y: "0",
+    width: "3.5",
+    height: "10",
+    rx: "1"
+  }), /*#__PURE__*/React.createElement("rect", {
+    x: "6.5",
+    y: "0",
+    width: "3.5",
+    height: "10",
+    rx: "1"
+  })) : /*#__PURE__*/React.createElement("svg", {
+    width: "10",
+    height: "12",
+    viewBox: "0 0 10 12",
+    fill: "#7c3aed"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M1 1l8 5-8 5V1z"
+  }))))), running && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: "10px",
+      fontSize: "12px",
+      color: "#9a7cc5",
+      display: "flex",
+      alignItems: "center",
+      gap: "6px"
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      width: 7,
+      height: 7,
+      borderRadius: "50%",
+      background: "#7c3aed",
+      display: "inline-block",
+      animation: "pulse 1.4s infinite"
+    }
+  }), "Registrando \xB7 ", /*#__PURE__*/React.createElement("b", {
+    style: {
+      color: "#6d28d9"
+    }
+  }, cliente), " \xB7 ", resp)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "inline-flex",
+      gap: "2px",
+      background: "#fff",
+      padding: "3px",
+      borderRadius: "9px",
+      border: "1.5px solid #ede9fe",
+      marginBottom: "20px"
+    }
+  }, [["log", "📋 Registro"], ["tabla", "📊 Por cliente y mes"]].map(function (_ref2) {
+    var _ref3 = _slicedToArray(_ref2, 2),
+      t = _ref3[0],
+      lbl = _ref3[1];
+    return /*#__PURE__*/React.createElement("button", {
+      key: t,
+      style: {
+        padding: "6px 18px",
+        borderRadius: "6px",
+        border: "none",
+        background: tab === t ? "#ede9fe" : "transparent",
+        color: tab === t ? "#6d28d9" : "#9a7cc5",
+        fontSize: "13px",
+        fontFamily: "inherit",
+        fontWeight: tab === t ? 600 : 400,
+        cursor: "pointer"
+      },
+      onClick: function onClick() {
+        return setTab(t);
+      }
+    }, lbl);
+  })), tab === "log" && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "#fff",
+      border: "1.5px solid #ede9fe",
+      borderRadius: "12px",
+      padding: "16px 18px",
+      marginBottom: "16px",
+      display: "flex",
+      gap: "16px",
+      flexWrap: "wrap",
+      alignItems: "flex-end"
+    }
+  }, [["Mes", fMes, setFMes, ["Todos"].concat(_toConsumableArray(allLogMonths)), function (k) {
+    return k === "Todos" ? "Todos" : logMonthLabel(k);
+  }], ["Cliente", fCliente, setFCliente, ["Todos"].concat(_toConsumableArray(clientes)), function (v) {
+    return v;
+  }], ["Resp.", fResp, setFResp, ["Todos"].concat(_toConsumableArray(resps)), function (v) {
+    return v;
+  }], ["Estado", fStatus, setFStatus, ["Todos"].concat(STATUSES), function (v) {
+    return v;
+  }]].map(function (_ref4) {
+    var _ref5 = _slicedToArray(_ref4, 5),
+      label = _ref5[0],
+      val = _ref5[1],
+      setter = _ref5[2],
+      opts = _ref5[3],
+      fmt = _ref5[4];
+    return /*#__PURE__*/React.createElement("div", {
+      key: label
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "10px",
+        color: "#b8a8d0",
+        fontWeight: 600,
+        textTransform: "uppercase",
+        letterSpacing: ".1em",
+        marginBottom: "4px"
+      }
+    }, label), /*#__PURE__*/React.createElement("select", {
+      style: sel,
+      value: val,
+      onChange: function onChange(e) {
+        return setter(e.target.value);
+      }
+    }, opts.map(function (o) {
+      return /*#__PURE__*/React.createElement("option", {
+        key: o,
+        value: o
+      }, fmt(o));
+    })));
+  }), hasLogFilter && /*#__PURE__*/React.createElement("button", {
+    onClick: resetLogFilters,
+    style: {
+      background: "#f3f0fb",
+      color: "#9a7cc5",
+      border: "1.5px solid #ddd6fe",
+      borderRadius: "8px",
+      padding: "9px 14px",
+      fontSize: "12px",
+      fontFamily: "inherit",
+      cursor: "pointer",
+      alignSelf: "flex-end"
+    }
+  }, "\u2715 Limpiar")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "11px",
+      fontWeight: 600,
+      color: "#c4b5fd",
+      textTransform: "uppercase",
+      letterSpacing: ".1em",
+      marginBottom: "10px",
+      paddingBottom: "8px",
+      borderBottom: "1px solid #f0ebff",
+      display: "flex",
+      justifyContent: "space-between"
+    }
+  }, /*#__PURE__*/React.createElement("span", null, filtered.length, " entrada", filtered.length !== 1 ? "s" : ""), /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("b", {
+    style: {
+      color: "#6d28d9"
+    }
+  }, fmtHours(filtH)), " ", hasLogFilter ? "filtrado" : "total")), filtered.length === 0 ? /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center",
+      padding: "40px",
+      color: "#c4b5fd",
+      background: "#fff",
+      borderRadius: "12px",
+      border: "1.5px dashed #e4d9f8"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "28px",
+      marginBottom: "8px"
+    }
+  }, "\u23F1"), "No hay entradas con estos filtros.") : filtered.map(function (e) {
+    var s = SC[e.status] || SC.Pendiente;
+    return /*#__PURE__*/React.createElement("div", {
+      key: e.id,
+      className: "row",
+      style: {
+        display: "grid",
+        gridTemplateColumns: "1fr auto auto auto 64px 28px",
+        alignItems: "center",
+        gap: "8px",
+        padding: "11px 14px",
+        background: "#fff",
+        borderRadius: "9px",
+        marginBottom: "6px",
+        border: "1.5px solid #f0ebff",
+        transition: "border-color .15s"
+      }
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "13px",
+        color: "#1e1035",
+        lineHeight: 1.4
+      }
+    }, e.task), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "11px",
+        color: "#b8a8d0",
+        marginTop: "2px"
+      }
+    }, e.cliente, " \xB7 ", e.responsable, " \xB7 ", fmtDate(e.date), e.fromExcel && /*#__PURE__*/React.createElement("span", {
+      style: {
+        marginLeft: 6,
+        fontSize: "10px",
+        background: "#f0fdf4",
+        color: "#15803d",
+        border: "1px solid #bbf7d0",
+        padding: "1px 5px",
+        borderRadius: "4px"
+      }
+    }, "Excel"))), /*#__PURE__*/React.createElement("span", {
+      style: {
+        padding: "3px 8px",
+        borderRadius: "5px",
+        fontSize: "11px",
+        fontWeight: 600,
+        background: s.bg,
+        color: s.text,
+        border: "1px solid ".concat(s.border),
+        whiteSpace: "nowrap"
+      }
+    }, e.status), /*#__PURE__*/React.createElement("span", {
+      style: {
+        padding: "3px 8px",
+        borderRadius: "5px",
+        fontSize: "11px",
+        background: "#f3e8ff",
+        color: "#7c3aed",
+        border: "1px solid #e9d5ff",
+        whiteSpace: "nowrap"
+      }
+    }, e.responsable), /*#__PURE__*/React.createElement("span", {
+      style: {
+        padding: "3px 8px",
+        borderRadius: "5px",
+        fontSize: "11px",
+        background: "#eef2ff",
+        color: "#4338ca",
+        border: "1px solid #e0e7ff",
+        whiteSpace: "nowrap"
+      }
+    }, e.cliente), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: "monospace",
+        fontSize: "13px",
+        fontWeight: 700,
+        color: "#6d28d9",
+        textAlign: "right",
+        whiteSpace: "nowrap"
+      }
+    }, fmtHours(e.hours)), /*#__PURE__*/React.createElement("button", {
+      className: "del",
+      style: {
+        background: "none",
+        border: "none",
+        color: "#d8c8f0",
+        cursor: "pointer",
+        fontSize: "16px",
+        padding: "2px 4px",
+        borderRadius: "5px",
+        lineHeight: 1
+      },
+      onClick: function onClick() {
+        return del(e.id);
+      }
+    }, "\xD7"));
+  })), tab === "tabla" && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "#fff",
+      border: "1.5px solid #ede9fe",
+      borderRadius: "12px",
+      padding: "18px 20px",
+      marginBottom: "20px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: "16px",
+      flexWrap: "wrap",
+      alignItems: "flex-end",
+      marginBottom: "18px"
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "10px",
+      color: "#b8a8d0",
+      fontWeight: 600,
+      textTransform: "uppercase",
+      letterSpacing: ".1em",
+      marginBottom: "4px"
+    }
+  }, "Cliente"), /*#__PURE__*/React.createElement("select", {
+    style: sel,
+    value: t2Cliente,
+    onChange: function onChange(e) {
+      setT2Cliente(e.target.value);
+      setT2Months([]);
+    }
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "Todos"
+  }, "Todos los clientes"), clientes.map(function (c) {
+    return /*#__PURE__*/React.createElement("option", {
+      key: c
+    }, c);
+  }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "10px",
+      color: "#b8a8d0",
+      fontWeight: 600,
+      textTransform: "uppercase",
+      letterSpacing: ".1em",
+      marginBottom: "4px"
+    }
+  }, "A\xF1o"), /*#__PURE__*/React.createElement("select", {
+    style: sel,
+    value: t2Year,
+    onChange: function onChange(e) {
+      setT2Year(e.target.value);
+      setT2Months([]);
+    }
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "Todos"
+  }, "Todo el a\xF1o"), allYears.map(function (y) {
+    return /*#__PURE__*/React.createElement("option", {
+      key: y
+    }, y);
+  }))), t2HasFilter && /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      setT2Cliente("Todos");
+      setT2Year("Todos");
+      setT2Months([]);
+    },
+    style: {
+      background: "#f3f0fb",
+      color: "#9a7cc5",
+      border: "1.5px solid #ddd6fe",
+      borderRadius: "8px",
+      padding: "9px 14px",
+      fontSize: "12px",
+      fontFamily: "inherit",
+      cursor: "pointer",
+      alignSelf: "flex-end"
+    }
+  }, "\u2715 Limpiar")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "10px",
+      color: "#b8a8d0",
+      fontWeight: 600,
+      textTransform: "uppercase",
+      letterSpacing: ".1em",
+      marginBottom: "8px"
+    }
+  }, "Meses \u2014 selecciona uno o varios, o deja en blanco para ver todo el a\xF1o"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      flexWrap: "wrap",
+      gap: "6px"
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "mbtn",
+    onClick: function onClick() {
+      return setT2Months([]);
+    },
+    style: {
+      padding: "6px 14px",
+      borderRadius: "20px",
+      border: "1.5px solid",
+      fontSize: "12px",
+      fontFamily: "inherit",
+      cursor: "pointer",
+      transition: "all .15s",
+      fontWeight: isAllMonths() ? 700 : 400,
+      background: isAllMonths() ? "#6d28d9" : "#fff",
+      borderColor: isAllMonths() ? "#6d28d9" : "#ddd6fe",
+      color: isAllMonths() ? "#fff" : "#9a7cc5"
+    }
+  }, "Todo el a\xF1o"), availableMonths.map(function (m) {
+    var active = t2Months.includes(m);
+    return /*#__PURE__*/React.createElement("button", {
+      key: m,
+      className: "mbtn",
+      onClick: function onClick() {
+        return toggleMonth(m);
+      },
+      style: {
+        padding: "6px 14px",
+        borderRadius: "20px",
+        border: "1.5px solid",
+        fontSize: "12px",
+        fontFamily: "inherit",
+        cursor: "pointer",
+        transition: "all .15s",
+        fontWeight: active ? 700 : 400,
+        background: active ? "#ede9fe" : "#fff",
+        borderColor: active ? "#a78bfa" : "#ddd6fe",
+        color: active ? "#6d28d9" : "#6b5a8e"
+      }
+    }, MONTH_SHORT[m]);
+  })))), t2List.length === 0 ? /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center",
+      padding: "48px 24px",
+      color: "#c4b5fd",
+      background: "#fff",
+      borderRadius: "12px",
+      border: "1.5px dashed #e4d9f8"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "28px",
+      marginBottom: "10px"
+    }
+  }, "\uD83D\uDCED"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "14px"
+    }
+  }, "No hay entradas para esta selecci\xF3n.")) : /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: "12px",
+      paddingBottom: "10px",
+      borderBottom: "1px solid #f0ebff"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: "6px",
+      flexWrap: "wrap"
+    }
+  }, t2Cliente !== "Todos" && /*#__PURE__*/React.createElement("span", {
+    style: {
+      background: "#eef2ff",
+      color: "#4338ca",
+      border: "1px solid #e0e7ff",
+      borderRadius: "6px",
+      padding: "3px 10px",
+      fontSize: "12px",
+      fontWeight: 600
+    }
+  }, t2Cliente), t2Year !== "Todos" && /*#__PURE__*/React.createElement("span", {
+    style: {
+      background: "#f3e8ff",
+      color: "#7c3aed",
+      border: "1px solid #e9d5ff",
+      borderRadius: "6px",
+      padding: "3px 10px",
+      fontSize: "12px",
+      fontWeight: 600
+    }
+  }, t2Year), t2Months.map(function (m) {
+    return /*#__PURE__*/React.createElement("span", {
+      key: m,
+      style: {
+        background: "#ede9fe",
+        color: "#6d28d9",
+        border: "1px solid #ddd6fe",
+        borderRadius: "6px",
+        padding: "3px 10px",
+        fontSize: "12px",
+        fontWeight: 600
+      }
+    }, MONTH_NAMES[m]);
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "13px",
+      color: "#9a7cc5",
+      whiteSpace: "nowrap"
+    }
+  }, t2List.length, " entradas \xB7\xA0", /*#__PURE__*/React.createElement("b", {
+    style: {
+      color: "#6d28d9",
+      fontFamily: "monospace",
+      fontSize: "14px"
+    }
+  }, fmtHours(t2Total)))), t2Cliente === "Todos" && t2ByCli.length > 1 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fill,minmax(150px,1fr))",
+      gap: "8px",
+      marginBottom: "18px"
+    }
+  }, t2ByCli.map(function (item) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: item.name,
+      style: {
+        background: "#fff",
+        border: "1.5px solid #ede9fe",
+        borderRadius: "9px",
+        padding: "12px 14px"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "10px",
+        color: "#c4b5fd",
+        textTransform: "uppercase",
+        letterSpacing: ".1em",
+        marginBottom: "4px"
+      }
+    }, item.n, " tarea", item.n !== 1 ? "s" : ""), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "17px",
+        fontWeight: 700,
+        color: "#6d28d9"
+      }
+    }, fmtHours(item.h)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "12px",
+        color: "#6b5a8e",
+        marginTop: "2px"
+      }
+    }, item.name));
+  })), t2List.map(function (e) {
+    var s = SC[e.status] || SC.Pendiente;
+    return /*#__PURE__*/React.createElement("div", {
+      key: e.id,
+      className: "row",
+      style: {
+        display: "grid",
+        gridTemplateColumns: "1fr auto auto auto 64px",
+        alignItems: "center",
+        gap: "8px",
+        padding: "11px 14px",
+        background: "#fff",
+        borderRadius: "9px",
+        marginBottom: "6px",
+        border: "1.5px solid #f0ebff",
+        transition: "border-color .15s"
+      }
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "13px",
+        color: "#1e1035",
+        lineHeight: 1.4
+      }
+    }, e.task), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "11px",
+        color: "#b8a8d0",
+        marginTop: "2px"
+      }
+    }, e.cliente, " \xB7 ", e.responsable, " \xB7 ", fmtDate(e.date), e.fromExcel && /*#__PURE__*/React.createElement("span", {
+      style: {
+        marginLeft: 6,
+        fontSize: "10px",
+        background: "#f0fdf4",
+        color: "#15803d",
+        border: "1px solid #bbf7d0",
+        padding: "1px 5px",
+        borderRadius: "4px"
+      }
+    }, "Excel"))), /*#__PURE__*/React.createElement("span", {
+      style: {
+        padding: "3px 8px",
+        borderRadius: "5px",
+        fontSize: "11px",
+        fontWeight: 600,
+        background: s.bg,
+        color: s.text,
+        border: "1px solid ".concat(s.border),
+        whiteSpace: "nowrap"
+      }
+    }, e.status), /*#__PURE__*/React.createElement("span", {
+      style: {
+        padding: "3px 8px",
+        borderRadius: "5px",
+        fontSize: "11px",
+        background: "#f3e8ff",
+        color: "#7c3aed",
+        border: "1px solid #e9d5ff",
+        whiteSpace: "nowrap"
+      }
+    }, e.responsable), /*#__PURE__*/React.createElement("span", {
+      style: {
+        padding: "3px 8px",
+        borderRadius: "5px",
+        fontSize: "11px",
+        background: "#eef2ff",
+        color: "#4338ca",
+        border: "1px solid #e0e7ff",
+        whiteSpace: "nowrap"
+      }
+    }, e.cliente), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: "monospace",
+        fontSize: "13px",
+        fontWeight: 700,
+        color: "#6d28d9",
+        textAlign: "right",
+        whiteSpace: "nowrap"
+      }
+    }, fmtHours(e.hours)));
+  })))));
+}
+var root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(/*#__PURE__*/React.createElement(App, null));
 
-    const root = ReactDOM.createRoot(document.getElementById("root"));
-    root.render(<App />);
   </script>
 </body>
 </html>
