@@ -20,24 +20,17 @@
 </head>
 <body>
   <div id="root"></div>
-
-  <!-- 1. React -->
+  <!-- Solo React — Firebase via REST, sin SDK externo -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-
-  <!-- 2. Firebase 9 compat -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
-  <!-- 3. Firebase init -->
   <script>
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i.return) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
-function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i.return) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
@@ -823,45 +816,101 @@ function initials(name) {
   return name.slice(0, 2).toUpperCase();
 }
 
-// ── Firebase helpers ──
-var db = null;
-function initDB() {
-  if (!db) db = firebase.firestore();
-  return db;
+// ── Firebase REST API (sin SDK, sin problemas de carga) ──
+var FB_PROJECT = "timetracker-ltn";
+var FB_KEY = "AIzaSyBiMJCGP9L5x3qBTbD2EUZAyMEOS7v8uz8";
+var FB_URL = "https://firestore.googleapis.com/v1/projects/" + FB_PROJECT + "/databases/(default)/documents/timetracker/main?key=" + FB_KEY;
+function fbRead() {
+  return _fbRead.apply(this, arguments);
 }
-function getDocRef() {
-  return initDB().collection("timetracker").doc("main");
-}
-function saveToFirebase(_x) {
-  return _saveToFirebase.apply(this, arguments);
-} // ── Login ──
-function _saveToFirebase() {
-  _saveToFirebase = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(data) {
-    var _t;
-    return _regenerator().w(function (_context) {
-      while (1) switch (_context.p = _context.n) {
+function _fbRead() {
+  _fbRead = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
+    var _d$fields$entries, _d$fields$clientes, _d$fields$resps, r, d, _t;
+    return _regenerator().w(function (_context2) {
+      while (1) switch (_context2.p = _context2.n) {
         case 0:
-          _context.p = 0;
-          _context.n = 1;
-          return getDocRef().set({
-            entries: data.entries,
-            clientes: data.clientes,
-            resps: data.resps,
-            updatedAt: new Date().toISOString()
+          _context2.p = 0;
+          _context2.n = 1;
+          return fetch(FB_URL);
+        case 1:
+          r = _context2.v;
+          if (r.ok) {
+            _context2.n = 2;
+            break;
+          }
+          return _context2.a(2, null);
+        case 2:
+          _context2.n = 3;
+          return r.json();
+        case 3:
+          d = _context2.v;
+          if (d.fields) {
+            _context2.n = 4;
+            break;
+          }
+          return _context2.a(2, null);
+        case 4:
+          return _context2.a(2, {
+            entries: JSON.parse(((_d$fields$entries = d.fields.entries) === null || _d$fields$entries === void 0 ? void 0 : _d$fields$entries.stringValue) || "[]"),
+            clientes: JSON.parse(((_d$fields$clientes = d.fields.clientes) === null || _d$fields$clientes === void 0 ? void 0 : _d$fields$clientes.stringValue) || "[]"),
+            resps: JSON.parse(((_d$fields$resps = d.fields.resps) === null || _d$fields$resps === void 0 ? void 0 : _d$fields$resps.stringValue) || "[]")
+          });
+        case 5:
+          _context2.p = 5;
+          _t = _context2.v;
+          console.error("fbRead error:", _t);
+          return _context2.a(2, null);
+      }
+    }, _callee2, null, [[0, 5]]);
+  }));
+  return _fbRead.apply(this, arguments);
+}
+function fbWrite(_x) {
+  return _fbWrite.apply(this, arguments);
+} // ── Login ──
+function _fbWrite() {
+  _fbWrite = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(data) {
+    var _t2;
+    return _regenerator().w(function (_context3) {
+      while (1) switch (_context3.p = _context3.n) {
+        case 0:
+          _context3.p = 0;
+          _context3.n = 1;
+          return fetch(FB_URL, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              fields: {
+                entries: {
+                  stringValue: JSON.stringify(data.entries)
+                },
+                clientes: {
+                  stringValue: JSON.stringify(data.clientes)
+                },
+                resps: {
+                  stringValue: JSON.stringify(data.resps)
+                },
+                updatedAt: {
+                  stringValue: new Date().toISOString()
+                }
+              }
+            })
           });
         case 1:
-          _context.n = 3;
+          _context3.n = 3;
           break;
         case 2:
-          _context.p = 2;
-          _t = _context.v;
-          console.error("Firebase write error:", _t);
+          _context3.p = 2;
+          _t2 = _context3.v;
+          console.error("fbWrite error:", _t2);
         case 3:
-          return _context.a(2);
+          return _context3.a(2);
       }
-    }, _callee, null, [[0, 2]]);
+    }, _callee3, null, [[0, 2]]);
   }));
-  return _saveToFirebase.apply(this, arguments);
+  return _fbWrite.apply(this, arguments);
 }
 function LoginScreen(_ref) {
   var onLogin = _ref.onLogin;
@@ -1829,37 +1878,104 @@ function App() {
     setDeleteConfirm = _useState76[1];
   var timerRef = useRef(null);
   var taskRef = useRef(null);
-  var skipNextWrite = useRef(false); // avoid write loop on incoming snapshot
+  var skipNextWrite = useRef(false);
+  var pollRef = useRef(null);
+  var lastUpdatedAt = useRef(null);
 
-  // Subscribe to Firestore on mount
+  // Initial load + polling for changes from other users (every 8s)
   useEffect(function () {
-    var unsub = getDocRef().onSnapshot(function (snap) {
-      if (snap.exists) {
-        var d = snap.data();
-        skipNextWrite.current = true;
-        if (d.entries) setEntries(d.entries);
-        if (d.clientes) setClientes(d.clientes);
-        if (d.resps) setResps(d.resps);
-      } else {
-        // First time — seed with Excel data
-        saveToFirebase({
-          entries: EXCEL_DATA,
-          clientes: DEFAULT_CLIENTES,
-          resps: DEFAULT_RESPONSABLES
-        });
-      }
-      setFbReady(true);
-    }, function (err) {
-      console.error("Firestore error:", err);
-      setEntries(EXCEL_DATA);
-      setFbReady(true);
-    });
+    function load(_x2) {
+      return _load.apply(this, arguments);
+    }
+    function _load() {
+      _load = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(isFirst) {
+        var d, _raw$fields, raw, ts, ls, s;
+        return _regenerator().w(function (_context) {
+          while (1) switch (_context.n) {
+            case 0:
+              _context.n = 1;
+              return fbRead();
+            case 1:
+              d = _context.v;
+              if (!d) {
+                _context.n = 8;
+                break;
+              }
+              if (!isFirst) {
+                _context.n = 5;
+                break;
+              }
+              if (!(d.entries && d.entries.length > 0)) {
+                _context.n = 2;
+                break;
+              }
+              setEntries(d.entries);
+              if (d.clientes) setClientes(d.clientes);
+              if (d.resps) setResps(d.resps);
+              _context.n = 4;
+              break;
+            case 2:
+              _context.n = 3;
+              return fbWrite({
+                entries: EXCEL_DATA,
+                clientes: DEFAULT_CLIENTES,
+                resps: DEFAULT_RESPONSABLES
+              });
+            case 3:
+              setEntries(EXCEL_DATA);
+            case 4:
+              setFbReady(true);
+              _context.n = 7;
+              break;
+            case 5:
+              _context.n = 6;
+              return fetch(FB_URL + "&fields=fields.updatedAt").then(function (r) {
+                return r.json();
+              }).catch(function () {
+                return null;
+              });
+            case 6:
+              raw = _context.v;
+              ts = raw === null || raw === void 0 || (_raw$fields = raw.fields) === null || _raw$fields === void 0 || (_raw$fields = _raw$fields.updatedAt) === null || _raw$fields === void 0 ? void 0 : _raw$fields.stringValue;
+              if (ts && ts !== lastUpdatedAt.current) {
+                lastUpdatedAt.current = ts;
+                skipNextWrite.current = true;
+                if (d.entries) setEntries(d.entries);
+                if (d.clientes) setClientes(d.clientes);
+                if (d.resps) setResps(d.resps);
+              }
+            case 7:
+              _context.n = 9;
+              break;
+            case 8:
+              if (isFirst) {
+                // Firebase not reachable — use localStorage fallback
+                ls = localStorage.getItem("ltn-tt-fallback");
+                if (ls) {
+                  s = JSON.parse(ls);
+                  setEntries(s.entries || EXCEL_DATA);
+                  if (s.clientes) setClientes(s.clientes);
+                  if (s.resps) setResps(s.resps);
+                } else setEntries(EXCEL_DATA);
+                setFbReady(true);
+              }
+            case 9:
+              return _context.a(2);
+          }
+        }, _callee);
+      }));
+      return _load.apply(this, arguments);
+    }
+    load(true);
+    pollRef.current = setInterval(function () {
+      return load(false);
+    }, 8000);
     return function () {
-      return unsub();
+      return clearInterval(pollRef.current);
     };
   }, []);
 
-  // Write to Firebase whenever data changes (skip when change came from snapshot)
+  // Write to Firebase whenever data changes
   var isFirstWrite = useRef(true);
   useEffect(function () {
     if (!fbReady) return;
@@ -1871,11 +1987,21 @@ function App() {
       skipNextWrite.current = false;
       return;
     }
-    saveToFirebase({
+    fbWrite({
       entries: entries,
       clientes: clientes,
       resps: resps
+    }).then(function () {
+      lastUpdatedAt.current = new Date().toISOString();
     });
+    // Also save to localStorage as fallback
+    try {
+      localStorage.setItem("ltn-tt-fallback", JSON.stringify({
+        entries: entries,
+        clientes: clientes,
+        resps: resps
+      }));
+    } catch (e) {}
   }, [entries, clientes, resps, fbReady]);
 
   // Timer tick
@@ -3197,10 +3323,7 @@ function App() {
     });
   })))));
 }
-window.addEventListener("load", function() {
-  var root = ReactDOM.createRoot(document.getElementById("root"));
-  root.render(React.createElement(App));
-});
+window.addEventListener("load",function(){var root=ReactDOM.createRoot(document.getElementById("root"));root.render(React.createElement(App));});
   </script>
 </body>
 </html>
