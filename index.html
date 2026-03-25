@@ -1,29 +1,51 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Time Tracker · Lidera tu Negocio</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #f3f0fb; }
-    select option { background: #fff; color: #1e1035; }
-    .del:hover { color: #b91c1c !important; background: #fee2e2 !important; }
-    .row:hover { border-color: #c4b5fd !important; }
-    .pbtn:hover { opacity: .85; }
-    .mbtn:hover { background: #ede9fe !important; border-color: #a78bfa !important; color: #6d28d9 !important; }
-    @keyframes pulse   { 0%,100%{opacity:1} 50%{opacity:.3} }
-    @keyframes fadein  { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:none} }
-    @keyframes shake   { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-5px)} 40%,80%{transform:translateX(5px)} }
-    .shake { animation: shake .35s ease; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#f3f0fb}
+    select option{background:#fff;color:#1e1035}
+    .del:hover{color:#b91c1c!important;background:#fee2e2!important}
+    .row:hover{border-color:#c4b5fd!important}
+    .pbtn:hover{opacity:.85}
+    .mbtn:hover{background:#ede9fe!important;border-color:#a78bfa!important;color:#6d28d9!important}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+    @keyframes fadein{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+    @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+    .shake{animation:shake .35s ease}
   </style>
 </head>
 <body>
   <div id="root"></div>
+
+  <!-- 1. React -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+
+  <!-- 2. Firebase 9 compat -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <!-- 3. Firebase init -->
+  <script>
+    firebase.initializeApp({
+      apiKey: "AIzaSyBiMJCGP9L5x3qBTbD2EUZAyMEOS7v8uz8",
+      authDomain: "timetracker-ltn.firebaseapp.com",
+      projectId: "timetracker-ltn",
+      storageBucket: "timetracker-ltn.firebasestorage.app",
+      messagingSenderId: "54436069257",
+      appId: "1:54436069257:web:585d633e8917ae05eb2b58"
+    });
+  </script>
+
+  <!-- 4. App (React monta al evento load, cuando todo está listo) -->
   <script>
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i.return) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
@@ -39,15 +61,43 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 var _React = React,
   useState = _React.useState,
   useEffect = _React.useEffect,
   useRef = _React.useRef;
 var DEFAULT_CLIENTES = ["Medea", "Maraver", "Kawi", "Academia Premium", "Farmacia Curiel", "Federopticos", "Beatriz Zaragoza", "Aflamas", "Recoambiente", "Otro"];
 var DEFAULT_RESPONSABLES = ["Carli", "Juli", "Mati", "Ele"];
-var STATUSES = ["Realizado", "Proceso", "Pendiente", "Pausado"];
+var STATUSES = ["Pendiente", "Proceso", "Realizado", "Pausado"];
 var MONTH_NAMES = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 var MONTH_SHORT = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+var USER_COLORS = {
+  Carli: {
+    bg: "#fce7f3",
+    text: "#be185d",
+    border: "#fbcfe8",
+    avatar: "#ec4899"
+  },
+  Juli: {
+    bg: "#ede9fe",
+    text: "#6d28d9",
+    border: "#ddd6fe",
+    avatar: "#7c3aed"
+  },
+  Mati: {
+    bg: "#dcfce7",
+    text: "#15803d",
+    border: "#bbf7d0",
+    avatar: "#16a34a"
+  },
+  Ele: {
+    bg: "#fef9c3",
+    text: "#a16207",
+    border: "#fde68a",
+    avatar: "#d97706"
+  }
+};
 var SC = {
   Realizado: {
     bg: "#dcfce7",
@@ -162,7 +212,7 @@ var EXCEL_DATA = [{
   fromExcel: true
 }, {
   id: 1011,
-  task: "Seguimiento informe campaña ritual Hidra Medea — Rosa y Montse",
+  task: "Seguimiento informe campaña ritual Hidra Medea",
   cliente: "Medea",
   responsable: "Juli",
   status: "Realizado",
@@ -171,7 +221,7 @@ var EXCEL_DATA = [{
   fromExcel: true
 }, {
   id: 1012,
-  task: "Insistir con respuesta Academia Premium. Lidia necesita más tiempo.",
+  task: "Insistir con respuesta Academia Premium.",
   cliente: "Academia Premium",
   responsable: "Juli",
   status: "Realizado",
@@ -216,7 +266,7 @@ var EXCEL_DATA = [{
   fromExcel: true
 }, {
   id: 1017,
-  task: "Propuestas de mejora perfil LinkedIn Manuel. Envío a Carli y a Manuel.",
+  task: "Propuestas de mejora perfil LinkedIn Manuel.",
   cliente: "Maraver",
   responsable: "Juli",
   status: "Realizado",
@@ -279,7 +329,7 @@ var EXCEL_DATA = [{
   fromExcel: true
 }, {
   id: 1024,
-  task: "Seguimiento aprobación landing page servicio de novias. Aprobada 3/03.",
+  task: "Seguimiento aprobación landing page servicio de novias.",
   cliente: "Medea",
   responsable: "Juli",
   status: "Realizado",
@@ -288,7 +338,7 @@ var EXCEL_DATA = [{
   fromExcel: true
 }, {
   id: 1025,
-  task: "Seguimiento aprobación Dossier SPD. Enviado a aprobación.",
+  task: "Seguimiento aprobación Dossier SPD.",
   cliente: "Farmacia Curiel",
   responsable: "Juli",
   status: "Realizado",
@@ -342,7 +392,7 @@ var EXCEL_DATA = [{
   fromExcel: true
 }, {
   id: 1031,
-  task: "Seguimiento edición video SPD vertical. Esperando escenas faltantes.",
+  task: "Seguimiento edición video SPD vertical.",
   cliente: "Farmacia Curiel",
   responsable: "Juli",
   status: "Realizado",
@@ -360,7 +410,7 @@ var EXCEL_DATA = [{
   fromExcel: true
 }, {
   id: 1033,
-  task: "Consultar feedback cambio nombre Club Diabéticos. Le gusta la idea.",
+  task: "Consultar feedback cambio nombre Club Diabéticos.",
   cliente: "Farmacia Curiel",
   responsable: "Juli",
   status: "Proceso",
@@ -396,7 +446,7 @@ var EXCEL_DATA = [{
   fromExcel: true
 }, {
   id: 1037,
-  task: "Adaptaciones carrusel ADS para pantalla. Enviado a aprobación.",
+  task: "Adaptaciones carrusel ADS para pantalla.",
   cliente: "Farmacia Curiel",
   responsable: "Juli",
   status: "Realizado",
@@ -432,7 +482,7 @@ var EXCEL_DATA = [{
   fromExcel: true
 }, {
   id: 1041,
-  task: "Revisar materiales campaña Meta SPD con Paola. Nueva creatividad decidida.",
+  task: "Revisar materiales campaña Meta SPD con Paola.",
   cliente: "Farmacia Curiel",
   responsable: "Juli",
   status: "Realizado",
@@ -468,7 +518,7 @@ var EXCEL_DATA = [{
   fromExcel: true
 }, {
   id: 1045,
-  task: "Implementar campaña formulario instantáneo audífonos. Ya genera leads.",
+  task: "Implementar campaña formulario instantáneo audífonos.",
   cliente: "Federopticos",
   responsable: "Juli",
   status: "Realizado",
@@ -477,7 +527,7 @@ var EXCEL_DATA = [{
   fromExcel: true
 }, {
   id: 1046,
-  task: "Preguntar qué pondremos en perfil LinkedIn de Andrea/Recoambiente",
+  task: "Preguntar qué pondremos en perfil LinkedIn de Recoambiente",
   cliente: "Recoambiente",
   responsable: "Carli",
   status: "Pendiente",
@@ -504,7 +554,7 @@ var EXCEL_DATA = [{
   fromExcel: true
 }, {
   id: 1049,
-  task: "Mirar a diario leads que entran por WhatsApp y meterlos en pipeline",
+  task: "Mirar leads que entran por WhatsApp y meterlos en pipeline",
   cliente: "Medea",
   responsable: "Juli",
   status: "Realizado",
@@ -531,7 +581,7 @@ var EXCEL_DATA = [{
   fromExcel: true
 }, {
   id: 1052,
-  task: "Asignar a Matías modificación pipeline novias — etapas Mensaje 8 al 11",
+  task: "Asignar a Matías modificación pipeline novias",
   cliente: "Beatriz Zaragoza",
   responsable: "Juli",
   status: "Realizado",
@@ -648,7 +698,7 @@ var EXCEL_DATA = [{
   fromExcel: true
 }, {
   id: 1065,
-  task: "Enviarle resumen reunión de Rosa, Carli y Shey. Fecha 18-3.",
+  task: "Enviarle resumen reunión de Rosa, Carli y Shey.",
   cliente: "Medea",
   responsable: "Juli",
   status: "Realizado",
@@ -675,7 +725,7 @@ var EXCEL_DATA = [{
   fromExcel: true
 }, {
   id: 1068,
-  task: "Seguimiento locuciones corregidas campaña Menú Maridaje. Aprobado.",
+  task: "Seguimiento locuciones corregidas campaña Menú Maridaje.",
   cliente: "Aflamas",
   responsable: "Juli",
   status: "Realizado",
@@ -693,7 +743,7 @@ var EXCEL_DATA = [{
   fromExcel: true
 }, {
   id: 1070,
-  task: "Pasar microinfluencers para campaña gafas de sol y cambio de cristales",
+  task: "Pasar microinfluencers para campaña gafas de sol",
   cliente: "Federopticos",
   responsable: "Carli",
   status: "Pendiente",
@@ -737,20 +787,6 @@ var EXCEL_DATA = [{
   date: "2026-03-24T00:00:00",
   fromExcel: true
 }];
-var STORAGE_KEY = "ltn-tt-v7";
-function lsGet() {
-  try {
-    var v = localStorage.getItem(STORAGE_KEY);
-    return v ? JSON.parse(v) : null;
-  } catch (e) {
-    return null;
-  }
-}
-function lsSet(data) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  } catch (e) {}
-}
 function getYear(iso) {
   if (!iso) return null;
   return new Date(iso).getFullYear();
@@ -785,13 +821,204 @@ function fmtDate(iso) {
     return "—";
   }
 }
-function AddableSelect(_ref) {
-  var value = _ref.value,
-    _onChange = _ref.onChange,
-    options = _ref.options,
-    onAdd = _ref.onAdd,
-    placeholder = _ref.placeholder,
-    disabled = _ref.disabled;
+function hoursFromString(s) {
+  if (!s || !s.trim()) return 0;
+  var t = s.trim().toLowerCase();
+  var mM = t.match(/^(\d+(?:[.,]\d+)?)\s*m/),
+    hM = t.match(/^(\d+(?:[.,]\d+)?)\s*h/);
+  if (mM) return parseFloat(mM[1].replace(",", ".")) / 60;
+  if (hM) return parseFloat(hM[1].replace(",", "."));
+  var n = parseFloat(t.replace(",", "."));
+  return isNaN(n) ? 0 : n;
+}
+function initials(name) {
+  return name.slice(0, 2).toUpperCase();
+}
+
+// ── Firebase helpers ──
+var db = null;
+function initDB() {
+  if (!db) db = firebase.firestore();
+  return db;
+}
+function getDocRef() {
+  return initDB().collection("timetracker").doc("main");
+}
+function saveToFirebase(_x) {
+  return _saveToFirebase.apply(this, arguments);
+} // ── Login ──
+function _saveToFirebase() {
+  _saveToFirebase = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(data) {
+    var _t;
+    return _regenerator().w(function (_context) {
+      while (1) switch (_context.p = _context.n) {
+        case 0:
+          _context.p = 0;
+          _context.n = 1;
+          return getDocRef().set({
+            entries: data.entries,
+            clientes: data.clientes,
+            resps: data.resps,
+            updatedAt: new Date().toISOString()
+          });
+        case 1:
+          _context.n = 3;
+          break;
+        case 2:
+          _context.p = 2;
+          _t = _context.v;
+          console.error("Firebase write error:", _t);
+        case 3:
+          return _context.a(2);
+      }
+    }, _callee, null, [[0, 2]]);
+  }));
+  return _saveToFirebase.apply(this, arguments);
+}
+function LoginScreen(_ref) {
+  var onLogin = _ref.onLogin;
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      minHeight: "100vh",
+      background: "#f3f0fb",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "24px",
+      fontFamily: "system-ui,sans-serif"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: "32px",
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: "10px",
+      marginBottom: "12px"
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "28",
+    height: "28",
+    viewBox: "0 0 20 20",
+    fill: "none"
+  }, /*#__PURE__*/React.createElement("circle", {
+    cx: "10",
+    cy: "10",
+    r: "8",
+    stroke: "#7c3aed",
+    strokeWidth: "1.5"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M10 6v4l2.5 2.5",
+    stroke: "#7c3aed",
+    strokeWidth: "1.5",
+    strokeLinecap: "round"
+  })), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: "13px",
+      fontWeight: 700,
+      letterSpacing: ".15em",
+      textTransform: "uppercase",
+      color: "#7c3aed"
+    }
+  }, "Lidera tu Negocio")), /*#__PURE__*/React.createElement("h1", {
+    style: {
+      fontSize: "26px",
+      fontWeight: 800,
+      color: "#1e1035",
+      marginBottom: "8px",
+      letterSpacing: "-.02em"
+    }
+  }, "Time Tracker"), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontSize: "14px",
+      color: "#9a7cc5"
+    }
+  }, "\xBFQui\xE9n eres? Selecciona tu perfil para entrar.")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: "14px",
+      width: "100%",
+      maxWidth: "380px"
+    }
+  }, DEFAULT_RESPONSABLES.map(function (name) {
+    var c = USER_COLORS[name] || {
+      bg: "#ede9fe",
+      text: "#6d28d9",
+      border: "#ddd6fe",
+      avatar: "#7c3aed"
+    };
+    return /*#__PURE__*/React.createElement("button", {
+      key: name,
+      onClick: function onClick() {
+        return onLogin(name);
+      },
+      style: {
+        background: "#fff",
+        border: "2px solid ".concat(c.border),
+        borderRadius: "16px",
+        padding: "24px 20px",
+        cursor: "pointer",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "12px",
+        transition: "all .15s",
+        boxShadow: "0 2px 8px rgba(109,40,217,.06)"
+      },
+      onMouseEnter: function onMouseEnter(ev) {
+        ev.currentTarget.style.borderColor = c.avatar;
+        ev.currentTarget.style.transform = "translateY(-2px)";
+        ev.currentTarget.style.boxShadow = "0 6px 20px rgba(109,40,217,.12)";
+      },
+      onMouseLeave: function onMouseLeave(ev) {
+        ev.currentTarget.style.borderColor = c.border;
+        ev.currentTarget.style.transform = "none";
+        ev.currentTarget.style.boxShadow = "0 2px 8px rgba(109,40,217,.06)";
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        width: 56,
+        height: 56,
+        borderRadius: "50%",
+        background: c.bg,
+        border: "2px solid ".concat(c.border),
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: "18px",
+        fontWeight: 800,
+        color: c.avatar
+      }
+    }, initials(name)), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: "15px",
+        fontWeight: 700,
+        color: "#1e1035"
+      }
+    }, name));
+  })), /*#__PURE__*/React.createElement("p", {
+    style: {
+      marginTop: "28px",
+      fontSize: "12px",
+      color: "#c4b5fd"
+    }
+  }, "Datos compartidos en tiempo real \xB7 Firebase"));
+}
+
+// ── AddableSelect ──
+function AddableSelect(_ref2) {
+  var value = _ref2.value,
+    _onChange = _ref2.onChange,
+    options = _ref2.options,
+    onAdd = _ref2.onAdd,
+    placeholder = _ref2.placeholder,
+    disabled = _ref2.disabled;
   var _useState = useState(false),
     _useState2 = _slicedToArray(_useState, 2),
     adding = _useState2[0],
@@ -800,9 +1027,9 @@ function AddableSelect(_ref) {
     _useState4 = _slicedToArray(_useState3, 2),
     newVal = _useState4[0],
     setNewVal = _useState4[1];
-  var inputRef = useRef(null);
+  var ref = useRef(null);
   useEffect(function () {
-    if (adding && inputRef.current) inputRef.current.focus();
+    if (adding && ref.current) ref.current.focus();
   }, [adding]);
   function confirm() {
     var v = newVal.trim();
@@ -813,7 +1040,7 @@ function AddableSelect(_ref) {
     setAdding(false);
     setNewVal("");
   }
-  var base = {
+  var b = {
     background: "#f8f5ff",
     border: "1.5px solid #ddd6fe",
     color: "#1e1035",
@@ -830,7 +1057,7 @@ function AddableSelect(_ref) {
       alignItems: "center"
     }
   }, /*#__PURE__*/React.createElement("input", {
-    ref: inputRef,
+    ref: ref,
     value: newVal,
     onChange: function onChange(e) {
       return setNewVal(e.target.value);
@@ -843,7 +1070,7 @@ function AddableSelect(_ref) {
       }
     },
     placeholder: placeholder || "Nombre…",
-    style: _objectSpread(_objectSpread({}, base), {}, {
+    style: _objectSpread(_objectSpread({}, b), {}, {
       cursor: "text",
       minWidth: "130px"
     })
@@ -887,7 +1114,7 @@ function AddableSelect(_ref) {
     onChange: function onChange(e) {
       return _onChange(e.target.value);
     },
-    style: _objectSpread(_objectSpread({}, base), {}, {
+    style: _objectSpread(_objectSpread({}, b), {}, {
       cursor: "pointer"
     }),
     disabled: disabled
@@ -899,7 +1126,6 @@ function AddableSelect(_ref) {
     onClick: function onClick() {
       return setAdding(true);
     },
-    title: "A\xF1adir nuevo",
     style: {
       background: "#ede9fe",
       color: "#6d28d9",
@@ -914,102 +1140,646 @@ function AddableSelect(_ref) {
     }
   }, "+"));
 }
-function App() {
-  var saved = lsGet();
-  var _useState5 = useState((saved === null || saved === void 0 ? void 0 : saved.entries) || EXCEL_DATA),
+
+// ── Edit Modal ──
+function EditModal(_ref3) {
+  var entry = _ref3.entry,
+    clientes = _ref3.clientes,
+    resps = _ref3.resps,
+    onSave = _ref3.onSave,
+    onClose = _ref3.onClose;
+  var _useState5 = useState(entry.task),
     _useState6 = _slicedToArray(_useState5, 2),
-    entries = _useState6[0],
-    setEntries = _useState6[1];
-  var _useState7 = useState((saved === null || saved === void 0 ? void 0 : saved.clientes) || DEFAULT_CLIENTES),
+    task = _useState6[0],
+    setTask = _useState6[1];
+  var _useState7 = useState(entry.cliente),
     _useState8 = _slicedToArray(_useState7, 2),
-    clientes = _useState8[0],
-    setClientes = _useState8[1];
-  var _useState9 = useState((saved === null || saved === void 0 ? void 0 : saved.resps) || DEFAULT_RESPONSABLES),
+    cliente = _useState8[0],
+    setCliente = _useState8[1];
+  var _useState9 = useState(entry.responsable),
     _useState0 = _slicedToArray(_useState9, 2),
-    resps = _useState0[0],
-    setResps = _useState0[1];
-  var _useState1 = useState(false),
+    resp = _useState0[0],
+    setResp = _useState0[1];
+  var _useState1 = useState(entry.status),
     _useState10 = _slicedToArray(_useState1, 2),
-    running = _useState10[0],
-    setRunning = _useState10[1];
-  var _useState11 = useState(0),
+    status = _useState10[0],
+    setStatus = _useState10[1];
+  var initH = entry.hours ? Math.round(entry.hours * 60) < 60 ? Math.round(entry.hours * 60) + "m" : Math.floor(entry.hours) + "h" + (entry.hours % 1 > 0.01 ? " " + Math.round(entry.hours % 1 * 60) + "m" : "") : "";
+  var _useState11 = useState(initH),
     _useState12 = _slicedToArray(_useState11, 2),
-    elapsed = _useState12[0],
-    setElapsed = _useState12[1];
-  var _useState13 = useState(null),
+    hoursStr = _useState12[0],
+    setHoursStr = _useState12[1];
+  var _useState13 = useState(false),
     _useState14 = _slicedToArray(_useState13, 2),
-    startTs = _useState14[0],
-    setStartTs = _useState14[1];
-  var _useState15 = useState(""),
-    _useState16 = _slicedToArray(_useState15, 2),
-    task = _useState16[0],
-    setTask = _useState16[1];
-  var _useState17 = useState(false),
-    _useState18 = _slicedToArray(_useState17, 2),
-    taskError = _useState18[0],
-    setTaskError = _useState18[1];
-  var _useState19 = useState(DEFAULT_CLIENTES[0]),
-    _useState20 = _slicedToArray(_useState19, 2),
-    cliente = _useState20[0],
-    setCliente = _useState20[1];
-  var _useState21 = useState(DEFAULT_RESPONSABLES[0]),
-    _useState22 = _slicedToArray(_useState21, 2),
-    resp = _useState22[0],
-    setResp = _useState22[1];
-  var _useState23 = useState("Realizado"),
-    _useState24 = _slicedToArray(_useState23, 2),
-    status = _useState24[0],
-    setStatus = _useState24[1];
-  var _useState25 = useState("Todos"),
-    _useState26 = _slicedToArray(_useState25, 2),
-    fMes = _useState26[0],
-    setFMes = _useState26[1];
-  var _useState27 = useState("Todos"),
-    _useState28 = _slicedToArray(_useState27, 2),
-    fCliente = _useState28[0],
-    setFCliente = _useState28[1];
-  var _useState29 = useState("Todos"),
-    _useState30 = _slicedToArray(_useState29, 2),
-    fResp = _useState30[0],
-    setFResp = _useState30[1];
-  var _useState31 = useState("Todos"),
-    _useState32 = _slicedToArray(_useState31, 2),
-    fStatus = _useState32[0],
-    setFStatus = _useState32[1];
-  var _useState33 = useState("Todos"),
-    _useState34 = _slicedToArray(_useState33, 2),
-    t2Cliente = _useState34[0],
-    setT2Cliente = _useState34[1];
-  var _useState35 = useState("Todos"),
-    _useState36 = _slicedToArray(_useState35, 2),
-    t2Year = _useState36[0],
-    setT2Year = _useState36[1];
-  var _useState37 = useState([]),
-    _useState38 = _slicedToArray(_useState37, 2),
-    t2Months = _useState38[0],
-    setT2Months = _useState38[1];
-  var _useState39 = useState("log"),
-    _useState40 = _slicedToArray(_useState39, 2),
-    tab = _useState40[0],
-    setTab = _useState40[1];
-  var _useState41 = useState(""),
-    _useState42 = _slicedToArray(_useState41, 2),
-    toast = _useState42[0],
-    setToast = _useState42[1];
-  var timerRef = useRef(null);
-  var isFirst = useRef(true);
-  var taskRef = useRef(null);
-  useEffect(function () {
-    if (isFirst.current) {
-      isFirst.current = false;
+    taskErr = _useState14[0],
+    setTaskErr = _useState14[1];
+  var s2 = {
+    background: "#f8f5ff",
+    border: "1.5px solid #ddd6fe",
+    color: "#1e1035",
+    padding: "9px 12px",
+    borderRadius: "8px",
+    fontSize: "13px",
+    fontFamily: "inherit",
+    outline: "none",
+    cursor: "pointer"
+  };
+  function save() {
+    if (!task.trim()) {
+      setTaskErr(true);
       return;
     }
-    lsSet({
+    var h = hoursFromString(hoursStr);
+    onSave(_objectSpread(_objectSpread({}, entry), {}, {
+      task: task.trim(),
+      cliente: cliente,
+      responsable: resp,
+      status: status,
+      hours: h || entry.hours
+    }));
+  }
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "fixed",
+      inset: 0,
+      background: "rgba(30,16,53,0.45)",
+      zIndex: 200,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "20px"
+    },
+    onClick: function onClick(e) {
+      if (e.target === e.currentTarget) onClose();
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "#fff",
+      borderRadius: "16px",
+      padding: "28px",
+      width: "100%",
+      maxWidth: "520px",
+      boxShadow: "0 8px 40px rgba(109,40,217,.18)"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: "20px"
+    }
+  }, /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontSize: "16px",
+      fontWeight: 700,
+      color: "#1e1035"
+    }
+  }, "Editar entrada"), /*#__PURE__*/React.createElement("button", {
+    onClick: onClose,
+    style: {
+      background: "none",
+      border: "none",
+      fontSize: "22px",
+      cursor: "pointer",
+      color: "#9a7cc5",
+      lineHeight: 1
+    }
+  }, "\xD7")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "14px"
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "10px",
+      color: taskErr ? "#b91c1c" : "#b8a8d0",
+      fontWeight: 600,
+      textTransform: "uppercase",
+      letterSpacing: ".1em",
+      marginBottom: "4px"
+    }
+  }, "Descripci\xF3n ", taskErr && /*#__PURE__*/React.createElement("b", null, "\u2014 obligatorio")), /*#__PURE__*/React.createElement("textarea", {
+    value: task,
+    onChange: function onChange(e) {
+      setTask(e.target.value);
+      if (e.target.value.trim()) setTaskErr(false);
+    },
+    style: _objectSpread(_objectSpread({}, s2), {}, {
+      cursor: "text",
+      width: "100%",
+      minHeight: "72px",
+      resize: "vertical",
+      borderColor: taskErr ? "#fca5a5" : "#ddd6fe"
+    })
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: "12px"
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "10px",
+      color: "#b8a8d0",
+      fontWeight: 600,
+      textTransform: "uppercase",
+      letterSpacing: ".1em",
+      marginBottom: "4px"
+    }
+  }, "Cliente"), /*#__PURE__*/React.createElement("select", {
+    style: _objectSpread(_objectSpread({}, s2), {}, {
+      width: "100%"
+    }),
+    value: cliente,
+    onChange: function onChange(e) {
+      return setCliente(e.target.value);
+    }
+  }, clientes.map(function (c) {
+    return /*#__PURE__*/React.createElement("option", {
+      key: c
+    }, c);
+  }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "10px",
+      color: "#b8a8d0",
+      fontWeight: 600,
+      textTransform: "uppercase",
+      letterSpacing: ".1em",
+      marginBottom: "4px"
+    }
+  }, "Responsable"), /*#__PURE__*/React.createElement("select", {
+    style: _objectSpread(_objectSpread({}, s2), {}, {
+      width: "100%"
+    }),
+    value: resp,
+    onChange: function onChange(e) {
+      return setResp(e.target.value);
+    }
+  }, resps.map(function (r) {
+    return /*#__PURE__*/React.createElement("option", {
+      key: r
+    }, r);
+  })))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: "12px"
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "10px",
+      color: "#b8a8d0",
+      fontWeight: 600,
+      textTransform: "uppercase",
+      letterSpacing: ".1em",
+      marginBottom: "4px"
+    }
+  }, "Estado"), /*#__PURE__*/React.createElement("select", {
+    style: _objectSpread(_objectSpread({}, s2), {}, {
+      width: "100%"
+    }),
+    value: status,
+    onChange: function onChange(e) {
+      return setStatus(e.target.value);
+    }
+  }, STATUSES.map(function (s) {
+    return /*#__PURE__*/React.createElement("option", {
+      key: s
+    }, s);
+  }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "10px",
+      color: "#b8a8d0",
+      fontWeight: 600,
+      textTransform: "uppercase",
+      letterSpacing: ".1em",
+      marginBottom: "4px"
+    }
+  }, "Tiempo (30m, 1h\u2026)"), /*#__PURE__*/React.createElement("input", {
+    value: hoursStr,
+    onChange: function onChange(e) {
+      return setHoursStr(e.target.value);
+    },
+    style: _objectSpread(_objectSpread({}, s2), {}, {
+      cursor: "text",
+      width: "100%"
+    }),
+    placeholder: "45m, 1h, 2h 30m"
+  })))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: "10px",
+      justifyContent: "flex-end",
+      marginTop: "22px"
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: onClose,
+    style: {
+      background: "#f3f0fb",
+      color: "#9a7cc5",
+      border: "1.5px solid #ddd6fe",
+      borderRadius: "8px",
+      padding: "10px 20px",
+      fontSize: "13px",
+      fontFamily: "inherit",
+      cursor: "pointer"
+    }
+  }, "Cancelar"), /*#__PURE__*/React.createElement("button", {
+    onClick: save,
+    style: {
+      background: "#6d28d9",
+      color: "#fff",
+      border: "none",
+      borderRadius: "8px",
+      padding: "10px 24px",
+      fontSize: "13px",
+      fontFamily: "inherit",
+      cursor: "pointer",
+      fontWeight: 700
+    }
+  }, "Guardar cambios"))));
+}
+function StartTaskDialog(_ref4) {
+  var entry = _ref4.entry,
+    onConfirm = _ref4.onConfirm,
+    onClose = _ref4.onClose;
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "fixed",
+      inset: 0,
+      background: "rgba(30,16,53,0.45)",
+      zIndex: 200,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "20px"
+    },
+    onClick: function onClick(e) {
+      if (e.target === e.currentTarget) onClose();
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "#fff",
+      borderRadius: "16px",
+      padding: "28px",
+      width: "100%",
+      maxWidth: "460px",
+      boxShadow: "0 8px 40px rgba(109,40,217,.18)",
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "32px",
+      marginBottom: "14px"
+    }
+  }, "\u23F1"), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontSize: "16px",
+      fontWeight: 700,
+      color: "#1e1035",
+      marginBottom: "10px"
+    }
+  }, "\xBFIniciar esta tarea?"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "#f8f5ff",
+      border: "1.5px solid #ede9fe",
+      borderRadius: "10px",
+      padding: "14px 16px",
+      marginBottom: "20px",
+      textAlign: "left"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "13px",
+      color: "#1e1035",
+      lineHeight: 1.5,
+      marginBottom: "6px"
+    }
+  }, entry.task), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "11px",
+      color: "#9a7cc5"
+    }
+  }, entry.cliente, " \xB7 ", entry.responsable)), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontSize: "13px",
+      color: "#9a7cc5",
+      marginBottom: "22px",
+      lineHeight: 1.6
+    }
+  }, "El cron\xF3metro arrancar\xE1 y la tarea pasar\xE1 a ", /*#__PURE__*/React.createElement("b", {
+    style: {
+      color: "#a16207"
+    }
+  }, "Proceso"), ". Al parar, el tiempo se registrar\xE1."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: "10px",
+      justifyContent: "center"
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: onClose,
+    style: {
+      background: "#f3f0fb",
+      color: "#9a7cc5",
+      border: "1.5px solid #ddd6fe",
+      borderRadius: "8px",
+      padding: "10px 20px",
+      fontSize: "13px",
+      fontFamily: "inherit",
+      cursor: "pointer"
+    }
+  }, "Cancelar"), /*#__PURE__*/React.createElement("button", {
+    onClick: onConfirm,
+    style: {
+      background: "#6d28d9",
+      color: "#fff",
+      border: "none",
+      borderRadius: "8px",
+      padding: "10px 28px",
+      fontSize: "13px",
+      fontFamily: "inherit",
+      cursor: "pointer",
+      fontWeight: 700,
+      display: "flex",
+      alignItems: "center",
+      gap: "8px"
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "8",
+    height: "10",
+    viewBox: "0 0 8 10",
+    fill: "white"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M0 0l8 5-8 5V0z"
+  })), "Iniciar tarea"))));
+}
+function BlockedDialog(_ref5) {
+  var activeTask = _ref5.activeTask,
+    onClose = _ref5.onClose;
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "fixed",
+      inset: 0,
+      background: "rgba(30,16,53,0.45)",
+      zIndex: 200,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "20px"
+    },
+    onClick: function onClick(e) {
+      if (e.target === e.currentTarget) onClose();
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "#fff",
+      borderRadius: "16px",
+      padding: "28px",
+      width: "100%",
+      maxWidth: "420px",
+      boxShadow: "0 8px 40px rgba(185,28,28,.15)",
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "32px",
+      marginBottom: "14px"
+    }
+  }, "\uD83D\uDD12"), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontSize: "16px",
+      fontWeight: 700,
+      color: "#1e1035",
+      marginBottom: "10px"
+    }
+  }, "Tienes una tarea en curso"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "#fff5f5",
+      border: "1.5px solid #fecaca",
+      borderRadius: "10px",
+      padding: "14px 16px",
+      marginBottom: "20px",
+      textAlign: "left"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "13px",
+      color: "#1e1035",
+      lineHeight: 1.5,
+      marginBottom: "4px"
+    }
+  }, activeTask.task), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "11px",
+      color: "#9a7cc5"
+    }
+  }, activeTask.cliente, " \xB7 ", activeTask.responsable)), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontSize: "13px",
+      color: "#9a7cc5",
+      marginBottom: "22px",
+      lineHeight: 1.6
+    }
+  }, "Debes ", /*#__PURE__*/React.createElement("b", {
+    style: {
+      color: "#b91c1c"
+    }
+  }, "finalizar o pausar"), " la tarea actual antes de iniciar una nueva."), /*#__PURE__*/React.createElement("button", {
+    onClick: onClose,
+    style: {
+      background: "#6d28d9",
+      color: "#fff",
+      border: "none",
+      borderRadius: "8px",
+      padding: "10px 28px",
+      fontSize: "13px",
+      fontFamily: "inherit",
+      cursor: "pointer",
+      fontWeight: 700
+    }
+  }, "Entendido")));
+}
+
+// ── Main App ──
+function App() {
+  var _useState15 = useState(false),
+    _useState16 = _slicedToArray(_useState15, 2),
+    fbReady = _useState16[0],
+    setFbReady = _useState16[1];
+  var _useState17 = useState(null),
+    _useState18 = _slicedToArray(_useState17, 2),
+    currentUser = _useState18[0],
+    setCurrentUser = _useState18[1];
+  var _useState19 = useState([]),
+    _useState20 = _slicedToArray(_useState19, 2),
+    entries = _useState20[0],
+    setEntries = _useState20[1];
+  var _useState21 = useState(DEFAULT_CLIENTES),
+    _useState22 = _slicedToArray(_useState21, 2),
+    clientes = _useState22[0],
+    setClientes = _useState22[1];
+  var _useState23 = useState(DEFAULT_RESPONSABLES),
+    _useState24 = _slicedToArray(_useState23, 2),
+    resps = _useState24[0],
+    setResps = _useState24[1];
+
+  // Timer (local per session — not synced)
+  var _useState25 = useState("timer"),
+    _useState26 = _slicedToArray(_useState25, 2),
+    mode = _useState26[0],
+    setMode = _useState26[1];
+  var _useState27 = useState(false),
+    _useState28 = _slicedToArray(_useState27, 2),
+    running = _useState28[0],
+    setRunning = _useState28[1];
+  var _useState29 = useState(0),
+    _useState30 = _slicedToArray(_useState29, 2),
+    elapsed = _useState30[0],
+    setElapsed = _useState30[1];
+  var _useState31 = useState(null),
+    _useState32 = _slicedToArray(_useState31, 2),
+    startTs = _useState32[0],
+    setStartTs = _useState32[1];
+  var _useState33 = useState(null),
+    _useState34 = _slicedToArray(_useState33, 2),
+    activeEntryId = _useState34[0],
+    setActiveEntryId = _useState34[1];
+  var _useState35 = useState(""),
+    _useState36 = _slicedToArray(_useState35, 2),
+    task = _useState36[0],
+    setTask = _useState36[1];
+  var _useState37 = useState(false),
+    _useState38 = _slicedToArray(_useState37, 2),
+    taskError = _useState38[0],
+    setTaskError = _useState38[1];
+  var _useState39 = useState(DEFAULT_CLIENTES[0]),
+    _useState40 = _slicedToArray(_useState39, 2),
+    cliente = _useState40[0],
+    setCliente = _useState40[1];
+  var _useState41 = useState(null),
+    _useState42 = _slicedToArray(_useState41, 2),
+    resp = _useState42[0],
+    setResp = _useState42[1];
+  var _useState43 = useState("Realizado"),
+    _useState44 = _slicedToArray(_useState43, 2),
+    timerStatus = _useState44[0],
+    setTimerStatus = _useState44[1];
+  var _useState45 = useState(""),
+    _useState46 = _slicedToArray(_useState45, 2),
+    manualHours = _useState46[0],
+    setManualHours = _useState46[1];
+  var _useState47 = useState("Pendiente"),
+    _useState48 = _slicedToArray(_useState47, 2),
+    manualStatus = _useState48[0],
+    setManualStatus = _useState48[1];
+
+  // Filters
+  var _useState49 = useState("Todos"),
+    _useState50 = _slicedToArray(_useState49, 2),
+    fMes = _useState50[0],
+    setFMes = _useState50[1];
+  var _useState51 = useState("Todos"),
+    _useState52 = _slicedToArray(_useState51, 2),
+    fCliente = _useState52[0],
+    setFCliente = _useState52[1];
+  var _useState53 = useState("Todos"),
+    _useState54 = _slicedToArray(_useState53, 2),
+    fResp = _useState54[0],
+    setFResp = _useState54[1];
+  var _useState55 = useState("Todos"),
+    _useState56 = _slicedToArray(_useState55, 2),
+    fStatus = _useState56[0],
+    setFStatus = _useState56[1];
+  var _useState57 = useState("Todos"),
+    _useState58 = _slicedToArray(_useState57, 2),
+    t2Cliente = _useState58[0],
+    setT2Cliente = _useState58[1];
+  var _useState59 = useState("Todos"),
+    _useState60 = _slicedToArray(_useState59, 2),
+    t2Resp = _useState60[0],
+    setT2Resp = _useState60[1];
+  var _useState61 = useState("Todos"),
+    _useState62 = _slicedToArray(_useState61, 2),
+    t2Year = _useState62[0],
+    setT2Year = _useState62[1];
+  var _useState63 = useState([]),
+    _useState64 = _slicedToArray(_useState63, 2),
+    t2Months = _useState64[0],
+    setT2Months = _useState64[1];
+  var _useState65 = useState("log"),
+    _useState66 = _slicedToArray(_useState65, 2),
+    tab = _useState66[0],
+    setTab = _useState66[1];
+  var _useState67 = useState(""),
+    _useState68 = _slicedToArray(_useState67, 2),
+    toast = _useState68[0],
+    setToast = _useState68[1];
+  var _useState69 = useState(null),
+    _useState70 = _slicedToArray(_useState69, 2),
+    editEntry = _useState70[0],
+    setEditEntry = _useState70[1];
+  var _useState71 = useState(null),
+    _useState72 = _slicedToArray(_useState71, 2),
+    startDialog = _useState72[0],
+    setStartDialog = _useState72[1];
+  var _useState73 = useState(null),
+    _useState74 = _slicedToArray(_useState73, 2),
+    blockedDialog = _useState74[0],
+    setBlockedDialog = _useState74[1];
+  var timerRef = useRef(null);
+  var taskRef = useRef(null);
+  var skipNextWrite = useRef(false); // avoid write loop on incoming snapshot
+
+  // Subscribe to Firestore on mount
+  useEffect(function () {
+    var unsub = getDocRef().onSnapshot(function (snap) {
+      if (snap.exists) {
+        var d = snap.data();
+        skipNextWrite.current = true;
+        if (d.entries) setEntries(d.entries);
+        if (d.clientes) setClientes(d.clientes);
+        if (d.resps) setResps(d.resps);
+      } else {
+        // First time — seed with Excel data
+        saveToFirebase({
+          entries: EXCEL_DATA,
+          clientes: DEFAULT_CLIENTES,
+          resps: DEFAULT_RESPONSABLES
+        });
+      }
+      setFbReady(true);
+    }, function (err) {
+      console.error("Firestore error:", err);
+      setEntries(EXCEL_DATA);
+      setFbReady(true);
+    });
+    return function () {
+      return unsub();
+    };
+  }, []);
+
+  // Write to Firebase whenever data changes (skip when change came from snapshot)
+  var isFirstWrite = useRef(true);
+  useEffect(function () {
+    if (!fbReady) return;
+    if (isFirstWrite.current) {
+      isFirstWrite.current = false;
+      return;
+    }
+    if (skipNextWrite.current) {
+      skipNextWrite.current = false;
+      return;
+    }
+    saveToFirebase({
       entries: entries,
       clientes: clientes,
       resps: resps
     });
-  }, [entries, clientes, resps]);
+  }, [entries, clientes, resps, fbReady]);
+
+  // Timer tick
   useEffect(function () {
     if (running) {
       timerRef.current = setInterval(function () {
@@ -1024,7 +1794,7 @@ function App() {
     setToast(msg);
     setTimeout(function () {
       return setToast("");
-    }, 2400);
+    }, 2500);
   }
   function addCliente(v) {
     if (!clientes.includes(v)) setClientes(function (p) {
@@ -1036,6 +1806,10 @@ function App() {
       return [].concat(_toConsumableArray(p), [v]);
     });
   }
+  function handleLogin(name) {
+    setCurrentUser(name);
+    setResp(name);
+  }
   function play() {
     if (!task.trim()) {
       setTaskError(true);
@@ -1046,24 +1820,61 @@ function App() {
     setStartTs(Date.now());
     setElapsed(0);
     setRunning(true);
+    setActiveEntryId(null);
   }
   function stop() {
     setRunning(false);
+    var hours = Math.max(elapsed / 3600, 0.004);
+    if (activeEntryId) {
+      setEntries(function (p) {
+        return p.map(function (e) {
+          return e.id !== activeEntryId ? e : _objectSpread(_objectSpread({}, e), {}, {
+            hours: (e.hours || 0) + hours,
+            status: "Realizado",
+            date: new Date().toISOString()
+          });
+        });
+      });
+      showToast("✓ Tiempo registrado · tarea finalizada");
+    } else {
+      setEntries(function (p) {
+        return [{
+          id: Date.now(),
+          task: task.trim(),
+          cliente: cliente,
+          responsable: resp || currentUser,
+          status: timerStatus,
+          hours: hours,
+          date: new Date().toISOString()
+        }].concat(_toConsumableArray(p));
+      });
+      showToast("✓ Entrada guardada");
+    }
+    setElapsed(0);
+    setTask("");
+    setActiveEntryId(null);
+  }
+  function saveManual() {
+    if (!task.trim()) {
+      setTaskError(true);
+      if (taskRef.current) taskRef.current.focus();
+      return;
+    }
+    var h = hoursFromString(manualHours);
     setEntries(function (p) {
       return [{
         id: Date.now(),
         task: task.trim(),
         cliente: cliente,
-        responsable: resp,
-        status: status,
-        hours: Math.max(elapsed / 3600, 0.004),
-        date: new Date().toISOString(),
-        fromExcel: false
+        responsable: resp || currentUser,
+        status: manualStatus,
+        hours: h || 0.25,
+        date: new Date().toISOString()
       }].concat(_toConsumableArray(p));
     });
-    setElapsed(0);
     setTask("");
-    showToast("✓ Entrada guardada");
+    setManualHours("");
+    showToast("✓ Tarea creada");
   }
   function del(id) {
     setEntries(function (p) {
@@ -1073,26 +1884,65 @@ function App() {
     });
     showToast("Entrada eliminada");
   }
+  function saveEdit(u) {
+    setEntries(function (p) {
+      return p.map(function (e) {
+        return e.id === u.id ? u : e;
+      });
+    });
+    setEditEntry(null);
+    showToast("✓ Cambios guardados");
+  }
   function resetLogFilters() {
     setFMes("Todos");
     setFCliente("Todos");
     setFResp("Todos");
     setFStatus("Todos");
   }
+  function tryStartTask(entry) {
+    if (running) {
+      setBlockedDialog(activeEntryId ? entries.find(function (e) {
+        return e.id === activeEntryId;
+      }) || {
+        task: "Tarea sin nombre",
+        cliente: "—",
+        responsable: "—"
+      } : {
+        task: task,
+        cliente: cliente,
+        responsable: resp || currentUser
+      });
+      return;
+    }
+    setStartDialog(entry);
+  }
+  function confirmStartTask(entry) {
+    setStartDialog(null);
+    setEntries(function (p) {
+      return p.map(function (e) {
+        return e.id === entry.id ? _objectSpread(_objectSpread({}, e), {}, {
+          status: "Proceso"
+        }) : e;
+      });
+    });
+    setMode("timer");
+    setTask(entry.task);
+    setCliente(entry.cliente);
+    setResp(entry.responsable);
+    setTaskError(false);
+    setActiveEntryId(entry.id);
+    setStartTs(Date.now());
+    setElapsed(0);
+    setRunning(true);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+    showToast("⏱ Tarea iniciada");
+  }
   var allYears = _toConsumableArray(new Set(entries.map(function (e) {
     return getYear(e.date);
   }).filter(Boolean))).sort();
-  var availableMonths = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-  function toggleMonth(m) {
-    setT2Months(function (prev) {
-      return prev.includes(m) ? prev.filter(function (x) {
-        return x !== m;
-      }) : [].concat(_toConsumableArray(prev), [m]);
-    });
-  }
-  function isAllMonths() {
-    return t2Months.length === 0;
-  }
   var allLogMonths = _toConsumableArray(new Set(entries.map(function (e) {
     if (!e.date) return null;
     return "".concat(getYear(e.date), "-").concat(String(getMonth(e.date) + 1).padStart(2, "0"));
@@ -1124,6 +1974,7 @@ function App() {
   var hasLogFilter = fMes !== "Todos" || fCliente !== "Todos" || fResp !== "Todos" || fStatus !== "Todos";
   var t2List = entries.filter(function (e) {
     if (t2Cliente !== "Todos" && e.cliente !== t2Cliente) return false;
+    if (t2Resp !== "Todos" && e.responsable !== t2Resp) return false;
     if (!e.date) return t2Months.length === 0 && t2Year === "Todos";
     if (t2Year !== "Todos" && getYear(e.date) !== parseInt(t2Year)) return false;
     if (t2Months.length > 0 && !t2Months.includes(getMonth(e.date))) return false;
@@ -1132,7 +1983,7 @@ function App() {
   var t2Total = t2List.reduce(function (a, e) {
     return a + (e.hours || 0);
   }, 0);
-  var t2HasFilter = t2Cliente !== "Todos" || t2Year !== "Todos" || t2Months.length > 0;
+  var t2HasFilter = t2Cliente !== "Todos" || t2Year !== "Todos" || t2Months.length > 0 || t2Resp !== "Todos";
   var t2ByCli = _toConsumableArray(new Set(t2List.map(function (e) {
     return e.cliente;
   }))).map(function (c) {
@@ -1161,6 +2012,216 @@ function App() {
     outline: "none",
     cursor: "pointer"
   };
+  var uc = currentUser ? USER_COLORS[currentUser] || {
+    bg: "#ede9fe",
+    text: "#6d28d9",
+    border: "#ddd6fe",
+    avatar: "#7c3aed"
+  } : {};
+
+  // Loading
+  if (!fbReady) return /*#__PURE__*/React.createElement("div", {
+    style: {
+      minHeight: "100vh",
+      background: "#f3f0fb",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontFamily: "system-ui,sans-serif",
+      flexDirection: "column",
+      gap: "16px"
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "32",
+    height: "32",
+    viewBox: "0 0 20 20",
+    fill: "none"
+  }, /*#__PURE__*/React.createElement("circle", {
+    cx: "10",
+    cy: "10",
+    r: "8",
+    stroke: "#7c3aed",
+    strokeWidth: "1.5"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M10 6v4l2.5 2.5",
+    stroke: "#7c3aed",
+    strokeWidth: "1.5",
+    strokeLinecap: "round"
+  })), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: "14px",
+      color: "#9a7cc5"
+    }
+  }, "Conectando con Firebase\u2026"));
+  if (!currentUser) return /*#__PURE__*/React.createElement(LoginScreen, {
+    onLogin: handleLogin
+  });
+  function EntryRow(_ref6) {
+    var e = _ref6.e,
+      _ref6$showDel = _ref6.showDel,
+      showDel = _ref6$showDel === void 0 ? true : _ref6$showDel;
+    var s = SC[e.status] || SC.Pendiente;
+    var isActive = activeEntryId === e.id && running;
+    var canStart = e.status === "Pendiente" || e.status === "Pausado";
+    return /*#__PURE__*/React.createElement("div", {
+      className: "row",
+      style: {
+        display: "grid",
+        gridTemplateColumns: "1fr auto auto auto 64px auto auto" + (showDel ? " auto" : ""),
+        alignItems: "center",
+        gap: "8px",
+        padding: "11px 14px",
+        background: isActive ? "#faf5ff" : "#fff",
+        borderRadius: "9px",
+        marginBottom: "6px",
+        border: isActive ? "1.5px solid #a78bfa" : "1.5px solid #f0ebff",
+        transition: "border-color .15s"
+      }
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "13px",
+        color: "#1e1035",
+        lineHeight: 1.4
+      }
+    }, e.task), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "11px",
+        color: "#b8a8d0",
+        marginTop: "2px"
+      }
+    }, e.cliente, " \xB7 ", e.responsable, " \xB7 ", fmtDate(e.date), e.fromExcel && /*#__PURE__*/React.createElement("span", {
+      style: {
+        marginLeft: 6,
+        fontSize: "10px",
+        background: "#f0fdf4",
+        color: "#15803d",
+        border: "1px solid #bbf7d0",
+        padding: "1px 5px",
+        borderRadius: "4px"
+      }
+    }, "Excel"), isActive && /*#__PURE__*/React.createElement("span", {
+      style: {
+        marginLeft: 6,
+        fontSize: "10px",
+        background: "#ede9fe",
+        color: "#6d28d9",
+        border: "1px solid #ddd6fe",
+        padding: "1px 6px",
+        borderRadius: "4px",
+        animation: "pulse 1.4s infinite"
+      }
+    }, "\u25CF en curso"))), /*#__PURE__*/React.createElement("span", {
+      style: {
+        padding: "3px 8px",
+        borderRadius: "5px",
+        fontSize: "11px",
+        fontWeight: 600,
+        background: s.bg,
+        color: s.text,
+        border: "1px solid ".concat(s.border),
+        whiteSpace: "nowrap"
+      }
+    }, e.status), /*#__PURE__*/React.createElement("span", {
+      style: {
+        padding: "3px 8px",
+        borderRadius: "5px",
+        fontSize: "11px",
+        background: "#f3e8ff",
+        color: "#7c3aed",
+        border: "1px solid #e9d5ff",
+        whiteSpace: "nowrap"
+      }
+    }, e.responsable), /*#__PURE__*/React.createElement("span", {
+      style: {
+        padding: "3px 8px",
+        borderRadius: "5px",
+        fontSize: "11px",
+        background: "#eef2ff",
+        color: "#4338ca",
+        border: "1px solid #e0e7ff",
+        whiteSpace: "nowrap"
+      }
+    }, e.cliente), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: "monospace",
+        fontSize: "13px",
+        fontWeight: 700,
+        color: "#6d28d9",
+        textAlign: "right",
+        whiteSpace: "nowrap"
+      }
+    }, fmtHours(e.hours)), canStart ? /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick() {
+        return tryStartTask(e);
+      },
+      title: "Iniciar tarea",
+      style: {
+        display: "flex",
+        alignItems: "center",
+        gap: "5px",
+        background: running ? "#e5e7eb" : "#6d28d9",
+        color: running ? "#9ca3af" : "#fff",
+        border: "none",
+        borderRadius: "7px",
+        padding: "5px 10px",
+        fontSize: "11px",
+        fontFamily: "inherit",
+        cursor: running ? "not-allowed" : "pointer",
+        fontWeight: 700,
+        whiteSpace: "nowrap",
+        transition: "all .15s"
+      },
+      onMouseEnter: function onMouseEnter(ev) {
+        if (!running) ev.currentTarget.style.background = "#7c3aed";
+      },
+      onMouseLeave: function onMouseLeave(ev) {
+        if (!running) ev.currentTarget.style.background = "#6d28d9";
+      }
+    }, /*#__PURE__*/React.createElement("svg", {
+      width: "8",
+      height: "10",
+      viewBox: "0 0 8 10",
+      fill: "currentColor"
+    }, /*#__PURE__*/React.createElement("path", {
+      d: "M0 0l8 5-8 5V0z"
+    })), running ? "Bloqueado" : "Iniciar") : /*#__PURE__*/React.createElement("span", null), /*#__PURE__*/React.createElement("button", {
+      title: "Editar",
+      onClick: function onClick() {
+        return setEditEntry(e);
+      },
+      style: {
+        background: "none",
+        border: "none",
+        color: "#c4b5fd",
+        cursor: "pointer",
+        fontSize: "15px",
+        padding: "2px",
+        borderRadius: "5px",
+        lineHeight: 1
+      },
+      onMouseEnter: function onMouseEnter(ev) {
+        return ev.currentTarget.style.color = "#6d28d9";
+      },
+      onMouseLeave: function onMouseLeave(ev) {
+        return ev.currentTarget.style.color = "#c4b5fd";
+      }
+    }, "\u270E"), showDel && /*#__PURE__*/React.createElement("button", {
+      className: "del",
+      style: {
+        background: "none",
+        border: "none",
+        color: "#d8c8f0",
+        cursor: "pointer",
+        fontSize: "16px",
+        padding: "2px",
+        borderRadius: "5px",
+        lineHeight: 1
+      },
+      onClick: function onClick() {
+        return del(e.id);
+      }
+    }, "\xD7"));
+  }
   return /*#__PURE__*/React.createElement("div", {
     style: {
       minHeight: "100vh",
@@ -1169,7 +2230,28 @@ function App() {
       color: "#1e1035",
       paddingBottom: "60px"
     }
-  }, toast && /*#__PURE__*/React.createElement("div", {
+  }, editEntry && /*#__PURE__*/React.createElement(EditModal, {
+    entry: editEntry,
+    clientes: clientes,
+    resps: resps,
+    onSave: saveEdit,
+    onClose: function onClose() {
+      return setEditEntry(null);
+    }
+  }), startDialog && /*#__PURE__*/React.createElement(StartTaskDialog, {
+    entry: startDialog,
+    onConfirm: function onConfirm() {
+      return confirmStartTask(startDialog);
+    },
+    onClose: function onClose() {
+      return setStartDialog(null);
+    }
+  }), blockedDialog && /*#__PURE__*/React.createElement(BlockedDialog, {
+    activeTask: blockedDialog,
+    onClose: function onClose() {
+      return setBlockedDialog(null);
+    }
+  }), toast && /*#__PURE__*/React.createElement("div", {
     style: {
       position: "fixed",
       bottom: 20,
@@ -1180,7 +2262,7 @@ function App() {
       padding: "9px 18px",
       borderRadius: "8px",
       fontSize: "13px",
-      zIndex: 999,
+      zIndex: 150,
       animation: "fadein .2s ease",
       whiteSpace: "nowrap"
     }
@@ -1192,7 +2274,7 @@ function App() {
       height: "52px",
       display: "flex",
       alignItems: "center",
-      gap: "8px",
+      gap: "10px",
       position: "sticky",
       top: 0,
       zIndex: 50,
@@ -1228,6 +2310,22 @@ function App() {
     }
   }), /*#__PURE__*/React.createElement("span", {
     style: {
+      fontSize: "11px",
+      color: "#22c55e",
+      display: "flex",
+      alignItems: "center",
+      gap: "4px"
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      width: 6,
+      height: 6,
+      borderRadius: "50%",
+      background: "#22c55e",
+      display: "inline-block"
+    }
+  }), "Firebase"), /*#__PURE__*/React.createElement("span", {
+    style: {
       fontSize: "12px",
       color: "#9a7cc5"
     }
@@ -1235,7 +2333,58 @@ function App() {
     style: {
       color: "#6d28d9"
     }
-  }, fmtHours(totalH)), " \xB7 ", entries.length, " entradas")), /*#__PURE__*/React.createElement("div", {
+  }, fmtHours(totalH)), " \xB7 ", entries.length, " entradas"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: "8px",
+      background: uc.bg,
+      border: "1.5px solid ".concat(uc.border),
+      borderRadius: "20px",
+      padding: "4px 12px 4px 6px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 26,
+      height: 26,
+      borderRadius: "50%",
+      background: uc.avatar,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: "11px",
+      fontWeight: 800,
+      color: "#fff"
+    }
+  }, initials(currentUser)), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: "12px",
+      fontWeight: 600,
+      color: uc.text
+    }
+  }, currentUser)), /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      if (running) {
+        showToast("⚠️ Para el cronómetro antes de salir");
+        return;
+      }
+      setCurrentUser(null);
+      setRunning(false);
+      setElapsed(0);
+      setTask("");
+      setActiveEntryId(null);
+    },
+    style: {
+      background: "none",
+      border: "1.5px solid #e4d9f8",
+      color: "#9a7cc5",
+      borderRadius: "8px",
+      padding: "5px 10px",
+      fontSize: "11px",
+      fontFamily: "inherit",
+      cursor: "pointer"
+    }
+  }, "Salir")), /*#__PURE__*/React.createElement("div", {
     style: {
       maxWidth: "980px",
       margin: "0 auto",
@@ -1244,13 +2393,73 @@ function App() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       background: "#fff",
-      border: "1.5px solid #ede9fe",
+      border: running ? "1.5px solid #a78bfa" : "1.5px solid #ede9fe",
       borderRadius: "14px",
       padding: "18px 20px",
       marginBottom: "22px",
-      boxShadow: "0 2px 12px rgba(109,40,217,.06)"
+      boxShadow: running ? "0 2px 20px rgba(109,40,217,.15)" : "0 2px 12px rgba(109,40,217,.06)",
+      transition: "all .3s"
     }
-  }, /*#__PURE__*/React.createElement("div", {
+  }, running && activeEntryId && /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "#f3e8ff",
+      border: "1.5px solid #ddd6fe",
+      borderRadius: "9px",
+      padding: "10px 14px",
+      marginBottom: "14px",
+      fontSize: "12px",
+      color: "#6d28d9",
+      display: "flex",
+      alignItems: "center",
+      gap: "8px"
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      width: 8,
+      height: 8,
+      borderRadius: "50%",
+      background: "#7c3aed",
+      display: "inline-block",
+      animation: "pulse 1.4s infinite",
+      flexShrink: 0
+    }
+  }), /*#__PURE__*/React.createElement("span", null, "Ejecutando \xB7 ", /*#__PURE__*/React.createElement("b", null, task))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "inline-flex",
+      gap: "2px",
+      background: "#f3f0fb",
+      padding: "3px",
+      borderRadius: "8px",
+      marginBottom: "16px"
+    }
+  }, [["timer", "⏱ Cronómetro"], ["manual", "✏️ Crear tarea"]].map(function (_ref7) {
+    var _ref8 = _slicedToArray(_ref7, 2),
+      m = _ref8[0],
+      lbl = _ref8[1];
+    return /*#__PURE__*/React.createElement("button", {
+      key: m,
+      onClick: function onClick() {
+        if (!running) {
+          setMode(m);
+          setTask("");
+          setTaskError(false);
+          setActiveEntryId(null);
+        }
+      },
+      style: {
+        padding: "5px 14px",
+        borderRadius: "6px",
+        border: "none",
+        background: mode === m ? "#fff" : "transparent",
+        color: mode === m ? "#6d28d9" : "#9a7cc5",
+        fontSize: "12px",
+        fontFamily: "inherit",
+        fontWeight: mode === m ? 600 : 400,
+        cursor: running ? "not-allowed" : "pointer",
+        boxShadow: mode === m ? "0 1px 4px rgba(109,40,217,.1)" : "none"
+      }
+    }, lbl);
+  })), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
       alignItems: "flex-start",
@@ -1274,21 +2483,22 @@ function App() {
     ref: taskRef,
     className: taskError ? "shake" : "",
     style: _objectSpread(_objectSpread({}, sel), {}, {
-      cursor: "text",
+      cursor: running && activeEntryId ? "default" : "text",
       width: "100%",
       borderColor: taskError ? "#fca5a5" : "#ddd6fe",
       background: taskError ? "#fff5f5" : "#f8f5ff"
     }),
-    placeholder: "\xBFEn qu\xE9 est\xE1s trabajando?*",
+    placeholder: mode === "manual" ? "Describe la tarea a asignar…" : "¿En qué estás trabajando?",
     value: task,
     onChange: function onChange(e) {
+      if (running && activeEntryId) return;
       setTask(e.target.value);
       if (e.target.value.trim()) setTaskError(false);
     },
     onKeyDown: function onKeyDown(e) {
-      return e.key === "Enter" && !running && play();
+      return e.key === "Enter" && !running && (mode === "timer" ? play() : saveManual());
     },
-    disabled: running
+    disabled: running && !!activeEntryId
   })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "10px",
@@ -1303,7 +2513,7 @@ function App() {
     onChange: setCliente,
     options: clientes,
     onAdd: addCliente,
-    placeholder: "Nombre cliente\u2026",
+    placeholder: "Cliente\u2026",
     disabled: running
   })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1315,13 +2525,33 @@ function App() {
       marginBottom: "4px"
     }
   }, "Responsable"), /*#__PURE__*/React.createElement(AddableSelect, {
-    value: resp,
+    value: resp || currentUser,
     onChange: setResp,
     options: resps,
     onAdd: addResp,
-    placeholder: "Nombre responsable\u2026",
+    placeholder: "Nombre\u2026",
     disabled: running
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  })), mode === "timer" && !activeEntryId && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "10px",
+      color: "#b8a8d0",
+      fontWeight: 600,
+      textTransform: "uppercase",
+      letterSpacing: ".1em",
+      marginBottom: "4px"
+    }
+  }, "Estado al guardar"), /*#__PURE__*/React.createElement("select", {
+    style: sel,
+    value: timerStatus,
+    onChange: function onChange(e) {
+      return setTimerStatus(e.target.value);
+    },
+    disabled: running
+  }, STATUSES.map(function (s) {
+    return /*#__PURE__*/React.createElement("option", {
+      key: s
+    }, s);
+  }))), mode === "manual" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "10px",
       color: "#b8a8d0",
@@ -1332,16 +2562,34 @@ function App() {
     }
   }, "Estado"), /*#__PURE__*/React.createElement("select", {
     style: sel,
-    value: status,
+    value: manualStatus,
     onChange: function onChange(e) {
-      return setStatus(e.target.value);
-    },
-    disabled: running
+      return setManualStatus(e.target.value);
+    }
   }, STATUSES.map(function (s) {
     return /*#__PURE__*/React.createElement("option", {
       key: s
     }, s);
-  }))), /*#__PURE__*/React.createElement("div", {
+  }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "10px",
+      color: "#b8a8d0",
+      fontWeight: 600,
+      textTransform: "uppercase",
+      letterSpacing: ".1em",
+      marginBottom: "4px"
+    }
+  }, "Tiempo estimado"), /*#__PURE__*/React.createElement("input", {
+    value: manualHours,
+    onChange: function onChange(e) {
+      return setManualHours(e.target.value);
+    },
+    style: _objectSpread(_objectSpread({}, sel), {}, {
+      cursor: "text",
+      width: "110px"
+    }),
+    placeholder: "30m, 1h\u2026"
+  }))), mode === "timer" ? /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
       flexDirection: "column",
@@ -1376,53 +2624,49 @@ function App() {
       boxShadow: running ? "0 2px 12px rgba(124,58,237,.3)" : "none",
       transition: "all .15s"
     }
-  }, running ? /*#__PURE__*/React.createElement("svg", {
-    width: "10",
-    height: "10",
+  }, running ? React.createElement("svg", {
+    width: 10,
+    height: 10,
     viewBox: "0 0 10 10",
     fill: "white"
-  }, /*#__PURE__*/React.createElement("rect", {
-    x: "0",
-    y: "0",
-    width: "3.5",
-    height: "10",
-    rx: "1"
-  }), /*#__PURE__*/React.createElement("rect", {
-    x: "6.5",
-    y: "0",
-    width: "3.5",
-    height: "10",
-    rx: "1"
-  })) : /*#__PURE__*/React.createElement("svg", {
-    width: "10",
-    height: "12",
+  }, React.createElement("rect", {
+    x: 0,
+    y: 0,
+    width: 3.5,
+    height: 10,
+    rx: 1
+  }), React.createElement("rect", {
+    x: 6.5,
+    y: 0,
+    width: 3.5,
+    height: 10,
+    rx: 1
+  })) : React.createElement("svg", {
+    width: 10,
+    height: 12,
     viewBox: "0 0 10 12",
     fill: "#7c3aed"
-  }, /*#__PURE__*/React.createElement("path", {
+  }, React.createElement("path", {
     d: "M1 1l8 5-8 5V1z"
-  }))))), running && /*#__PURE__*/React.createElement("div", {
+  })))) : /*#__PURE__*/React.createElement("div", {
     style: {
-      marginTop: "10px",
-      fontSize: "12px",
-      color: "#9a7cc5",
-      display: "flex",
-      alignItems: "center",
-      gap: "6px"
+      alignSelf: "flex-end"
     }
-  }, /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: saveManual,
     style: {
-      width: 7,
-      height: 7,
-      borderRadius: "50%",
-      background: "#7c3aed",
-      display: "inline-block",
-      animation: "pulse 1.4s infinite"
+      background: "#6d28d9",
+      color: "#fff",
+      border: "none",
+      borderRadius: "9px",
+      padding: "10px 20px",
+      fontSize: "13px",
+      fontFamily: "inherit",
+      fontWeight: 700,
+      cursor: "pointer",
+      whiteSpace: "nowrap"
     }
-  }), "Registrando \xB7 ", /*#__PURE__*/React.createElement("b", {
-    style: {
-      color: "#6d28d9"
-    }
-  }, cliente), " \xB7 ", resp)), /*#__PURE__*/React.createElement("div", {
+  }, "Crear tarea \u2192")))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "inline-flex",
       gap: "2px",
@@ -1432,10 +2676,10 @@ function App() {
       border: "1.5px solid #ede9fe",
       marginBottom: "20px"
     }
-  }, [["log", "📋 Registro"], ["tabla", "📊 Por cliente y mes"]].map(function (_ref2) {
-    var _ref3 = _slicedToArray(_ref2, 2),
-      t = _ref3[0],
-      lbl = _ref3[1];
+  }, [["log", "📋 Registro"], ["tabla", "📊 Por cliente y mes"]].map(function (_ref9) {
+    var _ref0 = _slicedToArray(_ref9, 2),
+      t = _ref0[0],
+      lbl = _ref0[1];
     return /*#__PURE__*/React.createElement("button", {
       key: t,
       style: {
@@ -1473,13 +2717,13 @@ function App() {
     return v;
   }], ["Estado", fStatus, setFStatus, ["Todos"].concat(STATUSES), function (v) {
     return v;
-  }]].map(function (_ref4) {
-    var _ref5 = _slicedToArray(_ref4, 5),
-      label = _ref5[0],
-      val = _ref5[1],
-      setter = _ref5[2],
-      opts = _ref5[3],
-      fmt = _ref5[4];
+  }]].map(function (_ref1) {
+    var _ref10 = _slicedToArray(_ref1, 5),
+      label = _ref10[0],
+      val = _ref10[1],
+      setter = _ref10[2],
+      opts = _ref10[3],
+      fmt = _ref10[4];
     return /*#__PURE__*/React.createElement("div", {
       key: label
     }, /*#__PURE__*/React.createElement("div", {
@@ -1548,100 +2792,11 @@ function App() {
       marginBottom: "8px"
     }
   }, "\u23F1"), "No hay entradas con estos filtros.") : filtered.map(function (e) {
-    var s = SC[e.status] || SC.Pendiente;
-    return /*#__PURE__*/React.createElement("div", {
+    return /*#__PURE__*/React.createElement(EntryRow, {
       key: e.id,
-      className: "row",
-      style: {
-        display: "grid",
-        gridTemplateColumns: "1fr auto auto auto 64px 28px",
-        alignItems: "center",
-        gap: "8px",
-        padding: "11px 14px",
-        background: "#fff",
-        borderRadius: "9px",
-        marginBottom: "6px",
-        border: "1.5px solid #f0ebff",
-        transition: "border-color .15s"
-      }
-    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: "13px",
-        color: "#1e1035",
-        lineHeight: 1.4
-      }
-    }, e.task), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: "11px",
-        color: "#b8a8d0",
-        marginTop: "2px"
-      }
-    }, e.cliente, " \xB7 ", e.responsable, " \xB7 ", fmtDate(e.date), e.fromExcel && /*#__PURE__*/React.createElement("span", {
-      style: {
-        marginLeft: 6,
-        fontSize: "10px",
-        background: "#f0fdf4",
-        color: "#15803d",
-        border: "1px solid #bbf7d0",
-        padding: "1px 5px",
-        borderRadius: "4px"
-      }
-    }, "Excel"))), /*#__PURE__*/React.createElement("span", {
-      style: {
-        padding: "3px 8px",
-        borderRadius: "5px",
-        fontSize: "11px",
-        fontWeight: 600,
-        background: s.bg,
-        color: s.text,
-        border: "1px solid ".concat(s.border),
-        whiteSpace: "nowrap"
-      }
-    }, e.status), /*#__PURE__*/React.createElement("span", {
-      style: {
-        padding: "3px 8px",
-        borderRadius: "5px",
-        fontSize: "11px",
-        background: "#f3e8ff",
-        color: "#7c3aed",
-        border: "1px solid #e9d5ff",
-        whiteSpace: "nowrap"
-      }
-    }, e.responsable), /*#__PURE__*/React.createElement("span", {
-      style: {
-        padding: "3px 8px",
-        borderRadius: "5px",
-        fontSize: "11px",
-        background: "#eef2ff",
-        color: "#4338ca",
-        border: "1px solid #e0e7ff",
-        whiteSpace: "nowrap"
-      }
-    }, e.cliente), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontFamily: "monospace",
-        fontSize: "13px",
-        fontWeight: 700,
-        color: "#6d28d9",
-        textAlign: "right",
-        whiteSpace: "nowrap"
-      }
-    }, fmtHours(e.hours)), /*#__PURE__*/React.createElement("button", {
-      className: "del",
-      style: {
-        background: "none",
-        border: "none",
-        color: "#d8c8f0",
-        cursor: "pointer",
-        fontSize: "16px",
-        padding: "2px 4px",
-        borderRadius: "5px",
-        lineHeight: 1
-      },
-      onClick: function onClick() {
-        return del(e.id);
-      }
-    }, "\xD7"));
+      e: e,
+      showDel: true
+    });
   })), tab === "tabla" && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       background: "#fff",
@@ -1689,6 +2844,27 @@ function App() {
       letterSpacing: ".1em",
       marginBottom: "4px"
     }
+  }, "Responsable"), /*#__PURE__*/React.createElement("select", {
+    style: sel,
+    value: t2Resp,
+    onChange: function onChange(e) {
+      return setT2Resp(e.target.value);
+    }
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "Todos"
+  }, "Todos"), resps.map(function (r) {
+    return /*#__PURE__*/React.createElement("option", {
+      key: r
+    }, r);
+  }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "10px",
+      color: "#b8a8d0",
+      fontWeight: 600,
+      textTransform: "uppercase",
+      letterSpacing: ".1em",
+      marginBottom: "4px"
+    }
   }, "A\xF1o"), /*#__PURE__*/React.createElement("select", {
     style: sel,
     value: t2Year,
@@ -1705,6 +2881,7 @@ function App() {
   }))), t2HasFilter && /*#__PURE__*/React.createElement("button", {
     onClick: function onClick() {
       setT2Cliente("Todos");
+      setT2Resp("Todos");
       setT2Year("Todos");
       setT2Months([]);
     },
@@ -1728,7 +2905,7 @@ function App() {
       letterSpacing: ".1em",
       marginBottom: "8px"
     }
-  }, "Meses \u2014 selecciona uno o varios, o deja en blanco para ver todo el a\xF1o"), /*#__PURE__*/React.createElement("div", {
+  }, "Meses"), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
       flexWrap: "wrap",
@@ -1746,19 +2923,22 @@ function App() {
       fontSize: "12px",
       fontFamily: "inherit",
       cursor: "pointer",
-      transition: "all .15s",
-      fontWeight: isAllMonths() ? 700 : 400,
-      background: isAllMonths() ? "#6d28d9" : "#fff",
-      borderColor: isAllMonths() ? "#6d28d9" : "#ddd6fe",
-      color: isAllMonths() ? "#fff" : "#9a7cc5"
+      fontWeight: t2Months.length === 0 ? 700 : 400,
+      background: t2Months.length === 0 ? "#6d28d9" : "#fff",
+      borderColor: t2Months.length === 0 ? "#6d28d9" : "#ddd6fe",
+      color: t2Months.length === 0 ? "#fff" : "#9a7cc5"
     }
-  }, "Todo el a\xF1o"), availableMonths.map(function (m) {
+  }, "Todo el a\xF1o"), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(function (m) {
     var active = t2Months.includes(m);
     return /*#__PURE__*/React.createElement("button", {
       key: m,
       className: "mbtn",
       onClick: function onClick() {
-        return toggleMonth(m);
+        return setT2Months(function (prev) {
+          return prev.includes(m) ? prev.filter(function (x) {
+            return x !== m;
+          }) : [].concat(_toConsumableArray(prev), [m]);
+        });
       },
       style: {
         padding: "6px 14px",
@@ -1767,7 +2947,6 @@ function App() {
         fontSize: "12px",
         fontFamily: "inherit",
         cursor: "pointer",
-        transition: "all .15s",
         fontWeight: active ? 700 : 400,
         background: active ? "#ede9fe" : "#fff",
         borderColor: active ? "#a78bfa" : "#ddd6fe",
@@ -1817,11 +2996,21 @@ function App() {
       fontSize: "12px",
       fontWeight: 600
     }
-  }, t2Cliente), t2Year !== "Todos" && /*#__PURE__*/React.createElement("span", {
+  }, t2Cliente), t2Resp !== "Todos" && /*#__PURE__*/React.createElement("span", {
     style: {
       background: "#f3e8ff",
       color: "#7c3aed",
       border: "1px solid #e9d5ff",
+      borderRadius: "6px",
+      padding: "3px 10px",
+      fontSize: "12px",
+      fontWeight: 600
+    }
+  }, t2Resp), t2Year !== "Todos" && /*#__PURE__*/React.createElement("span", {
+    style: {
+      background: "#f0fdf4",
+      color: "#15803d",
+      border: "1px solid #bbf7d0",
       borderRadius: "6px",
       padding: "3px 10px",
       fontSize: "12px",
@@ -1846,7 +3035,7 @@ function App() {
       color: "#9a7cc5",
       whiteSpace: "nowrap"
     }
-  }, t2List.length, " entradas \xB7\xA0", /*#__PURE__*/React.createElement("b", {
+  }, t2List.length, " entradas \xB7 ", /*#__PURE__*/React.createElement("b", {
     style: {
       color: "#6d28d9",
       fontFamily: "monospace",
@@ -1890,90 +3079,17 @@ function App() {
       }
     }, item.name));
   })), t2List.map(function (e) {
-    var s = SC[e.status] || SC.Pendiente;
-    return /*#__PURE__*/React.createElement("div", {
+    return /*#__PURE__*/React.createElement(EntryRow, {
       key: e.id,
-      className: "row",
-      style: {
-        display: "grid",
-        gridTemplateColumns: "1fr auto auto auto 64px",
-        alignItems: "center",
-        gap: "8px",
-        padding: "11px 14px",
-        background: "#fff",
-        borderRadius: "9px",
-        marginBottom: "6px",
-        border: "1.5px solid #f0ebff",
-        transition: "border-color .15s"
-      }
-    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: "13px",
-        color: "#1e1035",
-        lineHeight: 1.4
-      }
-    }, e.task), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: "11px",
-        color: "#b8a8d0",
-        marginTop: "2px"
-      }
-    }, e.cliente, " \xB7 ", e.responsable, " \xB7 ", fmtDate(e.date), e.fromExcel && /*#__PURE__*/React.createElement("span", {
-      style: {
-        marginLeft: 6,
-        fontSize: "10px",
-        background: "#f0fdf4",
-        color: "#15803d",
-        border: "1px solid #bbf7d0",
-        padding: "1px 5px",
-        borderRadius: "4px"
-      }
-    }, "Excel"))), /*#__PURE__*/React.createElement("span", {
-      style: {
-        padding: "3px 8px",
-        borderRadius: "5px",
-        fontSize: "11px",
-        fontWeight: 600,
-        background: s.bg,
-        color: s.text,
-        border: "1px solid ".concat(s.border),
-        whiteSpace: "nowrap"
-      }
-    }, e.status), /*#__PURE__*/React.createElement("span", {
-      style: {
-        padding: "3px 8px",
-        borderRadius: "5px",
-        fontSize: "11px",
-        background: "#f3e8ff",
-        color: "#7c3aed",
-        border: "1px solid #e9d5ff",
-        whiteSpace: "nowrap"
-      }
-    }, e.responsable), /*#__PURE__*/React.createElement("span", {
-      style: {
-        padding: "3px 8px",
-        borderRadius: "5px",
-        fontSize: "11px",
-        background: "#eef2ff",
-        color: "#4338ca",
-        border: "1px solid #e0e7ff",
-        whiteSpace: "nowrap"
-      }
-    }, e.cliente), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontFamily: "monospace",
-        fontSize: "13px",
-        fontWeight: 700,
-        color: "#6d28d9",
-        textAlign: "right",
-        whiteSpace: "nowrap"
-      }
-    }, fmtHours(e.hours)));
+      e: e,
+      showDel: false
+    });
   })))));
 }
-var root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(/*#__PURE__*/React.createElement(App, null));
-
+window.addEventListener('load', function() {
+  var root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(React.createElement(App));
+});
   </script>
 </body>
 </html>
