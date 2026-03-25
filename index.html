@@ -20,7 +20,6 @@
 </head>
 <body>
   <div id="root"></div>
-  <!-- Solo React — Firebase via REST, sin SDK externo -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
   <script>
@@ -810,7 +809,7 @@ function hoursFromString(s) {
   if (mM) return parseFloat(mM[1].replace(",", ".")) / 60;
   if (hM) return parseFloat(hM[1].replace(",", "."));
   var n = parseFloat(t.replace(",", "."));
-  return isNaN(n) ? 0 : n;
+  return isNaN(n) ? 0 : n / 60;
 }
 function initials(name) {
   return name.slice(0, 2).toUpperCase();
@@ -1639,11 +1638,175 @@ function BlockedDialog(_ref5) {
   }, "Entendido")));
 }
 
-// ── Delete Confirm Dialog ──
-function DeleteConfirmDialog(_ref6) {
-  var entry = _ref6.entry,
-    onConfirm = _ref6.onConfirm,
+// ── Stop Task Dialog ──
+function StopTaskDialog(_ref6) {
+  var elapsed = _ref6.elapsed,
+    onSave = _ref6.onSave,
     onClose = _ref6.onClose;
+  var _useState15 = useState("Realizado"),
+    _useState16 = _slicedToArray(_useState15, 2),
+    finalStatus = _useState16[0],
+    setFinalStatus = _useState16[1];
+  var hrs = Math.max(elapsed / 3600, 0.004);
+  function fmtE(s) {
+    return [Math.floor(s / 3600), Math.floor(s % 3600 / 60), s % 60].map(function (n) {
+      return String(n).padStart(2, "0");
+    }).join(":");
+  }
+  function fmtH(h) {
+    var m = Math.round(h * 60);
+    if (m < 1) return "<1m";
+    if (m < 60) return m + "m";
+    var hr = Math.floor(m / 60),
+      rm = m % 60;
+    return rm > 0 ? hr + "h " + rm + "m" : hr + "h";
+  }
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "fixed",
+      inset: 0,
+      background: "rgba(30,16,53,0.45)",
+      zIndex: 200,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "20px"
+    },
+    onClick: function onClick(e) {
+      if (e.target === e.currentTarget) onClose();
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "#fff",
+      borderRadius: "16px",
+      padding: "28px",
+      width: "100%",
+      maxWidth: "440px",
+      boxShadow: "0 8px 40px rgba(109,40,217,.18)",
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "32px",
+      marginBottom: "14px"
+    }
+  }, "\u23F9"), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontSize: "16px",
+      fontWeight: 700,
+      color: "#1e1035",
+      marginBottom: "8px"
+    }
+  }, "\xBFParar esta tarea?"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "#f8f5ff",
+      border: "1.5px solid #ede9fe",
+      borderRadius: "10px",
+      padding: "14px 16px",
+      marginBottom: "20px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "22px",
+      fontWeight: 700,
+      fontFamily: "monospace",
+      color: "#6d28d9",
+      marginBottom: "4px"
+    }
+  }, fmtE(elapsed)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "12px",
+      color: "#9a7cc5"
+    }
+  }, "Tiempo registrado: ", /*#__PURE__*/React.createElement("b", null, fmtH(hrs)))), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontSize: "13px",
+      color: "#6b5a8e",
+      marginBottom: "16px",
+      fontWeight: 600
+    }
+  }, "\xBFEn qu\xE9 estado la dejas?"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: "10px",
+      justifyContent: "center",
+      marginBottom: "22px"
+    }
+  }, [["Proceso", "🔄", "#a16207", "#fef9c3", "#fde68a"], ["Realizado", "✅", "#15803d", "#dcfce7", "#bbf7d0"], ["Pausado", "⏸", "#b91c1c", "#fee2e2", "#fecaca"]].map(function (_ref7) {
+    var _ref8 = _slicedToArray(_ref7, 5),
+      s = _ref8[0],
+      icon = _ref8[1],
+      tc = _ref8[2],
+      bg = _ref8[3],
+      border = _ref8[4];
+    return /*#__PURE__*/React.createElement("button", {
+      key: s,
+      onClick: function onClick() {
+        return setFinalStatus(s);
+      },
+      style: {
+        padding: "10px 16px",
+        borderRadius: "10px",
+        border: "2px solid ".concat(finalStatus === s ? tc : border),
+        background: finalStatus === s ? bg : "#fff",
+        color: tc,
+        fontFamily: "inherit",
+        fontSize: "13px",
+        fontWeight: finalStatus === s ? 700 : 500,
+        cursor: "pointer",
+        transition: "all .15s",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "4px",
+        minWidth: "80px"
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: "18px"
+      }
+    }, icon), s);
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: "10px",
+      justifyContent: "center"
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: onClose,
+    style: {
+      background: "#f3f0fb",
+      color: "#9a7cc5",
+      border: "1.5px solid #ddd6fe",
+      borderRadius: "8px",
+      padding: "10px 20px",
+      fontSize: "13px",
+      fontFamily: "inherit",
+      cursor: "pointer"
+    }
+  }, "Cancelar"), /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return onSave(hrs, finalStatus);
+    },
+    style: {
+      background: "#6d28d9",
+      color: "#fff",
+      border: "none",
+      borderRadius: "8px",
+      padding: "10px 24px",
+      fontSize: "13px",
+      fontFamily: "inherit",
+      cursor: "pointer",
+      fontWeight: 700
+    }
+  }, "Guardar y parar"))));
+}
+
+// ── Delete Confirm Dialog ──
+function DeleteConfirmDialog(_ref9) {
+  var entry = _ref9.entry,
+    onConfirm = _ref9.onConfirm,
+    onClose = _ref9.onClose;
   return /*#__PURE__*/React.createElement("div", {
     style: {
       position: "fixed",
@@ -1748,134 +1911,138 @@ function DeleteConfirmDialog(_ref6) {
 
 // ── Main App ──
 function App() {
-  var _useState15 = useState(false),
-    _useState16 = _slicedToArray(_useState15, 2),
-    fbReady = _useState16[0],
-    setFbReady = _useState16[1];
-  var _useState17 = useState(null),
+  var _useState17 = useState(false),
     _useState18 = _slicedToArray(_useState17, 2),
-    currentUser = _useState18[0],
-    setCurrentUser = _useState18[1];
-  var _useState19 = useState([]),
+    fbReady = _useState18[0],
+    setFbReady = _useState18[1];
+  var _useState19 = useState(null),
     _useState20 = _slicedToArray(_useState19, 2),
-    entries = _useState20[0],
-    setEntries = _useState20[1];
-  var _useState21 = useState(DEFAULT_CLIENTES),
+    currentUser = _useState20[0],
+    setCurrentUser = _useState20[1];
+  var _useState21 = useState([]),
     _useState22 = _slicedToArray(_useState21, 2),
-    clientes = _useState22[0],
-    setClientes = _useState22[1];
-  var _useState23 = useState(DEFAULT_RESPONSABLES),
+    entries = _useState22[0],
+    setEntries = _useState22[1];
+  var _useState23 = useState(DEFAULT_CLIENTES),
     _useState24 = _slicedToArray(_useState23, 2),
-    resps = _useState24[0],
-    setResps = _useState24[1];
+    clientes = _useState24[0],
+    setClientes = _useState24[1];
+  var _useState25 = useState(DEFAULT_RESPONSABLES),
+    _useState26 = _slicedToArray(_useState25, 2),
+    resps = _useState26[0],
+    setResps = _useState26[1];
 
   // Timer (local per session — not synced)
-  var _useState25 = useState("timer"),
-    _useState26 = _slicedToArray(_useState25, 2),
-    mode = _useState26[0],
-    setMode = _useState26[1];
-  var _useState27 = useState(false),
+  var _useState27 = useState("timer"),
     _useState28 = _slicedToArray(_useState27, 2),
-    running = _useState28[0],
-    setRunning = _useState28[1];
-  var _useState29 = useState(0),
+    mode = _useState28[0],
+    setMode = _useState28[1];
+  var _useState29 = useState(false),
     _useState30 = _slicedToArray(_useState29, 2),
-    elapsed = _useState30[0],
-    setElapsed = _useState30[1];
-  var _useState31 = useState(null),
+    running = _useState30[0],
+    setRunning = _useState30[1];
+  var _useState31 = useState(0),
     _useState32 = _slicedToArray(_useState31, 2),
-    startTs = _useState32[0],
-    setStartTs = _useState32[1];
+    elapsed = _useState32[0],
+    setElapsed = _useState32[1];
   var _useState33 = useState(null),
     _useState34 = _slicedToArray(_useState33, 2),
-    activeEntryId = _useState34[0],
-    setActiveEntryId = _useState34[1];
-  var _useState35 = useState(""),
+    startTs = _useState34[0],
+    setStartTs = _useState34[1];
+  var _useState35 = useState(null),
     _useState36 = _slicedToArray(_useState35, 2),
-    task = _useState36[0],
-    setTask = _useState36[1];
-  var _useState37 = useState(false),
+    activeEntryId = _useState36[0],
+    setActiveEntryId = _useState36[1];
+  var _useState37 = useState(""),
     _useState38 = _slicedToArray(_useState37, 2),
-    taskError = _useState38[0],
-    setTaskError = _useState38[1];
-  var _useState39 = useState(DEFAULT_CLIENTES[0]),
+    task = _useState38[0],
+    setTask = _useState38[1];
+  var _useState39 = useState(false),
     _useState40 = _slicedToArray(_useState39, 2),
-    cliente = _useState40[0],
-    setCliente = _useState40[1];
-  var _useState41 = useState(null),
+    taskError = _useState40[0],
+    setTaskError = _useState40[1];
+  var _useState41 = useState(DEFAULT_CLIENTES[0]),
     _useState42 = _slicedToArray(_useState41, 2),
-    resp = _useState42[0],
-    setResp = _useState42[1];
-  var _useState43 = useState("Realizado"),
+    cliente = _useState42[0],
+    setCliente = _useState42[1];
+  var _useState43 = useState(null),
     _useState44 = _slicedToArray(_useState43, 2),
-    timerStatus = _useState44[0],
-    setTimerStatus = _useState44[1];
-  var _useState45 = useState(""),
+    resp = _useState44[0],
+    setResp = _useState44[1];
+  var _useState45 = useState("Realizado"),
     _useState46 = _slicedToArray(_useState45, 2),
-    manualHours = _useState46[0],
-    setManualHours = _useState46[1];
-  var _useState47 = useState("Pendiente"),
+    timerStatus = _useState46[0],
+    setTimerStatus = _useState46[1];
+  var _useState47 = useState(""),
     _useState48 = _slicedToArray(_useState47, 2),
-    manualStatus = _useState48[0],
-    setManualStatus = _useState48[1];
+    manualHours = _useState48[0],
+    setManualHours = _useState48[1];
+  var _useState49 = useState("Pendiente"),
+    _useState50 = _slicedToArray(_useState49, 2),
+    manualStatus = _useState50[0],
+    setManualStatus = _useState50[1];
 
   // Filters
-  var _useState49 = useState("Todos"),
-    _useState50 = _slicedToArray(_useState49, 2),
-    fMes = _useState50[0],
-    setFMes = _useState50[1];
   var _useState51 = useState("Todos"),
     _useState52 = _slicedToArray(_useState51, 2),
-    fCliente = _useState52[0],
-    setFCliente = _useState52[1];
+    fMes = _useState52[0],
+    setFMes = _useState52[1];
   var _useState53 = useState("Todos"),
     _useState54 = _slicedToArray(_useState53, 2),
-    fResp = _useState54[0],
-    setFResp = _useState54[1];
+    fCliente = _useState54[0],
+    setFCliente = _useState54[1];
   var _useState55 = useState("Todos"),
     _useState56 = _slicedToArray(_useState55, 2),
-    fStatus = _useState56[0],
-    setFStatus = _useState56[1];
+    fResp = _useState56[0],
+    setFResp = _useState56[1];
   var _useState57 = useState("Todos"),
     _useState58 = _slicedToArray(_useState57, 2),
-    t2Cliente = _useState58[0],
-    setT2Cliente = _useState58[1];
+    fStatus = _useState58[0],
+    setFStatus = _useState58[1];
   var _useState59 = useState("Todos"),
     _useState60 = _slicedToArray(_useState59, 2),
-    t2Resp = _useState60[0],
-    setT2Resp = _useState60[1];
+    t2Cliente = _useState60[0],
+    setT2Cliente = _useState60[1];
   var _useState61 = useState("Todos"),
     _useState62 = _slicedToArray(_useState61, 2),
-    t2Year = _useState62[0],
-    setT2Year = _useState62[1];
-  var _useState63 = useState([]),
+    t2Resp = _useState62[0],
+    setT2Resp = _useState62[1];
+  var _useState63 = useState("Todos"),
     _useState64 = _slicedToArray(_useState63, 2),
-    t2Months = _useState64[0],
-    setT2Months = _useState64[1];
-  var _useState65 = useState("log"),
+    t2Year = _useState64[0],
+    setT2Year = _useState64[1];
+  var _useState65 = useState([]),
     _useState66 = _slicedToArray(_useState65, 2),
-    tab = _useState66[0],
-    setTab = _useState66[1];
-  var _useState67 = useState(""),
+    t2Months = _useState66[0],
+    setT2Months = _useState66[1];
+  var _useState67 = useState("log"),
     _useState68 = _slicedToArray(_useState67, 2),
-    toast = _useState68[0],
-    setToast = _useState68[1];
-  var _useState69 = useState(null),
+    tab = _useState68[0],
+    setTab = _useState68[1];
+  var _useState69 = useState(""),
     _useState70 = _slicedToArray(_useState69, 2),
-    editEntry = _useState70[0],
-    setEditEntry = _useState70[1];
+    toast = _useState70[0],
+    setToast = _useState70[1];
   var _useState71 = useState(null),
     _useState72 = _slicedToArray(_useState71, 2),
-    startDialog = _useState72[0],
-    setStartDialog = _useState72[1];
+    editEntry = _useState72[0],
+    setEditEntry = _useState72[1];
   var _useState73 = useState(null),
     _useState74 = _slicedToArray(_useState73, 2),
-    blockedDialog = _useState74[0],
-    setBlockedDialog = _useState74[1];
+    startDialog = _useState74[0],
+    setStartDialog = _useState74[1];
   var _useState75 = useState(null),
     _useState76 = _slicedToArray(_useState75, 2),
-    deleteConfirm = _useState76[0],
-    setDeleteConfirm = _useState76[1];
+    blockedDialog = _useState76[0],
+    setBlockedDialog = _useState76[1];
+  var _useState77 = useState(null),
+    _useState78 = _slicedToArray(_useState77, 2),
+    deleteConfirm = _useState78[0],
+    setDeleteConfirm = _useState78[1];
+  var _useState79 = useState(false),
+    _useState80 = _slicedToArray(_useState79, 2),
+    stopDialog = _useState80[0],
+    setStopDialog = _useState80[1];
   var timerRef = useRef(null);
   var taskRef = useRef(null);
   var skipNextWrite = useRef(false);
@@ -2048,19 +2215,23 @@ function App() {
     setActiveEntryId(null);
   }
   function stop() {
+    clearInterval(timerRef.current);
+    setStopDialog(true);
+  }
+  function confirmStop(hours, finalStatus) {
+    setStopDialog(false);
     setRunning(false);
-    var hours = Math.max(elapsed / 3600, 0.004);
     if (activeEntryId) {
       setEntries(function (p) {
         return p.map(function (e) {
           return e.id !== activeEntryId ? e : _objectSpread(_objectSpread({}, e), {}, {
             hours: (e.hours || 0) + hours,
-            status: "Realizado",
+            status: finalStatus,
             date: new Date().toISOString()
           });
         });
       });
-      showToast("✓ Tiempo registrado · tarea finalizada");
+      showToast("✓ Tiempo registrado · tarea " + finalStatus.toLowerCase());
     } else {
       setEntries(function (p) {
         return [{
@@ -2068,7 +2239,7 @@ function App() {
           task: task.trim(),
           cliente: cliente,
           responsable: resp || currentUser,
-          status: timerStatus,
+          status: finalStatus,
           hours: hours,
           date: new Date().toISOString()
         }].concat(_toConsumableArray(p));
@@ -2078,6 +2249,11 @@ function App() {
     setElapsed(0);
     setTask("");
     setActiveEntryId(null);
+  }
+  function cancelStop() {
+    setStopDialog(false);
+    setStartTs(Date.now() - elapsed * 1000);
+    setRunning(true);
   }
   function saveManual() {
     if (!task.trim()) {
@@ -2285,10 +2461,10 @@ function App() {
   if (!currentUser) return /*#__PURE__*/React.createElement(LoginScreen, {
     onLogin: handleLogin
   });
-  function EntryRow(_ref7) {
-    var e = _ref7.e,
-      _ref7$showDel = _ref7.showDel,
-      showDel = _ref7$showDel === void 0 ? true : _ref7$showDel;
+  function EntryRow(_ref0) {
+    var e = _ref0.e,
+      _ref0$showDel = _ref0.showDel,
+      showDel = _ref0$showDel === void 0 ? true : _ref0$showDel;
     var s = SC[e.status] || SC.Pendiente;
     var isActive = activeEntryId === e.id && running;
     var canStart = e.status === "Pendiente" || e.status === "Pausado";
@@ -2488,6 +2664,10 @@ function App() {
     onClose: function onClose() {
       return setDeleteConfirm(null);
     }
+  }), stopDialog && /*#__PURE__*/React.createElement(StopTaskDialog, {
+    elapsed: elapsed,
+    onSave: confirmStop,
+    onClose: cancelStop
   }), toast && /*#__PURE__*/React.createElement("div", {
     style: {
       position: "fixed",
@@ -2669,10 +2849,10 @@ function App() {
       borderRadius: "8px",
       marginBottom: "16px"
     }
-  }, [["timer", "⏱ Cronómetro"], ["manual", "✏️ Crear tarea"]].map(function (_ref8) {
-    var _ref9 = _slicedToArray(_ref8, 2),
-      m = _ref9[0],
-      lbl = _ref9[1];
+  }, [["timer", "⏱ Cronómetro"], ["manual", "✏️ Crear tarea"]].map(function (_ref1) {
+    var _ref10 = _slicedToArray(_ref1, 2),
+      m = _ref10[0],
+      lbl = _ref10[1];
     return /*#__PURE__*/React.createElement("button", {
       key: m,
       onClick: function onClick() {
@@ -2913,10 +3093,10 @@ function App() {
       border: "1.5px solid #ede9fe",
       marginBottom: "20px"
     }
-  }, [["log", "📋 Registro"], ["tabla", "📊 Por cliente y mes"]].map(function (_ref0) {
-    var _ref1 = _slicedToArray(_ref0, 2),
-      t = _ref1[0],
-      lbl = _ref1[1];
+  }, [["log", "📋 Registro"], ["tabla", "📊 Por cliente y mes"]].map(function (_ref11) {
+    var _ref12 = _slicedToArray(_ref11, 2),
+      t = _ref12[0],
+      lbl = _ref12[1];
     return /*#__PURE__*/React.createElement("button", {
       key: t,
       style: {
@@ -2954,13 +3134,13 @@ function App() {
     return v;
   }], ["Estado", fStatus, setFStatus, ["Todos"].concat(STATUSES), function (v) {
     return v;
-  }]].map(function (_ref10) {
-    var _ref11 = _slicedToArray(_ref10, 5),
-      label = _ref11[0],
-      val = _ref11[1],
-      setter = _ref11[2],
-      opts = _ref11[3],
-      fmt = _ref11[4];
+  }]].map(function (_ref13) {
+    var _ref14 = _slicedToArray(_ref13, 5),
+      label = _ref14[0],
+      val = _ref14[1],
+      setter = _ref14[2],
+      opts = _ref14[3],
+      fmt = _ref14[4];
     return /*#__PURE__*/React.createElement("div", {
       key: label
     }, /*#__PURE__*/React.createElement("div", {
