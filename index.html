@@ -1539,7 +1539,7 @@ function StartTaskDialog(_ref4) {
       color: "#1e1035",
       marginBottom: "10px"
     }
-  }, "\xBFIniciar esta tarea?"), /*#__PURE__*/React.createElement("div", {
+  }, entry.status === "Pausado" ? "¿Reanudar esta tarea?" : entry.status === "Proceso" ? "¿Retomar esta tarea?" : "¿Iniciar esta tarea?"), /*#__PURE__*/React.createElement("div", {
     style: {
       background: "#f8f5ff",
       border: "1.5px solid #ede9fe",
@@ -2318,6 +2318,40 @@ function App() {
     setStartTs(Date.now() - elapsed * 1000);
     setRunning(true);
   }
+  // Pause the active task instantly — saves time, sets Pausado, no dialog
+  function pauseTask() {
+    clearInterval(timerRef.current);
+    setRunning(false);
+    setStopDialog(false);
+    var hours = Math.max(elapsed / 3600, 0.004);
+    if (activeEntryId) {
+      setEntries(function (p) {
+        return p.map(function (e) {
+          return e.id !== activeEntryId ? e : _objectSpread(_objectSpread({}, e), {}, {
+            hours: (e.hours || 0) + hours,
+            status: "Pausado",
+            date: new Date().toISOString()
+          });
+        });
+      });
+    } else {
+      setEntries(function (p) {
+        return [{
+          id: Date.now(),
+          task: task.trim(),
+          cliente: cliente,
+          responsable: resp || currentUser,
+          status: "Pausado",
+          hours: hours,
+          date: new Date().toISOString()
+        }].concat(_toConsumableArray(p));
+      });
+    }
+    setElapsed(0);
+    setTask("");
+    setActiveEntryId(null);
+    showToast("⏸ Tarea pausada");
+  }
   function saveManual() {
     if (!task.trim()) {
       setTaskError(true);
@@ -2388,13 +2422,16 @@ function App() {
   }
   function confirmStartTask(entry) {
     setStartDialog(null);
-    setEntries(function (p) {
-      return p.map(function (e) {
-        return e.id === entry.id ? _objectSpread(_objectSpread({}, e), {}, {
-          status: "Proceso"
-        }) : e;
+    // Mark as Proceso only if it was Pendiente/Pausado; keep Proceso as-is
+    if (entry.status === "Pendiente" || entry.status === "Pausado") {
+      setEntries(function (p) {
+        return p.map(function (e) {
+          return e.id === entry.id ? _objectSpread(_objectSpread({}, e), {}, {
+            status: "Proceso"
+          }) : e;
+        });
       });
-    });
+    }
     setMode("timer");
     setTask(entry.task);
     setCliente(entry.cliente);
@@ -2408,7 +2445,8 @@ function App() {
       top: 0,
       behavior: "smooth"
     });
-    showToast("⏱ Tarea iniciada");
+    var label = entry.status === "Pausado" ? "⏱ Tarea reanudada" : entry.status === "Proceso" ? "⏱ Retomando tarea" : "⏱ Tarea iniciada";
+    showToast(label);
   }
   var allYears = _toConsumableArray(new Set(entries.map(function (e) {
     return getYear(e.date);
@@ -2532,12 +2570,13 @@ function App() {
       showDel = _ref0$showDel === void 0 ? true : _ref0$showDel;
     var s = SC[e.status] || SC.Pendiente;
     var isActive = activeEntryId === e.id && running;
-    var canStart = e.status === "Pendiente" || e.status === "Pausado";
+    // Show play on any non-Realizado task that isn't currently running
+    var canPlay = e.status !== "Realizado" && !isActive;
     return /*#__PURE__*/React.createElement("div", {
       className: "row",
       style: {
         display: "grid",
-        gridTemplateColumns: "1fr auto auto auto 64px auto auto" + (showDel ? " auto" : ""),
+        gridTemplateColumns: "1fr auto auto auto auto auto auto" + (showDel ? " auto" : ""),
         alignItems: "center",
         gap: "8px",
         padding: "11px 14px",
@@ -2580,7 +2619,7 @@ function App() {
         borderRadius: "4px",
         animation: "pulse 1.4s infinite"
       }
-    }, "\u25CF en curso"))), /*#__PURE__*/React.createElement("span", {
+    }, "\u25CF en curso ", fmtElapsed(elapsed)))), /*#__PURE__*/React.createElement("span", {
       style: {
         padding: "3px 8px",
         borderRadius: "5px",
@@ -2614,7 +2653,7 @@ function App() {
     }, e.cliente), /*#__PURE__*/React.createElement("div", {
       style: {
         textAlign: "right",
-        minWidth: "80px"
+        minWidth: "72px"
       }
     }, /*#__PURE__*/React.createElement("span", {
       style: {
@@ -2640,16 +2679,63 @@ function App() {
         marginTop: "1px",
         cursor: "help"
       }
-    }, "\uD83D\uDCAC nota")), canStart ? /*#__PURE__*/React.createElement("button", {
+    }, "\uD83D\uDCAC nota")), isActive ?
+    /*#__PURE__*/
+    /* Task is running → show Pause button */
+    React.createElement("button", {
+      onClick: pauseTask,
+      title: "Pausar tarea",
+      style: {
+        display: "flex",
+        alignItems: "center",
+        gap: "4px",
+        background: "#fef9c3",
+        color: "#a16207",
+        border: "1.5px solid #fde68a",
+        borderRadius: "7px",
+        padding: "5px 10px",
+        fontSize: "11px",
+        fontFamily: "inherit",
+        cursor: "pointer",
+        fontWeight: 700,
+        whiteSpace: "nowrap"
+      },
+      onMouseEnter: function onMouseEnter(ev) {
+        ev.currentTarget.style.background = "#fde68a";
+      },
+      onMouseLeave: function onMouseLeave(ev) {
+        ev.currentTarget.style.background = "#fef9c3";
+      }
+    }, /*#__PURE__*/React.createElement("svg", {
+      width: "10",
+      height: "10",
+      viewBox: "0 0 10 10",
+      fill: "currentColor"
+    }, /*#__PURE__*/React.createElement("rect", {
+      x: "0",
+      y: "0",
+      width: "3.5",
+      height: "10",
+      rx: "1"
+    }), /*#__PURE__*/React.createElement("rect", {
+      x: "6.5",
+      y: "0",
+      width: "3.5",
+      height: "10",
+      rx: "1"
+    })), "Pausar") : canPlay ?
+    /*#__PURE__*/
+    /* Task can be started or resumed → show Play button */
+    React.createElement("button", {
       onClick: function onClick() {
         return tryStartTask(e);
       },
-      title: "Iniciar tarea",
+      title: e.status === "Pausado" ? "Reanudar tarea" : e.status === "Proceso" ? "Retomar tarea" : "Iniciar tarea",
       style: {
         display: "flex",
         alignItems: "center",
         gap: "5px",
-        background: running ? "#e5e7eb" : "#6d28d9",
+        background: running ? "#f3f4f6" : "#6d28d9",
         color: running ? "#9ca3af" : "#fff",
         border: "none",
         borderRadius: "7px",
@@ -2658,8 +2744,7 @@ function App() {
         fontFamily: "inherit",
         cursor: running ? "not-allowed" : "pointer",
         fontWeight: 700,
-        whiteSpace: "nowrap",
-        transition: "all .15s"
+        whiteSpace: "nowrap"
       },
       onMouseEnter: function onMouseEnter(ev) {
         if (!running) ev.currentTarget.style.background = "#7c3aed";
@@ -2674,7 +2759,7 @@ function App() {
       fill: "currentColor"
     }, /*#__PURE__*/React.createElement("path", {
       d: "M0 0l8 5-8 5V0z"
-    })), running ? "Bloqueado" : "Iniciar") : /*#__PURE__*/React.createElement("span", null), /*#__PURE__*/React.createElement("button", {
+    })), e.status === "Pausado" ? "Reanudar" : e.status === "Proceso" ? "Retomar" : "Iniciar") : /*#__PURE__*/React.createElement("span", null), /*#__PURE__*/React.createElement("button", {
       title: "Editar",
       onClick: function onClick() {
         return setEditEntry(e);
