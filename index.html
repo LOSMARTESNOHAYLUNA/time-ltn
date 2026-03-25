@@ -1200,15 +1200,30 @@ function EditModal(_ref3) {
     _useState10 = _slicedToArray(_useState1, 2),
     status = _useState10[0],
     setStatus = _useState10[1];
-  var initH = entry.hours ? Math.round(entry.hours * 60) < 60 ? Math.round(entry.hours * 60) + "m" : Math.floor(entry.hours) + "h" + (entry.hours % 1 > 0.01 ? " " + Math.round(entry.hours % 1 * 60) + "m" : "") : "";
-  var _useState11 = useState(initH),
+  var _useState11 = useState(entry.comments || ""),
     _useState12 = _slicedToArray(_useState11, 2),
-    hoursStr = _useState12[0],
-    setHoursStr = _useState12[1];
-  var _useState13 = useState(false),
+    comments = _useState12[0],
+    setComments = _useState12[1];
+  function toStr(h) {
+    if (!h || h === 0) return "";
+    var m = Math.round(h * 60);
+    if (m < 60) return m + "m";
+    var hr = Math.floor(m / 60),
+      rm = m % 60;
+    return rm > 0 ? hr + "h " + rm + "m" : hr + "h";
+  }
+  var _useState13 = useState(toStr(entry.hours)),
     _useState14 = _slicedToArray(_useState13, 2),
-    taskErr = _useState14[0],
-    setTaskErr = _useState14[1];
+    hoursStr = _useState14[0],
+    setHoursStr = _useState14[1];
+  var _useState15 = useState(toStr(entry.estimatedHours)),
+    _useState16 = _slicedToArray(_useState15, 2),
+    estStr = _useState16[0],
+    setEstStr = _useState16[1];
+  var _useState17 = useState(false),
+    _useState18 = _slicedToArray(_useState17, 2),
+    taskErr = _useState18[0],
+    setTaskErr = _useState18[1];
   var s2 = {
     background: "#f8f5ff",
     border: "1.5px solid #ddd6fe",
@@ -1220,18 +1235,22 @@ function EditModal(_ref3) {
     outline: "none",
     cursor: "pointer"
   };
+  var overTime = entry.estimatedHours && entry.hours > entry.estimatedHours;
   function save() {
     if (!task.trim()) {
       setTaskErr(true);
       return;
     }
     var h = hoursFromString(hoursStr);
+    var est = hoursFromString(estStr);
     onSave(_objectSpread(_objectSpread({}, entry), {}, {
       task: task.trim(),
       cliente: cliente,
       responsable: resp,
       status: status,
-      hours: h || entry.hours
+      hours: h || entry.hours,
+      estimatedHours: est || entry.estimatedHours || null,
+      comments: comments
     }));
   }
   return /*#__PURE__*/React.createElement("div", {
@@ -1254,8 +1273,10 @@ function EditModal(_ref3) {
       borderRadius: "16px",
       padding: "28px",
       width: "100%",
-      maxWidth: "520px",
-      boxShadow: "0 8px 40px rgba(109,40,217,.18)"
+      maxWidth: "540px",
+      boxShadow: "0 8px 40px rgba(109,40,217,.18)",
+      maxHeight: "90vh",
+      overflowY: "auto"
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1392,7 +1413,7 @@ function EditModal(_ref3) {
       letterSpacing: ".1em",
       marginBottom: "4px"
     }
-  }, "Tiempo (30m, 1h\u2026)"), /*#__PURE__*/React.createElement("input", {
+  }, "Tiempo real acumulado"), /*#__PURE__*/React.createElement("input", {
     value: hoursStr,
     onChange: function onChange(e) {
       return setHoursStr(e.target.value);
@@ -1401,8 +1422,50 @@ function EditModal(_ref3) {
       cursor: "text",
       width: "100%"
     }),
-    placeholder: "45m, 1h, 2h 30m"
-  })))), /*#__PURE__*/React.createElement("div", {
+    placeholder: "45m, 1h\u2026"
+  }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "10px",
+      color: "#b8a8d0",
+      fontWeight: 600,
+      textTransform: "uppercase",
+      letterSpacing: ".1em",
+      marginBottom: "4px"
+    }
+  }, "Tiempo estimado"), /*#__PURE__*/React.createElement("input", {
+    value: estStr,
+    onChange: function onChange(e) {
+      return setEstStr(e.target.value);
+    },
+    style: _objectSpread(_objectSpread({}, s2), {}, {
+      cursor: "text",
+      width: "100%"
+    }),
+    placeholder: "ej: 30m, 1h\u2026"
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "10px",
+      color: overTime ? "#b91c1c" : "#b8a8d0",
+      fontWeight: 600,
+      textTransform: "uppercase",
+      letterSpacing: ".1em",
+      marginBottom: "4px"
+    }
+  }, overTime ? "⚠️ Tiempo superado — ¿Por qué ha llevado más?" : "Comentarios (opcional)"), /*#__PURE__*/React.createElement("textarea", {
+    value: comments,
+    onChange: function onChange(e) {
+      return setComments(e.target.value);
+    },
+    style: _objectSpread(_objectSpread({}, s2), {}, {
+      cursor: "text",
+      width: "100%",
+      minHeight: "60px",
+      resize: "vertical",
+      borderColor: overTime && !comments ? "#fca5a5" : "#ddd6fe",
+      background: overTime && !comments ? "#fff5f5" : "#f8f5ff"
+    }),
+    placeholder: overTime ? "Explica por qué ha llevado más tiempo del estimado…" : "Notas adicionales…"
+  }))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
       gap: "10px",
@@ -1643,10 +1706,10 @@ function StopTaskDialog(_ref6) {
   var elapsed = _ref6.elapsed,
     onSave = _ref6.onSave,
     onClose = _ref6.onClose;
-  var _useState15 = useState("Realizado"),
-    _useState16 = _slicedToArray(_useState15, 2),
-    finalStatus = _useState16[0],
-    setFinalStatus = _useState16[1];
+  var _useState19 = useState("Realizado"),
+    _useState20 = _slicedToArray(_useState19, 2),
+    finalStatus = _useState20[0],
+    setFinalStatus = _useState20[1];
   var hrs = Math.max(elapsed / 3600, 0.004);
   function fmtE(s) {
     return [Math.floor(s / 3600), Math.floor(s % 3600 / 60), s % 60].map(function (n) {
@@ -1911,138 +1974,138 @@ function DeleteConfirmDialog(_ref9) {
 
 // ── Main App ──
 function App() {
-  var _useState17 = useState(false),
-    _useState18 = _slicedToArray(_useState17, 2),
-    fbReady = _useState18[0],
-    setFbReady = _useState18[1];
-  var _useState19 = useState(null),
-    _useState20 = _slicedToArray(_useState19, 2),
-    currentUser = _useState20[0],
-    setCurrentUser = _useState20[1];
-  var _useState21 = useState([]),
+  var _useState21 = useState(false),
     _useState22 = _slicedToArray(_useState21, 2),
-    entries = _useState22[0],
-    setEntries = _useState22[1];
-  var _useState23 = useState(DEFAULT_CLIENTES),
+    fbReady = _useState22[0],
+    setFbReady = _useState22[1];
+  var _useState23 = useState(null),
     _useState24 = _slicedToArray(_useState23, 2),
-    clientes = _useState24[0],
-    setClientes = _useState24[1];
-  var _useState25 = useState(DEFAULT_RESPONSABLES),
+    currentUser = _useState24[0],
+    setCurrentUser = _useState24[1];
+  var _useState25 = useState([]),
     _useState26 = _slicedToArray(_useState25, 2),
-    resps = _useState26[0],
-    setResps = _useState26[1];
+    entries = _useState26[0],
+    setEntries = _useState26[1];
+  var _useState27 = useState(DEFAULT_CLIENTES),
+    _useState28 = _slicedToArray(_useState27, 2),
+    clientes = _useState28[0],
+    setClientes = _useState28[1];
+  var _useState29 = useState(DEFAULT_RESPONSABLES),
+    _useState30 = _slicedToArray(_useState29, 2),
+    resps = _useState30[0],
+    setResps = _useState30[1];
 
   // Timer (local per session — not synced)
-  var _useState27 = useState("timer"),
-    _useState28 = _slicedToArray(_useState27, 2),
-    mode = _useState28[0],
-    setMode = _useState28[1];
-  var _useState29 = useState(false),
-    _useState30 = _slicedToArray(_useState29, 2),
-    running = _useState30[0],
-    setRunning = _useState30[1];
-  var _useState31 = useState(0),
+  var _useState31 = useState("timer"),
     _useState32 = _slicedToArray(_useState31, 2),
-    elapsed = _useState32[0],
-    setElapsed = _useState32[1];
-  var _useState33 = useState(null),
+    mode = _useState32[0],
+    setMode = _useState32[1];
+  var _useState33 = useState(false),
     _useState34 = _slicedToArray(_useState33, 2),
-    startTs = _useState34[0],
-    setStartTs = _useState34[1];
-  var _useState35 = useState(null),
+    running = _useState34[0],
+    setRunning = _useState34[1];
+  var _useState35 = useState(0),
     _useState36 = _slicedToArray(_useState35, 2),
-    activeEntryId = _useState36[0],
-    setActiveEntryId = _useState36[1];
-  var _useState37 = useState(""),
+    elapsed = _useState36[0],
+    setElapsed = _useState36[1];
+  var _useState37 = useState(null),
     _useState38 = _slicedToArray(_useState37, 2),
-    task = _useState38[0],
-    setTask = _useState38[1];
-  var _useState39 = useState(false),
+    startTs = _useState38[0],
+    setStartTs = _useState38[1];
+  var _useState39 = useState(null),
     _useState40 = _slicedToArray(_useState39, 2),
-    taskError = _useState40[0],
-    setTaskError = _useState40[1];
-  var _useState41 = useState(DEFAULT_CLIENTES[0]),
+    activeEntryId = _useState40[0],
+    setActiveEntryId = _useState40[1];
+  var _useState41 = useState(""),
     _useState42 = _slicedToArray(_useState41, 2),
-    cliente = _useState42[0],
-    setCliente = _useState42[1];
-  var _useState43 = useState(null),
+    task = _useState42[0],
+    setTask = _useState42[1];
+  var _useState43 = useState(false),
     _useState44 = _slicedToArray(_useState43, 2),
-    resp = _useState44[0],
-    setResp = _useState44[1];
-  var _useState45 = useState("Realizado"),
+    taskError = _useState44[0],
+    setTaskError = _useState44[1];
+  var _useState45 = useState(DEFAULT_CLIENTES[0]),
     _useState46 = _slicedToArray(_useState45, 2),
-    timerStatus = _useState46[0],
-    setTimerStatus = _useState46[1];
-  var _useState47 = useState(""),
+    cliente = _useState46[0],
+    setCliente = _useState46[1];
+  var _useState47 = useState(null),
     _useState48 = _slicedToArray(_useState47, 2),
-    manualHours = _useState48[0],
-    setManualHours = _useState48[1];
-  var _useState49 = useState("Pendiente"),
+    resp = _useState48[0],
+    setResp = _useState48[1];
+  var _useState49 = useState("Realizado"),
     _useState50 = _slicedToArray(_useState49, 2),
-    manualStatus = _useState50[0],
-    setManualStatus = _useState50[1];
+    timerStatus = _useState50[0],
+    setTimerStatus = _useState50[1];
+  var _useState51 = useState(""),
+    _useState52 = _slicedToArray(_useState51, 2),
+    manualHours = _useState52[0],
+    setManualHours = _useState52[1];
+  var _useState53 = useState("Pendiente"),
+    _useState54 = _slicedToArray(_useState53, 2),
+    manualStatus = _useState54[0],
+    setManualStatus = _useState54[1];
 
   // Filters
-  var _useState51 = useState("Todos"),
-    _useState52 = _slicedToArray(_useState51, 2),
-    fMes = _useState52[0],
-    setFMes = _useState52[1];
-  var _useState53 = useState("Todos"),
-    _useState54 = _slicedToArray(_useState53, 2),
-    fCliente = _useState54[0],
-    setFCliente = _useState54[1];
   var _useState55 = useState("Todos"),
     _useState56 = _slicedToArray(_useState55, 2),
-    fResp = _useState56[0],
-    setFResp = _useState56[1];
+    fMes = _useState56[0],
+    setFMes = _useState56[1];
   var _useState57 = useState("Todos"),
     _useState58 = _slicedToArray(_useState57, 2),
-    fStatus = _useState58[0],
-    setFStatus = _useState58[1];
+    fCliente = _useState58[0],
+    setFCliente = _useState58[1];
   var _useState59 = useState("Todos"),
     _useState60 = _slicedToArray(_useState59, 2),
-    t2Cliente = _useState60[0],
-    setT2Cliente = _useState60[1];
+    fResp = _useState60[0],
+    setFResp = _useState60[1];
   var _useState61 = useState("Todos"),
     _useState62 = _slicedToArray(_useState61, 2),
-    t2Resp = _useState62[0],
-    setT2Resp = _useState62[1];
+    fStatus = _useState62[0],
+    setFStatus = _useState62[1];
   var _useState63 = useState("Todos"),
     _useState64 = _slicedToArray(_useState63, 2),
-    t2Year = _useState64[0],
-    setT2Year = _useState64[1];
-  var _useState65 = useState([]),
+    t2Cliente = _useState64[0],
+    setT2Cliente = _useState64[1];
+  var _useState65 = useState("Todos"),
     _useState66 = _slicedToArray(_useState65, 2),
-    t2Months = _useState66[0],
-    setT2Months = _useState66[1];
-  var _useState67 = useState("log"),
+    t2Resp = _useState66[0],
+    setT2Resp = _useState66[1];
+  var _useState67 = useState("Todos"),
     _useState68 = _slicedToArray(_useState67, 2),
-    tab = _useState68[0],
-    setTab = _useState68[1];
-  var _useState69 = useState(""),
+    t2Year = _useState68[0],
+    setT2Year = _useState68[1];
+  var _useState69 = useState([]),
     _useState70 = _slicedToArray(_useState69, 2),
-    toast = _useState70[0],
-    setToast = _useState70[1];
-  var _useState71 = useState(null),
+    t2Months = _useState70[0],
+    setT2Months = _useState70[1];
+  var _useState71 = useState("log"),
     _useState72 = _slicedToArray(_useState71, 2),
-    editEntry = _useState72[0],
-    setEditEntry = _useState72[1];
-  var _useState73 = useState(null),
+    tab = _useState72[0],
+    setTab = _useState72[1];
+  var _useState73 = useState(""),
     _useState74 = _slicedToArray(_useState73, 2),
-    startDialog = _useState74[0],
-    setStartDialog = _useState74[1];
+    toast = _useState74[0],
+    setToast = _useState74[1];
   var _useState75 = useState(null),
     _useState76 = _slicedToArray(_useState75, 2),
-    blockedDialog = _useState76[0],
-    setBlockedDialog = _useState76[1];
+    editEntry = _useState76[0],
+    setEditEntry = _useState76[1];
   var _useState77 = useState(null),
     _useState78 = _slicedToArray(_useState77, 2),
-    deleteConfirm = _useState78[0],
-    setDeleteConfirm = _useState78[1];
-  var _useState79 = useState(false),
+    startDialog = _useState78[0],
+    setStartDialog = _useState78[1];
+  var _useState79 = useState(null),
     _useState80 = _slicedToArray(_useState79, 2),
-    stopDialog = _useState80[0],
-    setStopDialog = _useState80[1];
+    blockedDialog = _useState80[0],
+    setBlockedDialog = _useState80[1];
+  var _useState81 = useState(null),
+    _useState82 = _slicedToArray(_useState81, 2),
+    deleteConfirm = _useState82[0],
+    setDeleteConfirm = _useState82[1];
+  var _useState83 = useState(false),
+    _useState84 = _slicedToArray(_useState83, 2),
+    stopDialog = _useState84[0],
+    setStopDialog = _useState84[1];
   var timerRef = useRef(null);
   var taskRef = useRef(null);
   var skipNextWrite = useRef(false);
@@ -2261,7 +2324,7 @@ function App() {
       if (taskRef.current) taskRef.current.focus();
       return;
     }
-    var h = hoursFromString(manualHours);
+    var est = hoursFromString(manualHours);
     setEntries(function (p) {
       return [{
         id: Date.now(),
@@ -2269,8 +2332,10 @@ function App() {
         cliente: cliente,
         responsable: resp || currentUser,
         status: manualStatus,
-        hours: h || 0.25,
-        date: new Date().toISOString()
+        hours: 0,
+        estimatedHours: est || null,
+        date: new Date().toISOString(),
+        comments: ""
       }].concat(_toConsumableArray(p));
     });
     setTask("");
@@ -2546,16 +2611,36 @@ function App() {
         border: "1px solid #e0e7ff",
         whiteSpace: "nowrap"
       }
-    }, e.cliente), /*#__PURE__*/React.createElement("span", {
+    }, e.cliente), /*#__PURE__*/React.createElement("div", {
+      style: {
+        textAlign: "right",
+        minWidth: "80px"
+      }
+    }, /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: "monospace",
         fontSize: "13px",
         fontWeight: 700,
-        color: "#6d28d9",
-        textAlign: "right",
+        color: e.estimatedHours && e.hours > e.estimatedHours ? "#dc2626" : "#6d28d9",
         whiteSpace: "nowrap"
       }
-    }, fmtHours(e.hours)), canStart ? /*#__PURE__*/React.createElement("button", {
+    }, e.hours > 0 ? fmtHours(e.hours) : "—"), e.estimatedHours && /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "10px",
+        color: e.hours > e.estimatedHours ? "#dc2626" : "#9a7cc5",
+        whiteSpace: "nowrap",
+        marginTop: "2px"
+      }
+    }, "est. ", fmtHours(e.estimatedHours), e.hours > e.estimatedHours ? " ⚠️" : ""), e.comments && /*#__PURE__*/React.createElement("div", {
+      title: e.comments,
+      style: {
+        fontSize: "10px",
+        color: "#a78bfa",
+        whiteSpace: "nowrap",
+        marginTop: "1px",
+        cursor: "help"
+      }
+    }, "\uD83D\uDCAC nota")), canStart ? /*#__PURE__*/React.createElement("button", {
       onClick: function onClick() {
         return tryStartTask(e);
       },
