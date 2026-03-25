@@ -815,68 +815,22 @@ function initials(name) {
   return name.slice(0, 2).toUpperCase();
 }
 
-// ── Firebase REST API (sin SDK, sin problemas de carga) ──
-var FB_PROJECT = "timetracker-ltn";
-var FB_KEY = "AIzaSyBiMJCGP9L5x3qBTbD2EUZAyMEOS7v8uz8";
-var FB_URL = "https://firestore.googleapis.com/v1/projects/" + FB_PROJECT + "/databases/(default)/documents/timetracker/main?key=" + FB_KEY;
-function fbRead() {
-  return _fbRead.apply(this, arguments);
+// ── Firestore REST API (sin SDK, funciona en cualquier hosting) ──
+var _FB_URL = "https://firestore.googleapis.com/v1/projects/timetracker-ltn/databases/(default)/documents/timetracker/main?key=AIzaSyBiMJCGP9L5x3qBTbD2EUZAyMEOS7v8uz8";
+function fbWrite(_x) {
+  return _fbWrite.apply(this, arguments);
 }
-function _fbRead() {
-  _fbRead = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
-    var _d$fields$entries, _d$fields$clientes, _d$fields$resps, r, d, _t;
+function _fbWrite() {
+  _fbWrite = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(data) {
+    var _t2;
     return _regenerator().w(function (_context2) {
       while (1) switch (_context2.p = _context2.n) {
         case 0:
           _context2.p = 0;
           _context2.n = 1;
-          return fetch(FB_URL);
-        case 1:
-          r = _context2.v;
-          if (r.ok) {
-            _context2.n = 2;
-            break;
-          }
-          return _context2.a(2, null);
-        case 2:
-          _context2.n = 3;
-          return r.json();
-        case 3:
-          d = _context2.v;
-          if (d.fields) {
-            _context2.n = 4;
-            break;
-          }
-          return _context2.a(2, null);
-        case 4:
-          return _context2.a(2, {
-            entries: JSON.parse(((_d$fields$entries = d.fields.entries) === null || _d$fields$entries === void 0 ? void 0 : _d$fields$entries.stringValue) || "[]"),
-            clientes: JSON.parse(((_d$fields$clientes = d.fields.clientes) === null || _d$fields$clientes === void 0 ? void 0 : _d$fields$clientes.stringValue) || "[]"),
-            resps: JSON.parse(((_d$fields$resps = d.fields.resps) === null || _d$fields$resps === void 0 ? void 0 : _d$fields$resps.stringValue) || "[]")
-          });
-        case 5:
-          _context2.p = 5;
-          _t = _context2.v;
-          console.error("fbRead error:", _t);
-          return _context2.a(2, null);
-      }
-    }, _callee2, null, [[0, 5]]);
-  }));
-  return _fbRead.apply(this, arguments);
-}
-function fbWrite(_x) {
-  return _fbWrite.apply(this, arguments);
-} // ── Login ──
-function _fbWrite() {
-  _fbWrite = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(data) {
-    var _t2;
-    return _regenerator().w(function (_context3) {
-      while (1) switch (_context3.p = _context3.n) {
-        case 0:
-          _context3.p = 0;
-          _context3.n = 1;
-          return fetch(FB_URL, {
+          return fetch(_FB_URL, {
             method: "PATCH",
+            credentials: "omit",
             headers: {
               "Content-Type": "application/json"
             },
@@ -898,18 +852,63 @@ function _fbWrite() {
             })
           });
         case 1:
-          _context3.n = 3;
+          _context2.n = 3;
           break;
         case 2:
-          _context3.p = 2;
-          _t2 = _context3.v;
+          _context2.p = 2;
+          _t2 = _context2.v;
           console.error("fbWrite error:", _t2);
         case 3:
-          return _context3.a(2);
+          return _context2.a(2);
       }
-    }, _callee3, null, [[0, 2]]);
+    }, _callee2, null, [[0, 2]]);
   }));
   return _fbWrite.apply(this, arguments);
+}
+function fbRead() {
+  return _fbRead.apply(this, arguments);
+} // ── Login ──
+function _fbRead() {
+  _fbRead = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
+    var _d$fields$entries, _d$fields$clientes, _d$fields$resps, r, d, _t3;
+    return _regenerator().w(function (_context3) {
+      while (1) switch (_context3.p = _context3.n) {
+        case 0:
+          _context3.p = 0;
+          _context3.n = 1;
+          return fetch(_FB_URL);
+        case 1:
+          r = _context3.v;
+          if (r.ok) {
+            _context3.n = 2;
+            break;
+          }
+          return _context3.a(2, null);
+        case 2:
+          _context3.n = 3;
+          return r.json();
+        case 3:
+          d = _context3.v;
+          if (d.fields) {
+            _context3.n = 4;
+            break;
+          }
+          return _context3.a(2, null);
+        case 4:
+          return _context3.a(2, {
+            entries: JSON.parse(((_d$fields$entries = d.fields.entries) === null || _d$fields$entries === void 0 ? void 0 : _d$fields$entries.stringValue) || "[]"),
+            clientes: JSON.parse(((_d$fields$clientes = d.fields.clientes) === null || _d$fields$clientes === void 0 ? void 0 : _d$fields$clientes.stringValue) || "[]"),
+            resps: JSON.parse(((_d$fields$resps = d.fields.resps) === null || _d$fields$resps === void 0 ? void 0 : _d$fields$resps.stringValue) || "[]")
+          });
+        case 5:
+          _context3.p = 5;
+          _t3 = _context3.v;
+          console.error("fbRead error:", _t3);
+          return _context3.a(2, null);
+      }
+    }, _callee3, null, [[0, 5]]);
+  }));
+  return _fbRead.apply(this, arguments);
 }
 function LoginScreen(_ref) {
   var onLogin = _ref.onLogin;
@@ -1706,7 +1705,7 @@ function StopTaskDialog(_ref6) {
   var elapsed = _ref6.elapsed,
     onSave = _ref6.onSave,
     onClose = _ref6.onClose;
-  var _useState19 = useState("Realizado"),
+  var _useState19 = useState("Proceso"),
     _useState20 = _slicedToArray(_useState19, 2),
     finalStatus = _useState20[0],
     setFinalStatus = _useState20[1];
@@ -1791,11 +1790,12 @@ function StopTaskDialog(_ref6) {
   }, "\xBFEn qu\xE9 estado la dejas?"), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
-      gap: "10px",
+      gap: "8px",
       justifyContent: "center",
-      marginBottom: "22px"
+      marginBottom: "22px",
+      flexWrap: "wrap"
     }
-  }, [["Proceso", "🔄", "#a16207", "#fef9c3", "#fde68a"], ["Realizado", "✅", "#15803d", "#dcfce7", "#bbf7d0"], ["Pausado", "⏸", "#b91c1c", "#fee2e2", "#fecaca"]].map(function (_ref7) {
+  }, [["Pendiente", "🕐", "#6d28d9", "#ede9fe", "#ddd6fe"], ["Proceso", "🔄", "#a16207", "#fef9c3", "#fde68a"], ["Realizado", "✅", "#15803d", "#dcfce7", "#bbf7d0"], ["Pausado", "⏸", "#b91c1c", "#fee2e2", "#fecaca"]].map(function (_ref7) {
     var _ref8 = _slicedToArray(_ref7, 5),
       s = _ref8[0],
       icon = _ref8[1],
@@ -2032,7 +2032,7 @@ function App() {
     _useState48 = _slicedToArray(_useState47, 2),
     resp = _useState48[0],
     setResp = _useState48[1];
-  var _useState49 = useState("Realizado"),
+  var _useState49 = useState("Proceso"),
     _useState50 = _slicedToArray(_useState49, 2),
     timerStatus = _useState50[0],
     setTimerStatus = _useState50[1];
@@ -2109,26 +2109,26 @@ function App() {
   var timerRef = useRef(null);
   var taskRef = useRef(null);
   var skipNextWrite = useRef(false);
+  var lastTs = useRef(null);
   var pollRef = useRef(null);
-  var lastUpdatedAt = useRef(null);
 
-  // Initial load + polling for changes from other users (every 8s)
+  // Initial load + poll every 8s for changes from other users
   useEffect(function () {
     function load(_x2) {
       return _load.apply(this, arguments);
     }
     function _load() {
       _load = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(isFirst) {
-        var d, _raw$fields, raw, ts, ls, s;
+        var d, _d2$fields, r2, d2, ts, ls, s, _t;
         return _regenerator().w(function (_context) {
-          while (1) switch (_context.n) {
+          while (1) switch (_context.p = _context.n) {
             case 0:
               _context.n = 1;
               return fbRead();
             case 1:
               d = _context.v;
               if (!d) {
-                _context.n = 8;
+                _context.n = 10;
                 break;
               }
               if (!isFirst) {
@@ -2139,6 +2139,7 @@ function App() {
                 _context.n = 2;
                 break;
               }
+              skipNextWrite.current = true;
               setEntries(d.entries);
               if (d.clientes) setClientes(d.clientes);
               if (d.resps) setResps(d.resps);
@@ -2155,44 +2156,53 @@ function App() {
               setEntries(EXCEL_DATA);
             case 4:
               setFbReady(true);
-              _context.n = 7;
+              _context.n = 9;
               break;
             case 5:
+              _context.p = 5;
               _context.n = 6;
-              return fetch(FB_URL + "&fields=fields.updatedAt").then(function (r) {
-                return r.json();
-              }).catch(function () {
-                return null;
-              });
+              return fetch(_FB_URL + "&fields=fields.updatedAt");
             case 6:
-              raw = _context.v;
-              ts = raw === null || raw === void 0 || (_raw$fields = raw.fields) === null || _raw$fields === void 0 || (_raw$fields = _raw$fields.updatedAt) === null || _raw$fields === void 0 ? void 0 : _raw$fields.stringValue;
-              if (ts && ts !== lastUpdatedAt.current) {
-                lastUpdatedAt.current = ts;
+              r2 = _context.v;
+              _context.n = 7;
+              return r2.json();
+            case 7:
+              d2 = _context.v;
+              ts = d2 === null || d2 === void 0 || (_d2$fields = d2.fields) === null || _d2$fields === void 0 || (_d2$fields = _d2$fields.updatedAt) === null || _d2$fields === void 0 ? void 0 : _d2$fields.stringValue;
+              if (ts && ts !== lastTs.current) {
+                lastTs.current = ts;
                 skipNextWrite.current = true;
                 if (d.entries) setEntries(d.entries);
                 if (d.clientes) setClientes(d.clientes);
                 if (d.resps) setResps(d.resps);
               }
-            case 7:
               _context.n = 9;
               break;
             case 8:
+              _context.p = 8;
+              _t = _context.v;
+            case 9:
+              _context.n = 11;
+              break;
+            case 10:
               if (isFirst) {
-                // Firebase not reachable — use localStorage fallback
-                ls = localStorage.getItem("ltn-tt-fallback");
-                if (ls) {
-                  s = JSON.parse(ls);
-                  setEntries(s.entries || EXCEL_DATA);
-                  if (s.clientes) setClientes(s.clientes);
-                  if (s.resps) setResps(s.resps);
-                } else setEntries(EXCEL_DATA);
+                try {
+                  ls = localStorage.getItem("ltn-tt-fallback");
+                  if (ls) {
+                    s = JSON.parse(ls);
+                    setEntries(s.entries || EXCEL_DATA);
+                    if (s.clientes) setClientes(s.clientes);
+                    if (s.resps) setResps(s.resps);
+                  } else setEntries(EXCEL_DATA);
+                } catch (e) {
+                  setEntries(EXCEL_DATA);
+                }
                 setFbReady(true);
               }
-            case 9:
+            case 11:
               return _context.a(2);
           }
-        }, _callee);
+        }, _callee, null, [[5, 8]]);
       }));
       return _load.apply(this, arguments);
     }
@@ -2221,10 +2231,7 @@ function App() {
       entries: entries,
       clientes: clientes,
       resps: resps
-    }).then(function () {
-      lastUpdatedAt.current = new Date().toISOString();
     });
-    // Also save to localStorage as fallback
     try {
       localStorage.setItem("ltn-tt-fallback", JSON.stringify({
         entries: entries,
@@ -2266,11 +2273,6 @@ function App() {
     setResp(name);
   }
   function play() {
-    if (!task.trim()) {
-      setTaskError(true);
-      if (taskRef.current) taskRef.current.focus();
-      return;
-    }
     setTaskError(false);
     setStartTs(Date.now());
     setElapsed(0);
@@ -2299,7 +2301,7 @@ function App() {
       setEntries(function (p) {
         return [{
           id: Date.now(),
-          task: task.trim(),
+          task: task.trim() || "(sin título)",
           cliente: cliente,
           responsable: resp || currentUser,
           status: finalStatus,
@@ -2338,7 +2340,7 @@ function App() {
       setEntries(function (p) {
         return [{
           id: Date.now(),
-          task: task.trim(),
+          task: task.trim() || "(sin título)",
           cliente: cliente,
           responsable: resp || currentUser,
           status: "Pausado",
@@ -3060,22 +3062,24 @@ function App() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "10px",
-      color: taskError ? "#b91c1c" : "#b8a8d0",
+      color: "#b8a8d0",
       fontWeight: 600,
       textTransform: "uppercase",
       letterSpacing: ".1em",
       marginBottom: "4px"
     }
-  }, "Descripci\xF3n ", taskError && /*#__PURE__*/React.createElement("b", null, "\u2014 obligatorio")), /*#__PURE__*/React.createElement("input", {
+  }, "Descripci\xF3n ", /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: "#c4b5fd",
+      fontWeight: 400
+    }
+  }, "(puedes a\xF1adirla despu\xE9s)")), /*#__PURE__*/React.createElement("input", {
     ref: taskRef,
-    className: taskError ? "shake" : "",
     style: _objectSpread(_objectSpread({}, sel), {}, {
       cursor: running && activeEntryId ? "default" : "text",
-      width: "100%",
-      borderColor: taskError ? "#fca5a5" : "#ddd6fe",
-      background: taskError ? "#fff5f5" : "#f8f5ff"
+      width: "100%"
     }),
-    placeholder: mode === "manual" ? "Describe la tarea a asignar…" : "¿En qué estás trabajando?",
+    placeholder: mode === "manual" ? "Describe la tarea a asignar…" : "¿En qué estás trabajando? (opcional)",
     value: task,
     onChange: function onChange(e) {
       if (running && activeEntryId) return;
