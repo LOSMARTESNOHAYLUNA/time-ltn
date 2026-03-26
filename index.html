@@ -23,33 +23,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
   <script>
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
-function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i.return) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
-function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-var _React = React,
-  useState = _React.useState,
-  useEffect = _React.useEffect,
-  useRef = _React.useRef;
+const {
+  useState,
+  useEffect,
+  useRef
+} = React;
 
 // ── Empresas ──
-var COMPANIES = {
+const COMPANIES = {
   ltn: {
     key: "ltn",
     name: "Lidera tu Negocio",
@@ -64,15 +45,15 @@ var COMPANIES = {
     color: "#0f172a",
     accent: "#f59e0b",
     users: ["Sheila", "Juli", "Carla", "Mati", "Elena", "Laura", "Estefanía", "Jessy", "Paola"],
-    defaultClientes: ["Otro"]
+    defaultClientes: ["Kawi Piscinas", "ROMIVIC", "Fábrica de Sonrisas", "Medea Estética", "Lorenzo Arquitectura", "DocRys", "Seguí Arquitectos", "FisioDomicili", "CleanUp", "Avecan", "SERDOC", "OLVISSA", "Otro"]
   }
 };
-var DEFAULT_CLIENTES = ["Medea", "Maraver", "Kawi", "Academia Premium", "Farmacia Curiel", "Federopticos", "Beatriz Zaragoza", "Aflamas", "Recoambiente", "Otro"];
-var DEFAULT_RESPONSABLES = ["Carla", "Juli", "Mati", "Elena"];
-var STATUSES = ["Pendiente", "Proceso", "Realizado", "Pausado"];
-var MONTH_NAMES = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-var MONTH_SHORT = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
-var USER_COLORS = {
+const DEFAULT_CLIENTES = ["Medea", "Maraver", "Kawi", "Academia Premium", "Farmacia Curiel", "Federopticos", "Beatriz Zaragoza", "Aflamas", "Recoambiente", "Otro"];
+const DEFAULT_RESPONSABLES = ["Carla", "Juli", "Mati", "Elena"];
+const STATUSES = ["Pendiente", "Proceso", "Realizado", "Pausado"];
+const MONTH_NAMES = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+const MONTH_SHORT = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+const USER_COLORS = {
   Carla: {
     bg: "#fce7f3",
     text: "#be185d",
@@ -128,7 +109,7 @@ var USER_COLORS = {
     avatar: "#a855f7"
   }
 };
-var SC = {
+const SC = {
   Realizado: {
     bg: "#dcfce7",
     text: "#15803d",
@@ -150,7 +131,7 @@ var SC = {
     border: "#fecaca"
   }
 };
-var EXCEL_DATA = [{
+const EXCEL_DATA = [{
   id: 1001,
   task: "Maribel solicitó foto de video para anuncio de revista y pantalla",
   cliente: "Farmacia Curiel",
@@ -826,16 +807,14 @@ function getMonth(iso) {
   return new Date(iso).getMonth();
 }
 function fmtElapsed(s) {
-  return [Math.floor(s / 3600), Math.floor(s % 3600 / 60), s % 60].map(function (n) {
-    return String(n).padStart(2, "0");
-  }).join(":");
+  return [Math.floor(s / 3600), Math.floor(s % 3600 / 60), s % 60].map(n => String(n).padStart(2, "0")).join(":");
 }
 function fmtHours(h) {
   if (!h || h === 0) return "—";
-  var m = Math.round(h * 60);
+  const m = Math.round(h * 60);
   if (m < 1) return "<1m";
   if (m < 60) return m + "m";
-  var hr = Math.floor(m / 60),
+  const hr = Math.floor(m / 60),
     rm = m % 60;
   return rm > 0 ? hr + "h " + rm + "m" : hr + "h";
 }
@@ -853,12 +832,12 @@ function fmtDate(iso) {
 }
 function hoursFromString(s) {
   if (!s || !s.trim()) return 0;
-  var t = s.trim().toLowerCase();
-  var mM = t.match(/^(\d+(?:[.,]\d+)?)\s*m/),
+  const t = s.trim().toLowerCase();
+  const mM = t.match(/^(\d+(?:[.,]\d+)?)\s*m/),
     hM = t.match(/^(\d+(?:[.,]\d+)?)\s*h/);
   if (mM) return parseFloat(mM[1].replace(",", ".")) / 60;
   if (hM) return parseFloat(hM[1].replace(",", "."));
-  var n = parseFloat(t.replace(",", "."));
+  const n = parseFloat(t.replace(",", "."));
   return isNaN(n) ? 0 : n / 60;
 }
 function initials(name) {
@@ -866,114 +845,68 @@ function initials(name) {
 }
 
 // ── Firestore REST — un documento por empresa ──
-var _FB_KEY = "AIzaSyBiMJCGP9L5x3qBTbD2EUZAyMEOS7v8uz8";
-var _FB_BASE = "https://firestore.googleapis.com/v1/projects/timetracker-ltn/databases/(default)/documents/timetracker/";
+const _FB_KEY = "AIzaSyBiMJCGP9L5x3qBTbD2EUZAyMEOS7v8uz8";
+const _FB_BASE = "https://firestore.googleapis.com/v1/projects/timetracker-ltn/databases/(default)/documents/timetracker/";
 function fbUrl(companyKey) {
   return _FB_BASE + companyKey + "?key=" + _FB_KEY;
 }
-function fbWrite(_x, _x2) {
-  return _fbWrite.apply(this, arguments);
-}
-function _fbWrite() {
-  _fbWrite = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(companyKey, data) {
-    var _t2;
-    return _regenerator().w(function (_context2) {
-      while (1) switch (_context2.p = _context2.n) {
-        case 0:
-          _context2.p = 0;
-          _context2.n = 1;
-          return fetch(fbUrl(companyKey), {
-            method: "PATCH",
-            credentials: "omit",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              fields: {
-                entries: {
-                  stringValue: JSON.stringify(data.entries)
-                },
-                clientes: {
-                  stringValue: JSON.stringify(data.clientes)
-                },
-                resps: {
-                  stringValue: JSON.stringify(data.resps)
-                },
-                updatedAt: {
-                  stringValue: new Date().toISOString()
-                }
-              }
-            })
-          });
-        case 1:
-          _context2.n = 3;
-          break;
-        case 2:
-          _context2.p = 2;
-          _t2 = _context2.v;
-          console.error("fbWrite error:", _t2);
-        case 3:
-          return _context2.a(2);
-      }
-    }, _callee2, null, [[0, 2]]);
-  }));
-  return _fbWrite.apply(this, arguments);
-}
-function fbRead(_x3) {
-  return _fbRead.apply(this, arguments);
-} // ── Login — selección de empresa y luego usuario ──
-function _fbRead() {
-  _fbRead = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(companyKey) {
-    var _d$fields$entries, _d$fields$clientes, _d$fields$resps, r, d, _t3;
-    return _regenerator().w(function (_context3) {
-      while (1) switch (_context3.p = _context3.n) {
-        case 0:
-          _context3.p = 0;
-          _context3.n = 1;
-          return fetch(fbUrl(companyKey), {
-            credentials: "omit",
-            cache: "no-cache"
-          });
-        case 1:
-          r = _context3.v;
-          if (r.ok) {
-            _context3.n = 2;
-            break;
+async function fbWrite(companyKey, data) {
+  try {
+    await fetch(fbUrl(companyKey), {
+      method: "PATCH",
+      credentials: "omit",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        fields: {
+          entries: {
+            stringValue: JSON.stringify(data.entries)
+          },
+          clientes: {
+            stringValue: JSON.stringify(data.clientes)
+          },
+          resps: {
+            stringValue: JSON.stringify(data.resps)
+          },
+          updatedAt: {
+            stringValue: new Date().toISOString()
           }
-          console.error("fbRead HTTP:", r.status);
-          return _context3.a(2, null);
-        case 2:
-          _context3.n = 3;
-          return r.json();
-        case 3:
-          d = _context3.v;
-          if (d.fields) {
-            _context3.n = 4;
-            break;
-          }
-          return _context3.a(2, null);
-        case 4:
-          return _context3.a(2, {
-            entries: JSON.parse(((_d$fields$entries = d.fields.entries) === null || _d$fields$entries === void 0 ? void 0 : _d$fields$entries.stringValue) || "[]"),
-            clientes: JSON.parse(((_d$fields$clientes = d.fields.clientes) === null || _d$fields$clientes === void 0 ? void 0 : _d$fields$clientes.stringValue) || "[]"),
-            resps: JSON.parse(((_d$fields$resps = d.fields.resps) === null || _d$fields$resps === void 0 ? void 0 : _d$fields$resps.stringValue) || "[]")
-          });
-        case 5:
-          _context3.p = 5;
-          _t3 = _context3.v;
-          console.error("fbRead error:", _t3.name, _t3.message);
-          return _context3.a(2, null);
-      }
-    }, _callee3, null, [[0, 5]]);
-  }));
-  return _fbRead.apply(this, arguments);
+        }
+      })
+    });
+  } catch (e) {
+    console.error("fbWrite error:", e);
+  }
 }
-function LoginScreen(_ref) {
-  var onLogin = _ref.onLogin;
-  var _useState = useState(null),
-    _useState2 = _slicedToArray(_useState, 2),
-    selectedCompany = _useState2[0],
-    setSelectedCompany = _useState2[1];
+async function fbRead(companyKey) {
+  try {
+    const r = await fetch(fbUrl(companyKey), {
+      credentials: "omit",
+      cache: "no-cache"
+    });
+    if (!r.ok) {
+      console.error("fbRead HTTP:", r.status);
+      return null;
+    }
+    const d = await r.json();
+    if (!d.fields) return null;
+    return {
+      entries: JSON.parse(d.fields.entries?.stringValue || "[]"),
+      clientes: JSON.parse(d.fields.clientes?.stringValue || "[]"),
+      resps: JSON.parse(d.fields.resps?.stringValue || "[]")
+    };
+  } catch (e) {
+    console.error("fbRead error:", e.name, e.message);
+    return null;
+  }
+}
+
+// ── Login — selección de empresa y luego usuario ──
+function LoginScreen({
+  onLogin
+}) {
+  const [selectedCompany, setSelectedCompany] = useState(null);
   if (!selectedCompany) {
     // Step 1: choose company
     return /*#__PURE__*/React.createElement("div", {
@@ -1032,87 +965,83 @@ function LoginScreen(_ref) {
         width: "100%",
         maxWidth: "440px"
       }
-    }, Object.values(COMPANIES).map(function (co) {
-      return /*#__PURE__*/React.createElement("button", {
-        key: co.key,
-        onClick: function onClick() {
-          return setSelectedCompany(co);
-        },
-        style: {
-          background: "#fff",
-          border: "2px solid #e4d9f8",
-          borderRadius: "16px",
-          padding: "24px 28px",
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          gap: "20px",
-          transition: "all .15s",
-          boxShadow: "0 2px 8px rgba(0,0,0,.06)",
-          textAlign: "left"
-        },
-        onMouseEnter: function onMouseEnter(ev) {
-          ev.currentTarget.style.borderColor = co.accent;
-          ev.currentTarget.style.transform = "translateY(-2px)";
-          ev.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,.1)";
-        },
-        onMouseLeave: function onMouseLeave(ev) {
-          ev.currentTarget.style.borderColor = "#e4d9f8";
-          ev.currentTarget.style.transform = "none";
-          ev.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,.06)";
-        }
-      }, /*#__PURE__*/React.createElement("div", {
-        style: {
-          width: 52,
-          height: 52,
-          borderRadius: "12px",
-          background: co.color,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexShrink: 0
-        }
-      }, /*#__PURE__*/React.createElement("svg", {
-        width: "24",
-        height: "24",
-        viewBox: "0 0 20 20",
-        fill: "none"
-      }, /*#__PURE__*/React.createElement("circle", {
-        cx: "10",
-        cy: "10",
-        r: "8",
-        stroke: co.accent,
-        strokeWidth: "1.5"
-      }), /*#__PURE__*/React.createElement("path", {
-        d: "M10 6v4l2.5 2.5",
-        stroke: co.accent,
-        strokeWidth: "1.5",
-        strokeLinecap: "round"
-      }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-        style: {
-          fontSize: "16px",
-          fontWeight: 800,
-          color: "#1e1035",
-          marginBottom: "4px"
-        }
-      }, co.name), /*#__PURE__*/React.createElement("div", {
-        style: {
-          fontSize: "12px",
-          color: "#9a7cc5"
-        }
-      }, co.users.length, " personas \xB7 Firebase")), /*#__PURE__*/React.createElement("div", {
-        style: {
-          marginLeft: "auto",
-          color: "#c4b5fd",
-          fontSize: "20px"
-        }
-      }, "\u2192"));
-    })));
+    }, Object.values(COMPANIES).map(co => /*#__PURE__*/React.createElement("button", {
+      key: co.key,
+      onClick: () => setSelectedCompany(co),
+      style: {
+        background: "#fff",
+        border: `2px solid #e4d9f8`,
+        borderRadius: "16px",
+        padding: "24px 28px",
+        cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+        gap: "20px",
+        transition: "all .15s",
+        boxShadow: "0 2px 8px rgba(0,0,0,.06)",
+        textAlign: "left"
+      },
+      onMouseEnter: ev => {
+        ev.currentTarget.style.borderColor = co.accent;
+        ev.currentTarget.style.transform = "translateY(-2px)";
+        ev.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,.1)";
+      },
+      onMouseLeave: ev => {
+        ev.currentTarget.style.borderColor = "#e4d9f8";
+        ev.currentTarget.style.transform = "none";
+        ev.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,.06)";
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        width: 52,
+        height: 52,
+        borderRadius: "12px",
+        background: co.color,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexShrink: 0
+      }
+    }, /*#__PURE__*/React.createElement("svg", {
+      width: "24",
+      height: "24",
+      viewBox: "0 0 20 20",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("circle", {
+      cx: "10",
+      cy: "10",
+      r: "8",
+      stroke: co.accent,
+      strokeWidth: "1.5"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M10 6v4l2.5 2.5",
+      stroke: co.accent,
+      strokeWidth: "1.5",
+      strokeLinecap: "round"
+    }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "16px",
+        fontWeight: 800,
+        color: "#1e1035",
+        marginBottom: "4px"
+      }
+    }, co.name), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "12px",
+        color: "#9a7cc5"
+      }
+    }, co.users.length, " personas \xB7 Firebase")), /*#__PURE__*/React.createElement("div", {
+      style: {
+        marginLeft: "auto",
+        color: "#c4b5fd",
+        fontSize: "20px"
+      }
+    }, "\u2192")))));
   }
 
   // Step 2: choose user within the selected company
-  var co = selectedCompany;
-  var cols = co.users.length <= 4 ? 2 : 3;
+  const co = selectedCompany;
+  const cols = co.users.length <= 4 ? 2 : 3;
   return /*#__PURE__*/React.createElement("div", {
     style: {
       minHeight: "100vh",
@@ -1125,9 +1054,7 @@ function LoginScreen(_ref) {
       fontFamily: "system-ui,sans-serif"
     }
   }, /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setSelectedCompany(null);
-    },
+    onClick: () => setSelectedCompany(null),
     style: {
       alignSelf: "flex-start",
       marginBottom: "24px",
@@ -1187,13 +1114,13 @@ function LoginScreen(_ref) {
   }, "\xBFQui\xE9n eres?")), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "grid",
-      gridTemplateColumns: "repeat(".concat(cols, ",1fr)"),
+      gridTemplateColumns: `repeat(${cols},1fr)`,
       gap: "12px",
       width: "100%",
       maxWidth: cols === 3 ? "480px" : "360px"
     }
-  }, co.users.map(function (name) {
-    var c = USER_COLORS[name] || {
+  }, co.users.map(name => {
+    const c = USER_COLORS[name] || {
       bg: "#ede9fe",
       text: "#6d28d9",
       border: "#ddd6fe",
@@ -1201,12 +1128,10 @@ function LoginScreen(_ref) {
     };
     return /*#__PURE__*/React.createElement("button", {
       key: name,
-      onClick: function onClick() {
-        return onLogin(co, name);
-      },
+      onClick: () => onLogin(co, name),
       style: {
         background: "#fff",
-        border: "2px solid ".concat(c.border),
+        border: `2px solid ${c.border}`,
         borderRadius: "14px",
         padding: "18px 12px",
         cursor: "pointer",
@@ -1217,11 +1142,11 @@ function LoginScreen(_ref) {
         transition: "all .15s",
         boxShadow: "0 2px 6px rgba(109,40,217,.06)"
       },
-      onMouseEnter: function onMouseEnter(ev) {
+      onMouseEnter: ev => {
         ev.currentTarget.style.borderColor = c.avatar;
         ev.currentTarget.style.transform = "translateY(-2px)";
       },
-      onMouseLeave: function onMouseLeave(ev) {
+      onMouseLeave: ev => {
         ev.currentTarget.style.borderColor = c.border;
         ev.currentTarget.style.transform = "none";
       }
@@ -1231,7 +1156,7 @@ function LoginScreen(_ref) {
         height: 46,
         borderRadius: "50%",
         background: c.bg,
-        border: "2px solid ".concat(c.border),
+        border: `2px solid ${c.border}`,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -1251,35 +1176,30 @@ function LoginScreen(_ref) {
 }
 
 // ── AddableSelect ──
-function AddableSelect(_ref2) {
-  var value = _ref2.value,
-    _onChange = _ref2.onChange,
-    options = _ref2.options,
-    onAdd = _ref2.onAdd,
-    placeholder = _ref2.placeholder,
-    disabled = _ref2.disabled;
-  var _useState3 = useState(false),
-    _useState4 = _slicedToArray(_useState3, 2),
-    adding = _useState4[0],
-    setAdding = _useState4[1];
-  var _useState5 = useState(""),
-    _useState6 = _slicedToArray(_useState5, 2),
-    newVal = _useState6[0],
-    setNewVal = _useState6[1];
-  var ref = useRef(null);
-  useEffect(function () {
+function AddableSelect({
+  value,
+  onChange,
+  options,
+  onAdd,
+  placeholder,
+  disabled
+}) {
+  const [adding, setAdding] = useState(false);
+  const [newVal, setNewVal] = useState("");
+  const ref = useRef(null);
+  useEffect(() => {
     if (adding && ref.current) ref.current.focus();
   }, [adding]);
   function confirm() {
-    var v = newVal.trim();
+    const v = newVal.trim();
     if (v) {
       onAdd(v);
-      _onChange(v);
+      onChange(v);
     }
     setAdding(false);
     setNewVal("");
   }
-  var b = {
+  const b = {
     background: "#f8f5ff",
     border: "1.5px solid #ddd6fe",
     color: "#1e1035",
@@ -1298,10 +1218,8 @@ function AddableSelect(_ref2) {
   }, /*#__PURE__*/React.createElement("input", {
     ref: ref,
     value: newVal,
-    onChange: function onChange(e) {
-      return setNewVal(e.target.value);
-    },
-    onKeyDown: function onKeyDown(e) {
+    onChange: e => setNewVal(e.target.value),
+    onKeyDown: e => {
       if (e.key === "Enter") confirm();
       if (e.key === "Escape") {
         setAdding(false);
@@ -1309,10 +1227,11 @@ function AddableSelect(_ref2) {
       }
     },
     placeholder: placeholder || "Nombre…",
-    style: _objectSpread(_objectSpread({}, b), {}, {
+    style: {
+      ...b,
       cursor: "text",
       minWidth: "130px"
-    })
+    }
   }), /*#__PURE__*/React.createElement("button", {
     onClick: confirm,
     style: {
@@ -1327,7 +1246,7 @@ function AddableSelect(_ref2) {
       fontWeight: 600
     }
   }, "\u2713"), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
+    onClick: () => {
       setAdding(false);
       setNewVal("");
     },
@@ -1350,21 +1269,16 @@ function AddableSelect(_ref2) {
     }
   }, /*#__PURE__*/React.createElement("select", {
     value: value,
-    onChange: function onChange(e) {
-      return _onChange(e.target.value);
-    },
-    style: _objectSpread(_objectSpread({}, b), {}, {
+    onChange: e => onChange(e.target.value),
+    style: {
+      ...b,
       cursor: "pointer"
-    }),
-    disabled: disabled
-  }, options.map(function (o) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: o
-    }, o);
-  })), !disabled && /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setAdding(true);
     },
+    disabled: disabled
+  }, options.map(o => /*#__PURE__*/React.createElement("option", {
+    key: o
+  }, o))), !disabled && /*#__PURE__*/React.createElement("button", {
+    onClick: () => setAdding(true),
     style: {
       background: "#ede9fe",
       color: "#6d28d9",
@@ -1381,53 +1295,30 @@ function AddableSelect(_ref2) {
 }
 
 // ── Edit Modal ──
-function EditModal(_ref3) {
-  var entry = _ref3.entry,
-    clientes = _ref3.clientes,
-    resps = _ref3.resps,
-    onSave = _ref3.onSave,
-    onClose = _ref3.onClose;
-  var _useState7 = useState(entry.task),
-    _useState8 = _slicedToArray(_useState7, 2),
-    task = _useState8[0],
-    setTask = _useState8[1];
-  var _useState9 = useState(entry.cliente),
-    _useState0 = _slicedToArray(_useState9, 2),
-    cliente = _useState0[0],
-    setCliente = _useState0[1];
-  var _useState1 = useState(entry.responsable),
-    _useState10 = _slicedToArray(_useState1, 2),
-    resp = _useState10[0],
-    setResp = _useState10[1];
-  var _useState11 = useState(entry.status),
-    _useState12 = _slicedToArray(_useState11, 2),
-    status = _useState12[0],
-    setStatus = _useState12[1];
-  var _useState13 = useState(entry.comments || ""),
-    _useState14 = _slicedToArray(_useState13, 2),
-    comments = _useState14[0],
-    setComments = _useState14[1];
+function EditModal({
+  entry,
+  clientes,
+  resps,
+  onSave,
+  onClose
+}) {
+  const [task, setTask] = useState(entry.task);
+  const [cliente, setCliente] = useState(entry.cliente);
+  const [resp, setResp] = useState(entry.responsable);
+  const [status, setStatus] = useState(entry.status);
+  const [comments, setComments] = useState(entry.comments || "");
   function toStr(h) {
     if (!h || h === 0) return "";
-    var m = Math.round(h * 60);
+    const m = Math.round(h * 60);
     if (m < 60) return m + "m";
-    var hr = Math.floor(m / 60),
+    const hr = Math.floor(m / 60),
       rm = m % 60;
     return rm > 0 ? hr + "h " + rm + "m" : hr + "h";
   }
-  var _useState15 = useState(toStr(entry.hours)),
-    _useState16 = _slicedToArray(_useState15, 2),
-    hoursStr = _useState16[0],
-    setHoursStr = _useState16[1];
-  var _useState17 = useState(toStr(entry.estimatedHours)),
-    _useState18 = _slicedToArray(_useState17, 2),
-    estStr = _useState18[0],
-    setEstStr = _useState18[1];
-  var _useState19 = useState(false),
-    _useState20 = _slicedToArray(_useState19, 2),
-    taskErr = _useState20[0],
-    setTaskErr = _useState20[1];
-  var s2 = {
+  const [hoursStr, setHoursStr] = useState(toStr(entry.hours));
+  const [estStr, setEstStr] = useState(toStr(entry.estimatedHours));
+  const [taskErr, setTaskErr] = useState(false);
+  const s2 = {
     background: "#f8f5ff",
     border: "1.5px solid #ddd6fe",
     color: "#1e1035",
@@ -1438,23 +1329,24 @@ function EditModal(_ref3) {
     outline: "none",
     cursor: "pointer"
   };
-  var overTime = entry.estimatedHours && entry.hours > entry.estimatedHours;
+  const overTime = entry.estimatedHours && entry.hours > entry.estimatedHours;
   function save() {
     if (!task.trim()) {
       setTaskErr(true);
       return;
     }
-    var h = hoursFromString(hoursStr);
-    var est = hoursFromString(estStr);
-    onSave(_objectSpread(_objectSpread({}, entry), {}, {
+    const h = hoursFromString(hoursStr);
+    const est = hoursFromString(estStr);
+    onSave({
+      ...entry,
       task: task.trim(),
-      cliente: cliente,
+      cliente,
       responsable: resp,
-      status: status,
+      status,
       hours: h || entry.hours,
       estimatedHours: est || entry.estimatedHours || null,
-      comments: comments
-    }));
+      comments
+    });
   }
   return /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1467,7 +1359,7 @@ function EditModal(_ref3) {
       justifyContent: "center",
       padding: "20px"
     },
-    onClick: function onClick(e) {
+    onClick: e => {
       if (e.target === e.currentTarget) onClose();
     }
   }, /*#__PURE__*/React.createElement("div", {
@@ -1521,17 +1413,18 @@ function EditModal(_ref3) {
     }
   }, "Descripci\xF3n ", taskErr && /*#__PURE__*/React.createElement("b", null, "\u2014 obligatorio")), /*#__PURE__*/React.createElement("textarea", {
     value: task,
-    onChange: function onChange(e) {
+    onChange: e => {
       setTask(e.target.value);
       if (e.target.value.trim()) setTaskErr(false);
     },
-    style: _objectSpread(_objectSpread({}, s2), {}, {
+    style: {
+      ...s2,
       cursor: "text",
       width: "100%",
       minHeight: "72px",
       resize: "vertical",
       borderColor: taskErr ? "#fca5a5" : "#ddd6fe"
-    })
+    }
   })), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "grid",
@@ -1548,18 +1441,15 @@ function EditModal(_ref3) {
       marginBottom: "4px"
     }
   }, "Cliente"), /*#__PURE__*/React.createElement("select", {
-    style: _objectSpread(_objectSpread({}, s2), {}, {
+    style: {
+      ...s2,
       width: "100%"
-    }),
+    },
     value: cliente,
-    onChange: function onChange(e) {
-      return setCliente(e.target.value);
-    }
-  }, clientes.map(function (c) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: c
-    }, c);
-  }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    onChange: e => setCliente(e.target.value)
+  }, clientes.map(c => /*#__PURE__*/React.createElement("option", {
+    key: c
+  }, c)))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "10px",
       color: "#b8a8d0",
@@ -1569,18 +1459,15 @@ function EditModal(_ref3) {
       marginBottom: "4px"
     }
   }, "Responsable"), /*#__PURE__*/React.createElement("select", {
-    style: _objectSpread(_objectSpread({}, s2), {}, {
+    style: {
+      ...s2,
       width: "100%"
-    }),
+    },
     value: resp,
-    onChange: function onChange(e) {
-      return setResp(e.target.value);
-    }
-  }, resps.map(function (r) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: r
-    }, r);
-  })))), /*#__PURE__*/React.createElement("div", {
+    onChange: e => setResp(e.target.value)
+  }, resps.map(r => /*#__PURE__*/React.createElement("option", {
+    key: r
+  }, r))))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "grid",
       gridTemplateColumns: "1fr 1fr",
@@ -1596,18 +1483,15 @@ function EditModal(_ref3) {
       marginBottom: "4px"
     }
   }, "Estado"), /*#__PURE__*/React.createElement("select", {
-    style: _objectSpread(_objectSpread({}, s2), {}, {
+    style: {
+      ...s2,
       width: "100%"
-    }),
+    },
     value: status,
-    onChange: function onChange(e) {
-      return setStatus(e.target.value);
-    }
-  }, STATUSES.map(function (s) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: s
-    }, s);
-  }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    onChange: e => setStatus(e.target.value)
+  }, STATUSES.map(s => /*#__PURE__*/React.createElement("option", {
+    key: s
+  }, s)))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "10px",
       color: "#b8a8d0",
@@ -1618,13 +1502,12 @@ function EditModal(_ref3) {
     }
   }, "Tiempo real acumulado"), /*#__PURE__*/React.createElement("input", {
     value: hoursStr,
-    onChange: function onChange(e) {
-      return setHoursStr(e.target.value);
-    },
-    style: _objectSpread(_objectSpread({}, s2), {}, {
+    onChange: e => setHoursStr(e.target.value),
+    style: {
+      ...s2,
       cursor: "text",
       width: "100%"
-    }),
+    },
     placeholder: "45m, 1h\u2026"
   }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1637,13 +1520,12 @@ function EditModal(_ref3) {
     }
   }, "Tiempo estimado"), /*#__PURE__*/React.createElement("input", {
     value: estStr,
-    onChange: function onChange(e) {
-      return setEstStr(e.target.value);
-    },
-    style: _objectSpread(_objectSpread({}, s2), {}, {
+    onChange: e => setEstStr(e.target.value),
+    style: {
+      ...s2,
       cursor: "text",
       width: "100%"
-    }),
+    },
     placeholder: "ej: 30m, 1h\u2026"
   })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1656,17 +1538,16 @@ function EditModal(_ref3) {
     }
   }, overTime ? "⚠️ Tiempo superado — ¿Por qué ha llevado más?" : "Comentarios (opcional)"), /*#__PURE__*/React.createElement("textarea", {
     value: comments,
-    onChange: function onChange(e) {
-      return setComments(e.target.value);
-    },
-    style: _objectSpread(_objectSpread({}, s2), {}, {
+    onChange: e => setComments(e.target.value),
+    style: {
+      ...s2,
       cursor: "text",
       width: "100%",
       minHeight: "60px",
       resize: "vertical",
       borderColor: overTime && !comments ? "#fca5a5" : "#ddd6fe",
       background: overTime && !comments ? "#fff5f5" : "#f8f5ff"
-    }),
+    },
     placeholder: overTime ? "Explica por qué ha llevado más tiempo del estimado…" : "Notas adicionales…"
   }))), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1702,10 +1583,11 @@ function EditModal(_ref3) {
     }
   }, "Guardar cambios"))));
 }
-function StartTaskDialog(_ref4) {
-  var entry = _ref4.entry,
-    onConfirm = _ref4.onConfirm,
-    onClose = _ref4.onClose;
+function StartTaskDialog({
+  entry,
+  onConfirm,
+  onClose
+}) {
   return /*#__PURE__*/React.createElement("div", {
     style: {
       position: "fixed",
@@ -1717,7 +1599,7 @@ function StartTaskDialog(_ref4) {
       justifyContent: "center",
       padding: "20px"
     },
-    onClick: function onClick(e) {
+    onClick: e => {
       if (e.target === e.currentTarget) onClose();
     }
   }, /*#__PURE__*/React.createElement("div", {
@@ -1817,9 +1699,10 @@ function StartTaskDialog(_ref4) {
     d: "M0 0l8 5-8 5V0z"
   })), "Iniciar tarea"))));
 }
-function BlockedDialog(_ref5) {
-  var activeTask = _ref5.activeTask,
-    onClose = _ref5.onClose;
+function BlockedDialog({
+  activeTask,
+  onClose
+}) {
   return /*#__PURE__*/React.createElement("div", {
     style: {
       position: "fixed",
@@ -1831,7 +1714,7 @@ function BlockedDialog(_ref5) {
       justifyContent: "center",
       padding: "20px"
     },
-    onClick: function onClick(e) {
+    onClick: e => {
       if (e.target === e.currentTarget) onClose();
     }
   }, /*#__PURE__*/React.createElement("div", {
@@ -1905,25 +1788,21 @@ function BlockedDialog(_ref5) {
 }
 
 // ── Stop Task Dialog ──
-function StopTaskDialog(_ref6) {
-  var elapsed = _ref6.elapsed,
-    onSave = _ref6.onSave,
-    onClose = _ref6.onClose;
-  var _useState21 = useState("Proceso"),
-    _useState22 = _slicedToArray(_useState21, 2),
-    finalStatus = _useState22[0],
-    setFinalStatus = _useState22[1];
-  var hrs = Math.max(elapsed / 3600, 0.004);
+function StopTaskDialog({
+  elapsed,
+  onSave,
+  onClose
+}) {
+  const [finalStatus, setFinalStatus] = useState("Proceso");
+  const hrs = Math.max(elapsed / 3600, 0.004);
   function fmtE(s) {
-    return [Math.floor(s / 3600), Math.floor(s % 3600 / 60), s % 60].map(function (n) {
-      return String(n).padStart(2, "0");
-    }).join(":");
+    return [Math.floor(s / 3600), Math.floor(s % 3600 / 60), s % 60].map(n => String(n).padStart(2, "0")).join(":");
   }
   function fmtH(h) {
-    var m = Math.round(h * 60);
+    const m = Math.round(h * 60);
     if (m < 1) return "<1m";
     if (m < 60) return m + "m";
-    var hr = Math.floor(m / 60),
+    const hr = Math.floor(m / 60),
       rm = m % 60;
     return rm > 0 ? hr + "h " + rm + "m" : hr + "h";
   }
@@ -1938,7 +1817,7 @@ function StopTaskDialog(_ref6) {
       justifyContent: "center",
       padding: "20px"
     },
-    onClick: function onClick(e) {
+    onClick: e => {
       if (e.target === e.currentTarget) onClose();
     }
   }, /*#__PURE__*/React.createElement("div", {
@@ -1999,41 +1878,31 @@ function StopTaskDialog(_ref6) {
       marginBottom: "22px",
       flexWrap: "wrap"
     }
-  }, [["Pendiente", "🕐", "#6d28d9", "#ede9fe", "#ddd6fe"], ["Proceso", "🔄", "#a16207", "#fef9c3", "#fde68a"], ["Realizado", "✅", "#15803d", "#dcfce7", "#bbf7d0"], ["Pausado", "⏸", "#b91c1c", "#fee2e2", "#fecaca"]].map(function (_ref7) {
-    var _ref8 = _slicedToArray(_ref7, 5),
-      s = _ref8[0],
-      icon = _ref8[1],
-      tc = _ref8[2],
-      bg = _ref8[3],
-      border = _ref8[4];
-    return /*#__PURE__*/React.createElement("button", {
-      key: s,
-      onClick: function onClick() {
-        return setFinalStatus(s);
-      },
-      style: {
-        padding: "10px 16px",
-        borderRadius: "10px",
-        border: "2px solid ".concat(finalStatus === s ? tc : border),
-        background: finalStatus === s ? bg : "#fff",
-        color: tc,
-        fontFamily: "inherit",
-        fontSize: "13px",
-        fontWeight: finalStatus === s ? 700 : 500,
-        cursor: "pointer",
-        transition: "all .15s",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: "4px",
-        minWidth: "80px"
-      }
-    }, /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: "18px"
-      }
-    }, icon), s);
-  })), /*#__PURE__*/React.createElement("div", {
+  }, [["Pendiente", "🕐", "#6d28d9", "#ede9fe", "#ddd6fe"], ["Proceso", "🔄", "#a16207", "#fef9c3", "#fde68a"], ["Realizado", "✅", "#15803d", "#dcfce7", "#bbf7d0"], ["Pausado", "⏸", "#b91c1c", "#fee2e2", "#fecaca"]].map(([s, icon, tc, bg, border]) => /*#__PURE__*/React.createElement("button", {
+    key: s,
+    onClick: () => setFinalStatus(s),
+    style: {
+      padding: "10px 16px",
+      borderRadius: "10px",
+      border: `2px solid ${finalStatus === s ? tc : border}`,
+      background: finalStatus === s ? bg : "#fff",
+      color: tc,
+      fontFamily: "inherit",
+      fontSize: "13px",
+      fontWeight: finalStatus === s ? 700 : 500,
+      cursor: "pointer",
+      transition: "all .15s",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      gap: "4px",
+      minWidth: "80px"
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: "18px"
+    }
+  }, icon), s))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
       gap: "10px",
@@ -2052,9 +1921,7 @@ function StopTaskDialog(_ref6) {
       cursor: "pointer"
     }
   }, "Cancelar"), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return onSave(hrs, finalStatus);
-    },
+    onClick: () => onSave(hrs, finalStatus),
     style: {
       background: "#6d28d9",
       color: "#fff",
@@ -2069,11 +1936,13 @@ function StopTaskDialog(_ref6) {
   }, "Guardar y parar"))));
 }
 
-// ── Delete Confirm Dialog ──
-function DeleteConfirmDialog(_ref9) {
-  var entry = _ref9.entry,
-    onConfirm = _ref9.onConfirm,
-    onClose = _ref9.onClose;
+// ── Continuación de tarea ajena ──
+function ReasignDialog({
+  entry,
+  currentUser,
+  onContinue,
+  onCancel
+}) {
   return /*#__PURE__*/React.createElement("div", {
     style: {
       position: "fixed",
@@ -2085,7 +1954,116 @@ function DeleteConfirmDialog(_ref9) {
       justifyContent: "center",
       padding: "20px"
     },
-    onClick: function onClick(e) {
+    onClick: e => {
+      if (e.target === e.currentTarget) onCancel();
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "#fff",
+      borderRadius: "16px",
+      padding: "28px",
+      width: "100%",
+      maxWidth: "460px",
+      boxShadow: "0 8px 40px rgba(109,40,217,.18)",
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "32px",
+      marginBottom: "14px"
+    }
+  }, "\uD83D\uDD17"), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontSize: "16px",
+      fontWeight: 700,
+      color: "#1e1035",
+      marginBottom: "10px"
+    }
+  }, "Tarea asignada a ", entry.responsable), /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "#fef9c3",
+      border: "1.5px solid #fde68a",
+      borderRadius: "10px",
+      padding: "14px 16px",
+      marginBottom: "16px",
+      textAlign: "left"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "13px",
+      color: "#1e1035",
+      lineHeight: 1.5,
+      marginBottom: "4px"
+    }
+  }, entry.task), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "11px",
+      color: "#a16207"
+    }
+  }, entry.responsable, " \xB7 ", entry.cliente)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "#f0f9ff",
+      border: "1.5px solid #bae6fd",
+      borderRadius: "10px",
+      padding: "12px 16px",
+      marginBottom: "20px",
+      textAlign: "left",
+      fontSize: "13px",
+      color: "#0369a1",
+      lineHeight: 1.6
+    }
+  }, /*#__PURE__*/React.createElement("b", null, "\xBFQuieres continuar esta tarea?"), /*#__PURE__*/React.createElement("br", null), "Se crear\xE1 una nueva tarea para ", /*#__PURE__*/React.createElement("b", null, currentUser), " enlazada a la de ", entry.responsable, ". La tarea original queda intacta con todo el trabajo de ", entry.responsable, "."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: "10px",
+      justifyContent: "center"
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: onCancel,
+    style: {
+      background: "#f3f0fb",
+      color: "#9a7cc5",
+      border: "1.5px solid #ddd6fe",
+      borderRadius: "8px",
+      padding: "10px 20px",
+      fontSize: "13px",
+      fontFamily: "inherit",
+      cursor: "pointer"
+    }
+  }, "Cancelar"), /*#__PURE__*/React.createElement("button", {
+    onClick: onContinue,
+    style: {
+      background: "#0ea5e9",
+      color: "#fff",
+      border: "none",
+      borderRadius: "8px",
+      padding: "10px 24px",
+      fontSize: "13px",
+      fontFamily: "inherit",
+      cursor: "pointer",
+      fontWeight: 700
+    }
+  }, "Crear continuaci\xF3n e iniciar"))));
+}
+
+// ── Delete Confirm Dialog ──
+function DeleteConfirmDialog({
+  entry,
+  onConfirm,
+  onClose
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "fixed",
+      inset: 0,
+      background: "rgba(30,16,53,0.45)",
+      zIndex: 200,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "20px"
+    },
+    onClick: e => {
       if (e.target === e.currentTarget) onClose();
     }
   }, /*#__PURE__*/React.createElement("div", {
@@ -2178,248 +2156,105 @@ function DeleteConfirmDialog(_ref9) {
 
 // ── Main App ──
 function App() {
-  var _useState23 = useState(false),
-    _useState24 = _slicedToArray(_useState23, 2),
-    fbReady = _useState24[0],
-    setFbReady = _useState24[1];
-  var _useState25 = useState(null),
-    _useState26 = _slicedToArray(_useState25, 2),
-    currentCompany = _useState26[0],
-    setCurrentCompany = _useState26[1]; // company object
-  var _useState27 = useState(null),
-    _useState28 = _slicedToArray(_useState27, 2),
-    currentUser = _useState28[0],
-    setCurrentUser = _useState28[1];
-  var _useState29 = useState([]),
-    _useState30 = _slicedToArray(_useState29, 2),
-    entries = _useState30[0],
-    setEntries = _useState30[1];
-  var _useState31 = useState(DEFAULT_CLIENTES),
-    _useState32 = _slicedToArray(_useState31, 2),
-    clientes = _useState32[0],
-    setClientes = _useState32[1];
-  var _useState33 = useState(DEFAULT_RESPONSABLES),
-    _useState34 = _slicedToArray(_useState33, 2),
-    resps = _useState34[0],
-    setResps = _useState34[1];
+  const [fbReady, setFbReady] = useState(false);
+  const [currentCompany, setCurrentCompany] = useState(null); // company object
+  const [currentUser, setCurrentUser] = useState(null);
+  const [entries, setEntries] = useState([]);
+  const [clientes, setClientes] = useState(DEFAULT_CLIENTES);
+  const [resps, setResps] = useState(DEFAULT_RESPONSABLES);
 
   // Timer (local per session — not synced)
-  var _useState35 = useState("timer"),
-    _useState36 = _slicedToArray(_useState35, 2),
-    mode = _useState36[0],
-    setMode = _useState36[1];
-  var _useState37 = useState(false),
-    _useState38 = _slicedToArray(_useState37, 2),
-    running = _useState38[0],
-    setRunning = _useState38[1];
-  var _useState39 = useState(0),
-    _useState40 = _slicedToArray(_useState39, 2),
-    elapsed = _useState40[0],
-    setElapsed = _useState40[1];
-  var _useState41 = useState(null),
-    _useState42 = _slicedToArray(_useState41, 2),
-    startTs = _useState42[0],
-    setStartTs = _useState42[1];
-  var _useState43 = useState(null),
-    _useState44 = _slicedToArray(_useState43, 2),
-    activeEntryId = _useState44[0],
-    setActiveEntryId = _useState44[1];
-  var _useState45 = useState(""),
-    _useState46 = _slicedToArray(_useState45, 2),
-    task = _useState46[0],
-    setTask = _useState46[1];
-  var _useState47 = useState(false),
-    _useState48 = _slicedToArray(_useState47, 2),
-    taskError = _useState48[0],
-    setTaskError = _useState48[1];
-  var _useState49 = useState(DEFAULT_CLIENTES[0]),
-    _useState50 = _slicedToArray(_useState49, 2),
-    cliente = _useState50[0],
-    setCliente = _useState50[1];
-  var _useState51 = useState(null),
-    _useState52 = _slicedToArray(_useState51, 2),
-    resp = _useState52[0],
-    setResp = _useState52[1];
-  var _useState53 = useState("Proceso"),
-    _useState54 = _slicedToArray(_useState53, 2),
-    timerStatus = _useState54[0],
-    setTimerStatus = _useState54[1];
-  var _useState55 = useState(""),
-    _useState56 = _slicedToArray(_useState55, 2),
-    manualHours = _useState56[0],
-    setManualHours = _useState56[1];
-  var _useState57 = useState("Pendiente"),
-    _useState58 = _slicedToArray(_useState57, 2),
-    manualStatus = _useState58[0],
-    setManualStatus = _useState58[1];
+  const [mode, setMode] = useState("timer");
+  const [running, setRunning] = useState(false);
+  const [elapsed, setElapsed] = useState(0);
+  const [startTs, setStartTs] = useState(null);
+  const [activeEntryId, setActiveEntryId] = useState(null);
+  const [task, setTask] = useState("");
+  const [taskError, setTaskError] = useState(false);
+  const [cliente, setCliente] = useState(DEFAULT_CLIENTES[0]);
+  const [resp, setResp] = useState(null);
+  const [timerStatus, setTimerStatus] = useState("Proceso");
+  const [manualHours, setManualHours] = useState("");
+  const [manualStatus, setManualStatus] = useState("Pendiente");
 
   // Filters
-  var _useState59 = useState("Todos"),
-    _useState60 = _slicedToArray(_useState59, 2),
-    fMes = _useState60[0],
-    setFMes = _useState60[1];
-  var _useState61 = useState("Todos"),
-    _useState62 = _slicedToArray(_useState61, 2),
-    fCliente = _useState62[0],
-    setFCliente = _useState62[1];
-  var _useState63 = useState("Todos"),
-    _useState64 = _slicedToArray(_useState63, 2),
-    fResp = _useState64[0],
-    setFResp = _useState64[1];
-  var _useState65 = useState("Todos"),
-    _useState66 = _slicedToArray(_useState65, 2),
-    fStatus = _useState66[0],
-    setFStatus = _useState66[1];
-  var _useState67 = useState("Todos"),
-    _useState68 = _slicedToArray(_useState67, 2),
-    t2Cliente = _useState68[0],
-    setT2Cliente = _useState68[1];
-  var _useState69 = useState("Todos"),
-    _useState70 = _slicedToArray(_useState69, 2),
-    t2Resp = _useState70[0],
-    setT2Resp = _useState70[1];
-  var _useState71 = useState("Todos"),
-    _useState72 = _slicedToArray(_useState71, 2),
-    t2Year = _useState72[0],
-    setT2Year = _useState72[1];
-  var _useState73 = useState([]),
-    _useState74 = _slicedToArray(_useState73, 2),
-    t2Months = _useState74[0],
-    setT2Months = _useState74[1];
-  var _useState75 = useState("log"),
-    _useState76 = _slicedToArray(_useState75, 2),
-    tab = _useState76[0],
-    setTab = _useState76[1];
-  var _useState77 = useState(""),
-    _useState78 = _slicedToArray(_useState77, 2),
-    toast = _useState78[0],
-    setToast = _useState78[1];
-  var _useState79 = useState(null),
-    _useState80 = _slicedToArray(_useState79, 2),
-    editEntry = _useState80[0],
-    setEditEntry = _useState80[1];
-  var _useState81 = useState(null),
-    _useState82 = _slicedToArray(_useState81, 2),
-    startDialog = _useState82[0],
-    setStartDialog = _useState82[1];
-  var _useState83 = useState(null),
-    _useState84 = _slicedToArray(_useState83, 2),
-    blockedDialog = _useState84[0],
-    setBlockedDialog = _useState84[1];
-  var _useState85 = useState(null),
-    _useState86 = _slicedToArray(_useState85, 2),
-    deleteConfirm = _useState86[0],
-    setDeleteConfirm = _useState86[1];
-  var _useState87 = useState(false),
-    _useState88 = _slicedToArray(_useState87, 2),
-    stopDialog = _useState88[0],
-    setStopDialog = _useState88[1];
-  var timerRef = useRef(null);
-  var taskRef = useRef(null);
-  var skipNextWrite = useRef(false);
-  var lastTs = useRef(null);
-  var pollRef = useRef(null);
+  const [fMes, setFMes] = useState("Todos");
+  const [fCliente, setFCliente] = useState("Todos");
+  const [fResp, setFResp] = useState("Todos");
+  const [fStatus, setFStatus] = useState("Todos");
+  const [t2Cliente, setT2Cliente] = useState("Todos");
+  const [t2Resp, setT2Resp] = useState("Todos");
+  const [t2Year, setT2Year] = useState("Todos");
+  const [t2Months, setT2Months] = useState([]);
+  const [tab, setTab] = useState("log");
+  const [toast, setToast] = useState("");
+  const [editEntry, setEditEntry] = useState(null);
+  const [startDialog, setStartDialog] = useState(null);
+  const [blockedDialog, setBlockedDialog] = useState(null);
+  const [deleteConfirm, setDeleteConfirm] = useState(null);
+  const [stopDialog, setStopDialog] = useState(false);
+  const [reasignDialog, setReasignDialog] = useState(null);
+  const timerRef = useRef(null);
+  const taskRef = useRef(null);
+  const skipNextWrite = useRef(false);
+  const lastTs = useRef(null);
+  const pollRef = useRef(null);
 
   // Firebase sync en segundo plano — la app ya está visible
-  useEffect(function () {
+  useEffect(() => {
     if (!currentCompany) return;
-    var lsKey = "ltn-tt-" + currentCompany.key;
-    function syncFirebase(_x4) {
-      return _syncFirebase.apply(this, arguments);
-    }
-    function _syncFirebase() {
-      _syncFirebase = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(isFirst) {
-        var d, snap, _d2$fields, r2, d2, ts, _t;
-        return _regenerator().w(function (_context) {
-          while (1) switch (_context.p = _context.n) {
-            case 0:
-              _context.n = 1;
-              return fbRead(currentCompany.key);
-            case 1:
-              d = _context.v;
-              if (d) {
-                _context.n = 2;
-                break;
-              }
-              return _context.a(2);
-            case 2:
-              if (!isFirst) {
-                _context.n = 5;
-                break;
-              }
-              if (!(d.entries && d.entries.length > 0)) {
-                _context.n = 3;
-                break;
-              }
-              skipNextWrite.current = true;
-              if (d.entries) setEntries(d.entries);
-              if (d.clientes) setClientes(d.clientes);
-              if (d.resps) setResps(d.resps);
-              // Actualizar localStorage con datos de Firebase
-              try {
-                localStorage.setItem(lsKey, JSON.stringify(d));
-              } catch (e) {}
-              _context.n = 4;
-              break;
-            case 3:
-              // Primera vez — sembrar Firebase con datos actuales
-              snap = JSON.parse(localStorage.getItem(lsKey) || "{}");
-              _context.n = 4;
-              return fbWrite(currentCompany.key, {
-                entries: snap.entries || EXCEL_DATA,
-                clientes: snap.clientes || currentCompany.defaultClientes || DEFAULT_CLIENTES,
-                resps: snap.resps || currentCompany.users || DEFAULT_RESPONSABLES
-              });
-            case 4:
-              _context.n = 9;
-              break;
-            case 5:
-              _context.p = 5;
-              _context.n = 6;
-              return fetch(fbUrl(currentCompany.key) + "&fields=fields.updatedAt", {
-                credentials: "omit"
-              });
-            case 6:
-              r2 = _context.v;
-              _context.n = 7;
-              return r2.json();
-            case 7:
-              d2 = _context.v;
-              ts = d2 === null || d2 === void 0 || (_d2$fields = d2.fields) === null || _d2$fields === void 0 || (_d2$fields = _d2$fields.updatedAt) === null || _d2$fields === void 0 ? void 0 : _d2$fields.stringValue;
-              if (ts && ts !== lastTs.current) {
-                lastTs.current = ts;
-                skipNextWrite.current = true;
-                if (d.entries) setEntries(d.entries);
-                if (d.clientes) setClientes(d.clientes);
-                if (d.resps) setResps(d.resps);
-                try {
-                  localStorage.setItem(lsKey, JSON.stringify(d));
-                } catch (e) {}
-              }
-              _context.n = 9;
-              break;
-            case 8:
-              _context.p = 8;
-              _t = _context.v;
-            case 9:
-              return _context.a(2);
+    const lsKey = "ltn-tt-" + currentCompany.key;
+    async function syncFirebase(isFirst) {
+      const d = await fbRead(currentCompany.key);
+      if (!d) return; // Firebase no disponible, trabajamos con localStorage
+      if (isFirst) {
+        if (d.entries && d.entries.length > 0) {
+          skipNextWrite.current = true;
+          if (d.entries) setEntries(d.entries);
+          if (d.clientes) setClientes(d.clientes);
+          if (d.resps) setResps(d.resps);
+          // Actualizar localStorage con datos de Firebase
+          try {
+            localStorage.setItem(lsKey, JSON.stringify(d));
+          } catch (e) {}
+        } else {
+          // Primera vez — sembrar Firebase con datos actuales
+          const snap = JSON.parse(localStorage.getItem(lsKey) || "{}");
+          await fbWrite(currentCompany.key, {
+            entries: snap.entries || EXCEL_DATA,
+            clientes: snap.clientes || currentCompany.defaultClientes || DEFAULT_CLIENTES,
+            resps: snap.resps || currentCompany.users || DEFAULT_RESPONSABLES
+          });
+        }
+      } else {
+        // Poll — comprobar si hay cambios de otras usuarias
+        try {
+          const r2 = await fetch(fbUrl(currentCompany.key) + "&fields=fields.updatedAt", {
+            credentials: "omit"
+          });
+          const d2 = await r2.json();
+          const ts = d2?.fields?.updatedAt?.stringValue;
+          if (ts && ts !== lastTs.current) {
+            lastTs.current = ts;
+            skipNextWrite.current = true;
+            if (d.entries) setEntries(d.entries);
+            if (d.clientes) setClientes(d.clientes);
+            if (d.resps) setResps(d.resps);
+            try {
+              localStorage.setItem(lsKey, JSON.stringify(d));
+            } catch (e) {}
           }
-        }, _callee, null, [[5, 8]]);
-      }));
-      return _syncFirebase.apply(this, arguments);
+        } catch (e) {/* poll silencioso */}
+      }
     }
     syncFirebase(true);
-    pollRef.current = setInterval(function () {
-      return syncFirebase(false);
-    }, 8000);
-    return function () {
-      return clearInterval(pollRef.current);
-    };
+    pollRef.current = setInterval(() => syncFirebase(false), 8000);
+    return () => clearInterval(pollRef.current);
   }, [currentCompany]);
 
   // Write to Firebase whenever data changes
-  var isFirstWrite = useRef(true);
-  useEffect(function () {
+  const isFirstWrite = useRef(true);
+  useEffect(() => {
     if (!fbReady) return;
     if (isFirstWrite.current) {
       isFirstWrite.current = false;
@@ -2429,55 +2264,45 @@ function App() {
       skipNextWrite.current = false;
       return;
     }
-    var lsKey = currentCompany ? "ltn-tt-" + currentCompany.key : "ltn-tt-ltn";
+    const lsKey = currentCompany ? "ltn-tt-" + currentCompany.key : "ltn-tt-ltn";
     try {
       localStorage.setItem(lsKey, JSON.stringify({
-        entries: entries,
-        clientes: clientes,
-        resps: resps
+        entries,
+        clientes,
+        resps
       }));
     } catch (e) {}
     if (currentCompany) fbWrite(currentCompany.key, {
-      entries: entries,
-      clientes: clientes,
-      resps: resps
+      entries,
+      clientes,
+      resps
     });
   }, [entries, clientes, resps, fbReady, currentCompany]);
 
   // Timer tick
-  useEffect(function () {
+  useEffect(() => {
     if (running) {
-      timerRef.current = setInterval(function () {
-        return setElapsed(Math.floor((Date.now() - startTs) / 1000));
-      }, 500);
+      timerRef.current = setInterval(() => setElapsed(Math.floor((Date.now() - startTs) / 1000)), 500);
     } else clearInterval(timerRef.current);
-    return function () {
-      return clearInterval(timerRef.current);
-    };
+    return () => clearInterval(timerRef.current);
   }, [running, startTs]);
   function showToast(msg) {
     setToast(msg);
-    setTimeout(function () {
-      return setToast("");
-    }, 2500);
+    setTimeout(() => setToast(""), 2500);
   }
   function addCliente(v) {
-    if (!clientes.includes(v)) setClientes(function (p) {
-      return [].concat(_toConsumableArray(p), [v]);
-    });
+    if (!clientes.includes(v)) setClientes(p => [...p, v]);
   }
   function addResp(v) {
-    if (!resps.includes(v)) setResps(function (p) {
-      return [].concat(_toConsumableArray(p), [v]);
-    });
+    if (!resps.includes(v)) setResps(p => [...p, v]);
   }
   function handleLogin(company, name) {
     // Load localStorage immediately so app shows without waiting for Firebase
-    var lsKey = "ltn-tt-" + company.key;
+    const lsKey = "ltn-tt-" + company.key;
     try {
-      var ls = localStorage.getItem(lsKey);
+      const ls = localStorage.getItem(lsKey);
       if (ls) {
-        var s = JSON.parse(ls);
+        const s = JSON.parse(ls);
         if (s.entries) setEntries(s.entries);
         if (s.clientes) setClientes(s.clientes);
         if (s.resps) setResps(s.resps);
@@ -2510,28 +2335,17 @@ function App() {
     setStopDialog(false);
     setRunning(false);
     if (activeEntryId) {
-      setEntries(function (p) {
-        return p.map(function (e) {
-          return e.id !== activeEntryId ? e : _objectSpread(_objectSpread({}, e), {}, {
-            hours: (e.hours || 0) + hours,
-            status: finalStatus,
-            date: new Date().toISOString()
-          });
-        });
-      });
-      showToast("✓ Tiempo registrado · tarea " + finalStatus.toLowerCase());
+      setEntries(p => p.map(e => e.id !== activeEntryId ? e : {
+        ...e,
+        hours: (e.hours || 0) + hours,
+        status: finalStatus,
+        date: new Date().toISOString()
+      }));
+      const msg = finalStatus === "Realizado" ? "✅ ¡Tarea terminada!" : finalStatus === "Pausado" ? "⏸ Tarea pausada" : "🔄 En progreso";
+      showToast(msg);
     } else {
-      setEntries(function (p) {
-        return [{
-          id: Date.now(),
-          task: task.trim() || "(sin título)",
-          cliente: cliente,
-          responsable: resp || currentUser,
-          status: finalStatus,
-          hours: hours,
-          date: new Date().toISOString()
-        }].concat(_toConsumableArray(p));
-      });
+      const msg2 = finalStatus === "Realizado" ? "✅ ¡Tarea terminada!" : "✓ Entrada guardada";
+      showToast(msg2);
       showToast("✓ Entrada guardada");
     }
     setElapsed(0);
@@ -2548,29 +2362,24 @@ function App() {
     clearInterval(timerRef.current);
     setRunning(false);
     setStopDialog(false);
-    var hours = Math.max(elapsed / 3600, 0.004);
+    const hours = Math.max(elapsed / 3600, 0.004);
     if (activeEntryId) {
-      setEntries(function (p) {
-        return p.map(function (e) {
-          return e.id !== activeEntryId ? e : _objectSpread(_objectSpread({}, e), {}, {
-            hours: (e.hours || 0) + hours,
-            status: "Pausado",
-            date: new Date().toISOString()
-          });
-        });
-      });
+      setEntries(p => p.map(e => e.id !== activeEntryId ? e : {
+        ...e,
+        hours: (e.hours || 0) + hours,
+        status: "Pausado",
+        date: new Date().toISOString()
+      }));
     } else {
-      setEntries(function (p) {
-        return [{
-          id: Date.now(),
-          task: task.trim() || "(sin título)",
-          cliente: cliente,
-          responsable: resp || currentUser,
-          status: "Pausado",
-          hours: hours,
-          date: new Date().toISOString()
-        }].concat(_toConsumableArray(p));
-      });
+      setEntries(p => [{
+        id: Date.now(),
+        task: task.trim() || "(sin título)",
+        cliente,
+        responsable: resp || currentUser,
+        status: "Pausado",
+        hours,
+        date: new Date().toISOString()
+      }, ...p]);
     }
     setElapsed(0);
     setTask("");
@@ -2583,30 +2392,24 @@ function App() {
       if (taskRef.current) taskRef.current.focus();
       return;
     }
-    var est = hoursFromString(manualHours);
-    setEntries(function (p) {
-      return [{
-        id: Date.now(),
-        task: task.trim(),
-        cliente: cliente,
-        responsable: resp || currentUser,
-        status: manualStatus,
-        hours: 0,
-        estimatedHours: est || null,
-        date: new Date().toISOString(),
-        comments: ""
-      }].concat(_toConsumableArray(p));
-    });
+    const est = hoursFromString(manualHours);
+    setEntries(p => [{
+      id: Date.now(),
+      task: task.trim(),
+      cliente,
+      responsable: resp || currentUser,
+      status: manualStatus,
+      hours: 0,
+      estimatedHours: est || null,
+      date: new Date().toISOString(),
+      comments: ""
+    }, ...p]);
     setTask("");
     setManualHours("");
     showToast("✓ Tarea creada");
   }
   function del(id) {
-    setEntries(function (p) {
-      return p.filter(function (e) {
-        return e.id !== id;
-      });
-    });
+    setEntries(p => p.filter(e => e.id !== id));
     showToast("Entrada eliminada");
     setDeleteConfirm(null);
   }
@@ -2614,11 +2417,7 @@ function App() {
     setDeleteConfirm(e);
   }
   function saveEdit(u) {
-    setEntries(function (p) {
-      return p.map(function (e) {
-        return e.id === u.id ? u : e;
-      });
-    });
+    setEntries(p => p.map(e => e.id === u.id ? u : e));
     setEditEntry(null);
     showToast("✓ Cambios guardados");
   }
@@ -2630,17 +2429,20 @@ function App() {
   }
   function tryStartTask(entry) {
     if (running) {
-      setBlockedDialog(activeEntryId ? entries.find(function (e) {
-        return e.id === activeEntryId;
-      }) || {
+      setBlockedDialog(activeEntryId ? entries.find(e => e.id === activeEntryId) || {
         task: "Tarea sin nombre",
         cliente: "—",
         responsable: "—"
       } : {
         task: task,
-        cliente: cliente,
+        cliente,
         responsable: resp || currentUser
       });
+      return;
+    }
+    // Check if task belongs to someone else
+    if (entry.responsable && entry.responsable !== currentUser) {
+      setReasignDialog(entry);
       return;
     }
     setStartDialog(entry);
@@ -2649,13 +2451,10 @@ function App() {
     setStartDialog(null);
     // Mark as Proceso only if it was Pendiente/Pausado; keep Proceso as-is
     if (entry.status === "Pendiente" || entry.status === "Pausado") {
-      setEntries(function (p) {
-        return p.map(function (e) {
-          return e.id === entry.id ? _objectSpread(_objectSpread({}, e), {}, {
-            status: "Proceso"
-          }) : e;
-        });
-      });
+      setEntries(p => p.map(e => e.id === entry.id ? {
+        ...e,
+        status: "Proceso"
+      } : e));
     }
     setMode("timer");
     setTask(entry.task);
@@ -2670,42 +2469,68 @@ function App() {
       top: 0,
       behavior: "smooth"
     });
-    var label = entry.status === "Pausado" ? "⏱ Tarea reanudada" : entry.status === "Proceso" ? "⏱ Retomando tarea" : "⏱ Tarea iniciada";
+    const label = entry.status === "Pausado" ? "⏱ Tarea reanudada" : entry.status === "Proceso" ? "⏱ Retomando tarea" : "⏱ Tarea iniciada";
     showToast(label);
   }
-  var allYears = _toConsumableArray(new Set(entries.map(function (e) {
-    return getYear(e.date);
-  }).filter(Boolean))).sort();
-  var allLogMonths = _toConsumableArray(new Set(entries.map(function (e) {
+  function confirmReasign() {
+    const original = reasignDialog;
+    setReasignDialog(null);
+    // Create a NEW continuation task linked to the original — original stays unchanged
+    const continuation = {
+      id: Date.now(),
+      task: "Continuación: " + original.task,
+      cliente: original.cliente,
+      responsable: currentUser,
+      status: "Proceso",
+      hours: 0,
+      estimatedHours: original.estimatedHours || null,
+      comments: "",
+      date: new Date().toISOString(),
+      continuacionDe: original.id,
+      // link to original
+      continuacionDeUser: original.responsable
+    };
+    setEntries(p => [continuation, ...p]);
+    // Start timer on the new continuation task
+    setMode("timer");
+    setTask(continuation.task);
+    setCliente(continuation.cliente);
+    setResp(currentUser);
+    setTaskError(false);
+    setActiveEntryId(continuation.id);
+    setStartTs(Date.now());
+    setElapsed(0);
+    setRunning(true);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+    showToast("🔗 Continuación creada e iniciada");
+  }
+  const allYears = [...new Set(entries.map(e => getYear(e.date)).filter(Boolean))].sort();
+  const allLogMonths = [...new Set(entries.map(e => {
     if (!e.date) return null;
-    return "".concat(getYear(e.date), "-").concat(String(getMonth(e.date) + 1).padStart(2, "0"));
-  }).filter(Boolean))).sort();
+    return `${getYear(e.date)}-${String(getMonth(e.date) + 1).padStart(2, "0")}`;
+  }).filter(Boolean))].sort();
   function logMonthLabel(k) {
-    var _k$split = k.split("-"),
-      _k$split2 = _slicedToArray(_k$split, 2),
-      y = _k$split2[0],
-      m = _k$split2[1];
+    const [y, m] = k.split("-");
     return MONTH_NAMES[parseInt(m) - 1] + " " + y;
   }
-  var filtered = entries.filter(function (e) {
+  const filtered = entries.filter(e => {
     if (fCliente !== "Todos" && e.cliente !== fCliente) return false;
     if (fResp !== "Todos" && e.responsable !== fResp) return false;
     if (fStatus !== "Todos" && e.status !== fStatus) return false;
     if (fMes !== "Todos") {
       if (!e.date) return false;
-      var k = "".concat(getYear(e.date), "-").concat(String(getMonth(e.date) + 1).padStart(2, "0"));
+      const k = `${getYear(e.date)}-${String(getMonth(e.date) + 1).padStart(2, "0")}`;
       if (k !== fMes) return false;
     }
     return true;
   });
-  var filtH = filtered.reduce(function (a, e) {
-    return a + (e.hours || 0);
-  }, 0);
-  var totalH = entries.reduce(function (a, e) {
-    return a + (e.hours || 0);
-  }, 0);
-  var hasLogFilter = fMes !== "Todos" || fCliente !== "Todos" || fResp !== "Todos" || fStatus !== "Todos";
-  var t2List = entries.filter(function (e) {
+  const filtH = filtered.reduce((a, e) => a + (e.hours || 0), 0);
+  const totalH = entries.reduce((a, e) => a + (e.hours || 0), 0);
+  const hasLogFilter = fMes !== "Todos" || fCliente !== "Todos" || fResp !== "Todos" || fStatus !== "Todos";
+  const t2List = entries.filter(e => {
     if (t2Cliente !== "Todos" && e.cliente !== t2Cliente) return false;
     if (t2Resp !== "Todos" && e.responsable !== t2Resp) return false;
     if (!e.date) return t2Months.length === 0 && t2Year === "Todos";
@@ -2713,28 +2538,14 @@ function App() {
     if (t2Months.length > 0 && !t2Months.includes(getMonth(e.date))) return false;
     return true;
   });
-  var t2Total = t2List.reduce(function (a, e) {
-    return a + (e.hours || 0);
-  }, 0);
-  var t2HasFilter = t2Cliente !== "Todos" || t2Year !== "Todos" || t2Months.length > 0 || t2Resp !== "Todos";
-  var t2ByCli = _toConsumableArray(new Set(t2List.map(function (e) {
-    return e.cliente;
-  }))).map(function (c) {
-    return {
-      name: c,
-      h: t2List.filter(function (e) {
-        return e.cliente === c;
-      }).reduce(function (a, e) {
-        return a + e.hours;
-      }, 0),
-      n: t2List.filter(function (e) {
-        return e.cliente === c;
-      }).length
-    };
-  }).sort(function (a, b) {
-    return b.h - a.h;
-  });
-  var sel = {
+  const t2Total = t2List.reduce((a, e) => a + (e.hours || 0), 0);
+  const t2HasFilter = t2Cliente !== "Todos" || t2Year !== "Todos" || t2Months.length > 0 || t2Resp !== "Todos";
+  const t2ByCli = [...new Set(t2List.map(e => e.cliente))].map(c => ({
+    name: c,
+    h: t2List.filter(e => e.cliente === c).reduce((a, e) => a + e.hours, 0),
+    n: t2List.filter(e => e.cliente === c).length
+  })).sort((a, b) => b.h - a.h);
+  const sel = {
     background: "#f8f5ff",
     border: "1.5px solid #ddd6fe",
     color: "#1e1035",
@@ -2745,7 +2556,7 @@ function App() {
     outline: "none",
     cursor: "pointer"
   };
-  var uc = currentUser ? USER_COLORS[currentUser] || {
+  const uc = currentUser ? USER_COLORS[currentUser] || {
     bg: "#ede9fe",
     text: "#6d28d9",
     border: "#ddd6fe",
@@ -2756,14 +2567,14 @@ function App() {
   if (!currentUser || !currentCompany) return /*#__PURE__*/React.createElement(LoginScreen, {
     onLogin: handleLogin
   });
-  function EntryRow(_ref0) {
-    var e = _ref0.e,
-      _ref0$showDel = _ref0.showDel,
-      showDel = _ref0$showDel === void 0 ? true : _ref0$showDel;
-    var s = SC[e.status] || SC.Pendiente;
-    var isActive = activeEntryId === e.id && running;
+  function EntryRow({
+    e,
+    showDel = true
+  }) {
+    const s = SC[e.status] || SC.Pendiente;
+    const isActive = activeEntryId === e.id && running;
     // Show play on any non-Realizado task that isn't currently running
-    var canPlay = e.status !== "Realizado" && !isActive;
+    const canPlay = e.status !== "Realizado" && !isActive;
     return /*#__PURE__*/React.createElement("div", {
       className: "row",
       style: {
@@ -2811,7 +2622,28 @@ function App() {
         borderRadius: "4px",
         animation: "pulse 1.4s infinite"
       }
-    }, "\u25CF en curso ", fmtElapsed(elapsed)))), /*#__PURE__*/React.createElement("span", {
+    }, "\u25CF en curso ", fmtElapsed(elapsed)), !isActive && e.status === "Realizado" && e.finishedAt && /*#__PURE__*/React.createElement("span", {
+      style: {
+        marginLeft: 6,
+        fontSize: "10px",
+        background: "#dcfce7",
+        color: "#15803d",
+        border: "1px solid #bbf7d0",
+        padding: "1px 6px",
+        borderRadius: "4px"
+      }
+    }, "\u2705 Terminada"), e.continuacionDe && /*#__PURE__*/React.createElement("span", {
+      style: {
+        marginLeft: 6,
+        fontSize: "10px",
+        background: "#e0f2fe",
+        color: "#0369a1",
+        border: "1px solid #bae6fd",
+        padding: "1px 6px",
+        borderRadius: "4px"
+      },
+      title: `Continuación de tarea de ${e.continuacionDeUser}`
+    }, "\uD83D\uDD17 Continuaci\xF3n de ", e.continuacionDeUser))), /*#__PURE__*/React.createElement("span", {
       style: {
         padding: "3px 8px",
         borderRadius: "5px",
@@ -2819,7 +2651,7 @@ function App() {
         fontWeight: 600,
         background: s.bg,
         color: s.text,
-        border: "1px solid ".concat(s.border),
+        border: `1px solid ${s.border}`,
         whiteSpace: "nowrap"
       }
     }, e.status), /*#__PURE__*/React.createElement("span", {
@@ -2892,10 +2724,10 @@ function App() {
         fontWeight: 700,
         whiteSpace: "nowrap"
       },
-      onMouseEnter: function onMouseEnter(ev) {
+      onMouseEnter: ev => {
         ev.currentTarget.style.background = "#fde68a";
       },
-      onMouseLeave: function onMouseLeave(ev) {
+      onMouseLeave: ev => {
         ev.currentTarget.style.background = "#fef9c3";
       }
     }, /*#__PURE__*/React.createElement("svg", {
@@ -2919,9 +2751,7 @@ function App() {
     /*#__PURE__*/
     /* Task can be started or resumed → show Play button */
     React.createElement("button", {
-      onClick: function onClick() {
-        return tryStartTask(e);
-      },
+      onClick: () => tryStartTask(e),
       title: e.status === "Pausado" ? "Reanudar tarea" : e.status === "Proceso" ? "Retomar tarea" : "Iniciar tarea",
       style: {
         display: "flex",
@@ -2938,10 +2768,10 @@ function App() {
         fontWeight: 700,
         whiteSpace: "nowrap"
       },
-      onMouseEnter: function onMouseEnter(ev) {
+      onMouseEnter: ev => {
         if (!running) ev.currentTarget.style.background = "#7c3aed";
       },
-      onMouseLeave: function onMouseLeave(ev) {
+      onMouseLeave: ev => {
         if (!running) ev.currentTarget.style.background = "#6d28d9";
       }
     }, /*#__PURE__*/React.createElement("svg", {
@@ -2953,9 +2783,7 @@ function App() {
       d: "M0 0l8 5-8 5V0z"
     })), e.status === "Pausado" ? "Reanudar" : e.status === "Proceso" ? "Retomar" : "Iniciar") : /*#__PURE__*/React.createElement("span", null), /*#__PURE__*/React.createElement("button", {
       title: "Editar",
-      onClick: function onClick() {
-        return setEditEntry(e);
-      },
+      onClick: () => setEditEntry(e),
       style: {
         background: "none",
         border: "none",
@@ -2966,12 +2794,8 @@ function App() {
         borderRadius: "5px",
         lineHeight: 1
       },
-      onMouseEnter: function onMouseEnter(ev) {
-        return ev.currentTarget.style.color = "#6d28d9";
-      },
-      onMouseLeave: function onMouseLeave(ev) {
-        return ev.currentTarget.style.color = "#c4b5fd";
-      }
+      onMouseEnter: ev => ev.currentTarget.style.color = "#6d28d9",
+      onMouseLeave: ev => ev.currentTarget.style.color = "#c4b5fd"
     }, "\u270E"), showDel && /*#__PURE__*/React.createElement("button", {
       className: "del",
       style: {
@@ -2984,9 +2808,7 @@ function App() {
         borderRadius: "5px",
         lineHeight: 1
       },
-      onClick: function onClick() {
-        return askDelete(e);
-      }
+      onClick: () => askDelete(e)
     }, "\xD7"));
   }
   return /*#__PURE__*/React.createElement("div", {
@@ -3002,34 +2824,27 @@ function App() {
     clientes: clientes,
     resps: resps,
     onSave: saveEdit,
-    onClose: function onClose() {
-      return setEditEntry(null);
-    }
+    onClose: () => setEditEntry(null)
   }), startDialog && /*#__PURE__*/React.createElement(StartTaskDialog, {
     entry: startDialog,
-    onConfirm: function onConfirm() {
-      return confirmStartTask(startDialog);
-    },
-    onClose: function onClose() {
-      return setStartDialog(null);
-    }
+    onConfirm: () => confirmStartTask(startDialog),
+    onClose: () => setStartDialog(null)
   }), blockedDialog && /*#__PURE__*/React.createElement(BlockedDialog, {
     activeTask: blockedDialog,
-    onClose: function onClose() {
-      return setBlockedDialog(null);
-    }
+    onClose: () => setBlockedDialog(null)
   }), deleteConfirm && /*#__PURE__*/React.createElement(DeleteConfirmDialog, {
     entry: deleteConfirm,
-    onConfirm: function onConfirm() {
-      return del(deleteConfirm.id);
-    },
-    onClose: function onClose() {
-      return setDeleteConfirm(null);
-    }
+    onConfirm: () => del(deleteConfirm.id),
+    onClose: () => setDeleteConfirm(null)
   }), stopDialog && /*#__PURE__*/React.createElement(StopTaskDialog, {
     elapsed: elapsed,
     onSave: confirmStop,
     onClose: cancelStop
+  }), reasignDialog && /*#__PURE__*/React.createElement(ReasignDialog, {
+    entry: reasignDialog,
+    currentUser: currentUser,
+    onContinue: confirmReasign,
+    onCancel: () => setReasignDialog(null)
   }), toast && /*#__PURE__*/React.createElement("div", {
     style: {
       position: "fixed",
@@ -3118,7 +2933,7 @@ function App() {
       alignItems: "center",
       gap: "8px",
       background: uc.bg,
-      border: "1.5px solid ".concat(uc.border),
+      border: `1.5px solid ${uc.border}`,
       borderRadius: "20px",
       padding: "4px 12px 4px 6px"
     }
@@ -3142,7 +2957,7 @@ function App() {
       color: uc.text
     }
   }, currentUser)), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
+    onClick: () => {
       if (running) {
         showToast("⚠️ Para el cronómetro antes de salir");
         return;
@@ -3216,34 +3031,29 @@ function App() {
       borderRadius: "8px",
       marginBottom: "16px"
     }
-  }, [["timer", "⏱ Cronómetro"], ["manual", "✏️ Crear tarea"]].map(function (_ref1) {
-    var _ref10 = _slicedToArray(_ref1, 2),
-      m = _ref10[0],
-      lbl = _ref10[1];
-    return /*#__PURE__*/React.createElement("button", {
-      key: m,
-      onClick: function onClick() {
-        if (!running) {
-          setMode(m);
-          setTask("");
-          setTaskError(false);
-          setActiveEntryId(null);
-        }
-      },
-      style: {
-        padding: "5px 14px",
-        borderRadius: "6px",
-        border: "none",
-        background: mode === m ? "#fff" : "transparent",
-        color: mode === m ? "#6d28d9" : "#9a7cc5",
-        fontSize: "12px",
-        fontFamily: "inherit",
-        fontWeight: mode === m ? 600 : 400,
-        cursor: running ? "not-allowed" : "pointer",
-        boxShadow: mode === m ? "0 1px 4px rgba(109,40,217,.1)" : "none"
+  }, [["timer", "⏱ Cronómetro"], ["manual", "✏️ Crear tarea"]].map(([m, lbl]) => /*#__PURE__*/React.createElement("button", {
+    key: m,
+    onClick: () => {
+      if (!running) {
+        setMode(m);
+        setTask("");
+        setTaskError(false);
+        setActiveEntryId(null);
       }
-    }, lbl);
-  })), /*#__PURE__*/React.createElement("div", {
+    },
+    style: {
+      padding: "5px 14px",
+      borderRadius: "6px",
+      border: "none",
+      background: mode === m ? "#fff" : "transparent",
+      color: mode === m ? "#6d28d9" : "#9a7cc5",
+      fontSize: "12px",
+      fontFamily: "inherit",
+      fontWeight: mode === m ? 600 : 400,
+      cursor: running ? "not-allowed" : "pointer",
+      boxShadow: mode === m ? "0 1px 4px rgba(109,40,217,.1)" : "none"
+    }
+  }, lbl))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
       alignItems: "flex-start",
@@ -3270,20 +3080,19 @@ function App() {
     }
   }, "(puedes a\xF1adirla despu\xE9s)")), /*#__PURE__*/React.createElement("input", {
     ref: taskRef,
-    style: _objectSpread(_objectSpread({}, sel), {}, {
+    style: {
+      ...sel,
       cursor: running && activeEntryId ? "default" : "text",
       width: "100%"
-    }),
+    },
     placeholder: mode === "manual" ? "Describe la tarea a asignar…" : "¿En qué estás trabajando? (opcional)",
     value: task,
-    onChange: function onChange(e) {
+    onChange: e => {
       if (running && activeEntryId) return;
       setTask(e.target.value);
       if (e.target.value.trim()) setTaskError(false);
     },
-    onKeyDown: function onKeyDown(e) {
-      return e.key === "Enter" && !running && (mode === "timer" ? play() : saveManual());
-    },
+    onKeyDown: e => e.key === "Enter" && !running && (mode === "timer" ? play() : saveManual()),
     disabled: running && !!activeEntryId
   })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -3329,15 +3138,11 @@ function App() {
   }, "Estado al guardar"), /*#__PURE__*/React.createElement("select", {
     style: sel,
     value: timerStatus,
-    onChange: function onChange(e) {
-      return setTimerStatus(e.target.value);
-    },
+    onChange: e => setTimerStatus(e.target.value),
     disabled: running
-  }, STATUSES.map(function (s) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: s
-    }, s);
-  }))), mode === "manual" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  }, STATUSES.map(s => /*#__PURE__*/React.createElement("option", {
+    key: s
+  }, s)))), mode === "manual" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "10px",
       color: "#b8a8d0",
@@ -3349,14 +3154,10 @@ function App() {
   }, "Estado"), /*#__PURE__*/React.createElement("select", {
     style: sel,
     value: manualStatus,
-    onChange: function onChange(e) {
-      return setManualStatus(e.target.value);
-    }
-  }, STATUSES.map(function (s) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: s
-    }, s);
-  }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    onChange: e => setManualStatus(e.target.value)
+  }, STATUSES.map(s => /*#__PURE__*/React.createElement("option", {
+    key: s
+  }, s)))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "10px",
       color: "#b8a8d0",
@@ -3367,13 +3168,12 @@ function App() {
     }
   }, "Tiempo estimado"), /*#__PURE__*/React.createElement("input", {
     value: manualHours,
-    onChange: function onChange(e) {
-      return setManualHours(e.target.value);
-    },
-    style: _objectSpread(_objectSpread({}, sel), {}, {
+    onChange: e => setManualHours(e.target.value),
+    style: {
+      ...sel,
       cursor: "text",
       width: "110px"
-    }),
+    },
     placeholder: "30m, 1h\u2026"
   }))), mode === "timer" ? /*#__PURE__*/React.createElement("div", {
     style: {
@@ -3462,28 +3262,21 @@ function App() {
       border: "1.5px solid #ede9fe",
       marginBottom: "20px"
     }
-  }, [["log", "📋 Registro"], ["tabla", "📊 Por cliente y mes"]].map(function (_ref11) {
-    var _ref12 = _slicedToArray(_ref11, 2),
-      t = _ref12[0],
-      lbl = _ref12[1];
-    return /*#__PURE__*/React.createElement("button", {
-      key: t,
-      style: {
-        padding: "6px 18px",
-        borderRadius: "6px",
-        border: "none",
-        background: tab === t ? "#ede9fe" : "transparent",
-        color: tab === t ? "#6d28d9" : "#9a7cc5",
-        fontSize: "13px",
-        fontFamily: "inherit",
-        fontWeight: tab === t ? 600 : 400,
-        cursor: "pointer"
-      },
-      onClick: function onClick() {
-        return setTab(t);
-      }
-    }, lbl);
-  })), tab === "log" && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  }, [["log", "📋 Registro"], ["tabla", "📊 Por cliente y mes"]].map(([t, lbl]) => /*#__PURE__*/React.createElement("button", {
+    key: t,
+    style: {
+      padding: "6px 18px",
+      borderRadius: "6px",
+      border: "none",
+      background: tab === t ? "#ede9fe" : "transparent",
+      color: tab === t ? "#6d28d9" : "#9a7cc5",
+      fontSize: "13px",
+      fontFamily: "inherit",
+      fontWeight: tab === t ? 600 : 400,
+      cursor: "pointer"
+    },
+    onClick: () => setTab(t)
+  }, lbl))), tab === "log" && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       background: "#fff",
       border: "1.5px solid #ede9fe",
@@ -3495,45 +3288,25 @@ function App() {
       flexWrap: "wrap",
       alignItems: "flex-end"
     }
-  }, [["Mes", fMes, setFMes, ["Todos"].concat(_toConsumableArray(allLogMonths)), function (k) {
-    return k === "Todos" ? "Todos" : logMonthLabel(k);
-  }], ["Cliente", fCliente, setFCliente, ["Todos"].concat(_toConsumableArray(clientes)), function (v) {
-    return v;
-  }], ["Resp.", fResp, setFResp, ["Todos"].concat(_toConsumableArray(resps)), function (v) {
-    return v;
-  }], ["Estado", fStatus, setFStatus, ["Todos"].concat(STATUSES), function (v) {
-    return v;
-  }]].map(function (_ref13) {
-    var _ref14 = _slicedToArray(_ref13, 5),
-      label = _ref14[0],
-      val = _ref14[1],
-      setter = _ref14[2],
-      opts = _ref14[3],
-      fmt = _ref14[4];
-    return /*#__PURE__*/React.createElement("div", {
-      key: label
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: "10px",
-        color: "#b8a8d0",
-        fontWeight: 600,
-        textTransform: "uppercase",
-        letterSpacing: ".1em",
-        marginBottom: "4px"
-      }
-    }, label), /*#__PURE__*/React.createElement("select", {
-      style: sel,
-      value: val,
-      onChange: function onChange(e) {
-        return setter(e.target.value);
-      }
-    }, opts.map(function (o) {
-      return /*#__PURE__*/React.createElement("option", {
-        key: o,
-        value: o
-      }, fmt(o));
-    })));
-  }), hasLogFilter && /*#__PURE__*/React.createElement("button", {
+  }, [["Mes", fMes, setFMes, ["Todos", ...allLogMonths], k => k === "Todos" ? "Todos" : logMonthLabel(k)], ["Cliente", fCliente, setFCliente, ["Todos", ...clientes], v => v], ["Resp.", fResp, setFResp, ["Todos", ...resps], v => v], ["Estado", fStatus, setFStatus, ["Todos", ...STATUSES], v => v]].map(([label, val, setter, opts, fmt]) => /*#__PURE__*/React.createElement("div", {
+    key: label
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "10px",
+      color: "#b8a8d0",
+      fontWeight: 600,
+      textTransform: "uppercase",
+      letterSpacing: ".1em",
+      marginBottom: "4px"
+    }
+  }, label), /*#__PURE__*/React.createElement("select", {
+    style: sel,
+    value: val,
+    onChange: e => setter(e.target.value)
+  }, opts.map(o => /*#__PURE__*/React.createElement("option", {
+    key: o,
+    value: o
+  }, fmt(o)))))), hasLogFilter && /*#__PURE__*/React.createElement("button", {
     onClick: resetLogFilters,
     style: {
       background: "#f3f0fb",
@@ -3577,13 +3350,11 @@ function App() {
       fontSize: "28px",
       marginBottom: "8px"
     }
-  }, "\u23F1"), "No hay entradas con estos filtros.") : filtered.map(function (e) {
-    return /*#__PURE__*/React.createElement(EntryRow, {
-      key: e.id,
-      e: e,
-      showDel: true
-    });
-  })), tab === "tabla" && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  }, "\u23F1"), "No hay entradas con estos filtros.") : filtered.map(e => /*#__PURE__*/React.createElement(EntryRow, {
+    key: e.id,
+    e: e,
+    showDel: true
+  }))), tab === "tabla" && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       background: "#fff",
       border: "1.5px solid #ede9fe",
@@ -3611,17 +3382,15 @@ function App() {
   }, "Cliente"), /*#__PURE__*/React.createElement("select", {
     style: sel,
     value: t2Cliente,
-    onChange: function onChange(e) {
+    onChange: e => {
       setT2Cliente(e.target.value);
       setT2Months([]);
     }
   }, /*#__PURE__*/React.createElement("option", {
     value: "Todos"
-  }, "Todos los clientes"), clientes.map(function (c) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: c
-    }, c);
-  }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  }, "Todos los clientes"), clientes.map(c => /*#__PURE__*/React.createElement("option", {
+    key: c
+  }, c)))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "10px",
       color: "#b8a8d0",
@@ -3633,16 +3402,12 @@ function App() {
   }, "Responsable"), /*#__PURE__*/React.createElement("select", {
     style: sel,
     value: t2Resp,
-    onChange: function onChange(e) {
-      return setT2Resp(e.target.value);
-    }
+    onChange: e => setT2Resp(e.target.value)
   }, /*#__PURE__*/React.createElement("option", {
     value: "Todos"
-  }, "Todos"), resps.map(function (r) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: r
-    }, r);
-  }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  }, "Todos"), resps.map(r => /*#__PURE__*/React.createElement("option", {
+    key: r
+  }, r)))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "10px",
       color: "#b8a8d0",
@@ -3654,18 +3419,16 @@ function App() {
   }, "A\xF1o"), /*#__PURE__*/React.createElement("select", {
     style: sel,
     value: t2Year,
-    onChange: function onChange(e) {
+    onChange: e => {
       setT2Year(e.target.value);
       setT2Months([]);
     }
   }, /*#__PURE__*/React.createElement("option", {
     value: "Todos"
-  }, "Todo el a\xF1o"), allYears.map(function (y) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: y
-    }, y);
-  }))), t2HasFilter && /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
+  }, "Todo el a\xF1o"), allYears.map(y => /*#__PURE__*/React.createElement("option", {
+    key: y
+  }, y)))), t2HasFilter && /*#__PURE__*/React.createElement("button", {
+    onClick: () => {
       setT2Cliente("Todos");
       setT2Resp("Todos");
       setT2Year("Todos");
@@ -3699,9 +3462,7 @@ function App() {
     }
   }, /*#__PURE__*/React.createElement("button", {
     className: "mbtn",
-    onClick: function onClick() {
-      return setT2Months([]);
-    },
+    onClick: () => setT2Months([]),
     style: {
       padding: "6px 14px",
       borderRadius: "20px",
@@ -3714,18 +3475,12 @@ function App() {
       borderColor: t2Months.length === 0 ? "#6d28d9" : "#ddd6fe",
       color: t2Months.length === 0 ? "#fff" : "#9a7cc5"
     }
-  }, "Todo el a\xF1o"), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(function (m) {
-    var active = t2Months.includes(m);
+  }, "Todo el a\xF1o"), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(m => {
+    const active = t2Months.includes(m);
     return /*#__PURE__*/React.createElement("button", {
       key: m,
       className: "mbtn",
-      onClick: function onClick() {
-        return setT2Months(function (prev) {
-          return prev.includes(m) ? prev.filter(function (x) {
-            return x !== m;
-          }) : [].concat(_toConsumableArray(prev), [m]);
-        });
-      },
+      onClick: () => setT2Months(prev => prev.includes(m) ? prev.filter(x => x !== m) : [...prev, m]),
       style: {
         padding: "6px 14px",
         borderRadius: "20px",
@@ -3802,20 +3557,18 @@ function App() {
       fontSize: "12px",
       fontWeight: 600
     }
-  }, t2Year), t2Months.map(function (m) {
-    return /*#__PURE__*/React.createElement("span", {
-      key: m,
-      style: {
-        background: "#ede9fe",
-        color: "#6d28d9",
-        border: "1px solid #ddd6fe",
-        borderRadius: "6px",
-        padding: "3px 10px",
-        fontSize: "12px",
-        fontWeight: 600
-      }
-    }, MONTH_NAMES[m]);
-  })), /*#__PURE__*/React.createElement("div", {
+  }, t2Year), t2Months.map(m => /*#__PURE__*/React.createElement("span", {
+    key: m,
+    style: {
+      background: "#ede9fe",
+      color: "#6d28d9",
+      border: "1px solid #ddd6fe",
+      borderRadius: "6px",
+      padding: "3px 10px",
+      fontSize: "12px",
+      fontWeight: 600
+    }
+  }, MONTH_NAMES[m]))), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "13px",
       color: "#9a7cc5",
@@ -3834,45 +3587,42 @@ function App() {
       gap: "8px",
       marginBottom: "18px"
     }
-  }, t2ByCli.map(function (item) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: item.name,
-      style: {
-        background: "#fff",
-        border: "1.5px solid #ede9fe",
-        borderRadius: "9px",
-        padding: "12px 14px"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: "10px",
-        color: "#c4b5fd",
-        textTransform: "uppercase",
-        letterSpacing: ".1em",
-        marginBottom: "4px"
-      }
-    }, item.n, " tarea", item.n !== 1 ? "s" : ""), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: "17px",
-        fontWeight: 700,
-        color: "#6d28d9"
-      }
-    }, fmtHours(item.h)), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: "12px",
-        color: "#6b5a8e",
-        marginTop: "2px"
-      }
-    }, item.name));
-  })), t2List.map(function (e) {
-    return /*#__PURE__*/React.createElement(EntryRow, {
-      key: e.id,
-      e: e,
-      showDel: false
-    });
-  })))));
+  }, t2ByCli.map(item => /*#__PURE__*/React.createElement("div", {
+    key: item.name,
+    style: {
+      background: "#fff",
+      border: "1.5px solid #ede9fe",
+      borderRadius: "9px",
+      padding: "12px 14px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "10px",
+      color: "#c4b5fd",
+      textTransform: "uppercase",
+      letterSpacing: ".1em",
+      marginBottom: "4px"
+    }
+  }, item.n, " tarea", item.n !== 1 ? "s" : ""), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "17px",
+      fontWeight: 700,
+      color: "#6d28d9"
+    }
+  }, fmtHours(item.h)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "12px",
+      color: "#6b5a8e",
+      marginTop: "2px"
+    }
+  }, item.name)))), t2List.map(e => /*#__PURE__*/React.createElement(EntryRow, {
+    key: e.id,
+    e: e,
+    showDel: false
+  }))))));
 }
-window.addEventListener("load",function(){var root=ReactDOM.createRoot(document.getElementById("root"));root.render(React.createElement(App));});
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(React.createElement(App));
   </script>
 </body>
 </html>
