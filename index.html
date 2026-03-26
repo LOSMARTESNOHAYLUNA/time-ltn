@@ -55,7 +55,7 @@ var COMPANIES = {
     name: "Lidera tu Negocio",
     color: "#3c2b86",
     accent: "#e61978",
-    users: ["Carla", "Juli", "Mati", "Elena"],
+    users: ["Carla", "Juli", "Mati", "Elena", "Sheila", "Estefanía", "Jessy", "Paola"],
     defaultClientes: ["Medea", "Maraver", "Kawi", "Academia Premium", "Farmacia Curiel", "Federopticos", "Beatriz Zaragoza", "Aflamas", "Recoambiente", "Otro"]
   },
   lmnhl: {
@@ -2290,31 +2290,10 @@ function App() {
   var lastTs = useRef(null);
   var pollRef = useRef(null);
 
-  // Arrancar SIEMPRE desde localStorage (app inmediata) y sincronizar con Firebase en segundo plano
+  // Firebase sync en segundo plano — la app ya está visible
   useEffect(function () {
     if (!currentCompany) return;
-
-    // 1. Cargar localStorage inmediatamente → app lista al instante
     var lsKey = "ltn-tt-" + currentCompany.key;
-    try {
-      var ls = localStorage.getItem(lsKey);
-      if (ls) {
-        var s = JSON.parse(ls);
-        skipNextWrite.current = true;
-        if (s.entries) setEntries(s.entries);
-        if (s.clientes) setClientes(s.clientes);
-        if (s.resps) setResps(s.resps);
-      } else {
-        setEntries(EXCEL_DATA);
-        setClientes(currentCompany.defaultClientes || DEFAULT_CLIENTES);
-        setResps(currentCompany.users || DEFAULT_RESPONSABLES);
-      }
-    } catch (e) {
-      setEntries(EXCEL_DATA);
-    }
-    setFbReady(true); // ← app visible inmediatamente
-
-    // 2. Intentar Firebase en segundo plano (sin bloquear)
     function syncFirebase(_x4) {
       return _syncFirebase.apply(this, arguments);
     }
@@ -2463,11 +2442,28 @@ function App() {
     });
   }
   function handleLogin(company, name) {
+    // Load localStorage immediately so app shows without waiting for Firebase
+    var lsKey = "ltn-tt-" + company.key;
+    try {
+      var ls = localStorage.getItem(lsKey);
+      if (ls) {
+        var s = JSON.parse(ls);
+        if (s.entries) setEntries(s.entries);
+        if (s.clientes) setClientes(s.clientes);
+        if (s.resps) setResps(s.resps);
+      } else {
+        setEntries(EXCEL_DATA);
+        setClientes(company.defaultClientes || DEFAULT_CLIENTES);
+        setResps(company.users || DEFAULT_RESPONSABLES);
+      }
+    } catch (e) {
+      setEntries(EXCEL_DATA);
+      setResps(company.users || DEFAULT_RESPONSABLES);
+    }
     setCurrentCompany(company);
     setCurrentUser(name);
     setResp(name);
-    // Set default resps for this company
-    setResps(company.users);
+    setFbReady(true); // show app immediately, Firebase syncs in background
   }
   function play() {
     setTaskError(false);
@@ -2726,40 +2722,7 @@ function App() {
     avatar: "#7c3aed"
   } : {};
 
-  // Loading
-  if (!fbReady) return /*#__PURE__*/React.createElement("div", {
-    style: {
-      minHeight: "100vh",
-      background: "#f3f0fb",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      fontFamily: "system-ui,sans-serif",
-      flexDirection: "column",
-      gap: "16px"
-    }
-  }, /*#__PURE__*/React.createElement("svg", {
-    width: "32",
-    height: "32",
-    viewBox: "0 0 20 20",
-    fill: "none"
-  }, /*#__PURE__*/React.createElement("circle", {
-    cx: "10",
-    cy: "10",
-    r: "8",
-    stroke: "#7c3aed",
-    strokeWidth: "1.5"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M10 6v4l2.5 2.5",
-    stroke: "#7c3aed",
-    strokeWidth: "1.5",
-    strokeLinecap: "round"
-  })), /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontSize: "14px",
-      color: "#9a7cc5"
-    }
-  }, "Conectando con Firebase\u2026"));
+  // Login check PRIMERO — si no hay usuario/empresa, mostrar selección
   if (!currentUser || !currentCompany) return /*#__PURE__*/React.createElement(LoginScreen, {
     onLogin: handleLogin
   });
