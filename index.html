@@ -2290,59 +2290,86 @@ function App() {
   var lastTs = useRef(null);
   var pollRef = useRef(null);
 
-  // Initial load + poll every 8s for changes from other users
+  // Arrancar SIEMPRE desde localStorage (app inmediata) y sincronizar con Firebase en segundo plano
   useEffect(function () {
     if (!currentCompany) return;
-    function load(_x4) {
-      return _load.apply(this, arguments);
+
+    // 1. Cargar localStorage inmediatamente → app lista al instante
+    var lsKey = "ltn-tt-" + currentCompany.key;
+    try {
+      var ls = localStorage.getItem(lsKey);
+      if (ls) {
+        var s = JSON.parse(ls);
+        skipNextWrite.current = true;
+        if (s.entries) setEntries(s.entries);
+        if (s.clientes) setClientes(s.clientes);
+        if (s.resps) setResps(s.resps);
+      } else {
+        setEntries(EXCEL_DATA);
+        setClientes(currentCompany.defaultClientes || DEFAULT_CLIENTES);
+        setResps(currentCompany.users || DEFAULT_RESPONSABLES);
+      }
+    } catch (e) {
+      setEntries(EXCEL_DATA);
     }
-    function _load() {
-      _load = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(isFirst) {
-        var d, defaultClientes, defaultResps, _d2$fields, r2, d2, ts, ls, s, _t;
+    setFbReady(true); // ← app visible inmediatamente
+
+    // 2. Intentar Firebase en segundo plano (sin bloquear)
+    function syncFirebase(_x4) {
+      return _syncFirebase.apply(this, arguments);
+    }
+    function _syncFirebase() {
+      _syncFirebase = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(isFirst) {
+        var d, snap, _d2$fields, r2, d2, ts, _t;
         return _regenerator().w(function (_context) {
           while (1) switch (_context.p = _context.n) {
             case 0:
               _context.n = 1;
-              return fbRead((currentCompany === null || currentCompany === void 0 ? void 0 : currentCompany.key) || "ltn");
+              return fbRead(currentCompany.key);
             case 1:
               d = _context.v;
-              if (!d) {
-                _context.n = 10;
+              if (d) {
+                _context.n = 2;
                 break;
               }
+              return _context.a(2);
+            case 2:
               if (!isFirst) {
                 _context.n = 5;
                 break;
               }
               if (!(d.entries && d.entries.length > 0)) {
-                _context.n = 2;
+                _context.n = 3;
                 break;
               }
               skipNextWrite.current = true;
-              setEntries(d.entries);
+              if (d.entries) setEntries(d.entries);
               if (d.clientes) setClientes(d.clientes);
               if (d.resps) setResps(d.resps);
+              // Actualizar localStorage con datos de Firebase
+              try {
+                localStorage.setItem(lsKey, JSON.stringify(d));
+              } catch (e) {}
               _context.n = 4;
               break;
-            case 2:
-              defaultClientes = (currentCompany === null || currentCompany === void 0 ? void 0 : currentCompany.defaultClientes) || DEFAULT_CLIENTES;
-              defaultResps = (currentCompany === null || currentCompany === void 0 ? void 0 : currentCompany.users) || DEFAULT_RESPONSABLES;
-              _context.n = 3;
-              return fbWrite((currentCompany === null || currentCompany === void 0 ? void 0 : currentCompany.key) || "ltn", {
-                entries: EXCEL_DATA,
-                clientes: defaultClientes,
-                resps: defaultResps
-              });
             case 3:
-              setEntries(EXCEL_DATA);
+              // Primera vez — sembrar Firebase con datos actuales
+              snap = JSON.parse(localStorage.getItem(lsKey) || "{}");
+              _context.n = 4;
+              return fbWrite(currentCompany.key, {
+                entries: snap.entries || EXCEL_DATA,
+                clientes: snap.clientes || currentCompany.defaultClientes || DEFAULT_CLIENTES,
+                resps: snap.resps || currentCompany.users || DEFAULT_RESPONSABLES
+              });
             case 4:
-              setFbReady(true);
               _context.n = 9;
               break;
             case 5:
               _context.p = 5;
               _context.n = 6;
-              return fetch(fbUrl((currentCompany === null || currentCompany === void 0 ? void 0 : currentCompany.key) || "ltn") + "&fields=fields.updatedAt");
+              return fetch(fbUrl(currentCompany.key) + "&fields=fields.updatedAt", {
+                credentials: "omit"
+              });
             case 6:
               r2 = _context.v;
               _context.n = 7;
@@ -2356,6 +2383,9 @@ function App() {
                 if (d.entries) setEntries(d.entries);
                 if (d.clientes) setClientes(d.clientes);
                 if (d.resps) setResps(d.resps);
+                try {
+                  localStorage.setItem(lsKey, JSON.stringify(d));
+                } catch (e) {}
               }
               _context.n = 9;
               break;
@@ -2363,33 +2393,15 @@ function App() {
               _context.p = 8;
               _t = _context.v;
             case 9:
-              _context.n = 11;
-              break;
-            case 10:
-              if (isFirst) {
-                try {
-                  ls = localStorage.getItem("ltn-tt-fallback");
-                  if (ls) {
-                    s = JSON.parse(ls);
-                    setEntries(s.entries || EXCEL_DATA);
-                    if (s.clientes) setClientes(s.clientes);
-                    if (s.resps) setResps(s.resps);
-                  } else setEntries(EXCEL_DATA);
-                } catch (e) {
-                  setEntries(EXCEL_DATA);
-                }
-                setFbReady(true);
-              }
-            case 11:
               return _context.a(2);
           }
         }, _callee, null, [[5, 8]]);
       }));
-      return _load.apply(this, arguments);
+      return _syncFirebase.apply(this, arguments);
     }
-    load(true);
+    syncFirebase(true);
     pollRef.current = setInterval(function () {
-      return load(false);
+      return syncFirebase(false);
     }, 8000);
     return function () {
       return clearInterval(pollRef.current);
@@ -2408,18 +2420,19 @@ function App() {
       skipNextWrite.current = false;
       return;
     }
-    if (currentCompany) fbWrite(currentCompany.key, {
-      entries: entries,
-      clientes: clientes,
-      resps: resps
-    });
+    var lsKey = currentCompany ? "ltn-tt-" + currentCompany.key : "ltn-tt-ltn";
     try {
-      localStorage.setItem("ltn-tt-fallback", JSON.stringify({
+      localStorage.setItem(lsKey, JSON.stringify({
         entries: entries,
         clientes: clientes,
         resps: resps
       }));
     } catch (e) {}
+    if (currentCompany) fbWrite(currentCompany.key, {
+      entries: entries,
+      clientes: clientes,
+      resps: resps
+    });
   }, [entries, clientes, resps, fbReady, currentCompany]);
 
   // Timer tick
