@@ -2218,13 +2218,16 @@ function App() {
             localStorage.setItem(lsKey, JSON.stringify(d));
           } catch (e) {}
         } else {
-          // Primera vez — sembrar Firebase con datos actuales
+          // Primera vez — sembrar Firebase
+          // LTN arranca con datos históricos del Excel; LMNHL arranca vacío
           const snap = JSON.parse(localStorage.getItem(lsKey) || "{}");
+          const seedEntries = snap.entries || (currentCompany.key === "ltn" ? EXCEL_DATA : []);
           await fbWrite(currentCompany.key, {
-            entries: snap.entries || EXCEL_DATA,
+            entries: seedEntries,
             clientes: snap.clientes || currentCompany.defaultClientes || DEFAULT_CLIENTES,
             resps: snap.resps || currentCompany.users || DEFAULT_RESPONSABLES
           });
+          if (currentCompany.key !== "ltn") setEntries([]);
         }
       } else {
         // Poll — comprobar si hay cambios de otras usuarias
@@ -2956,7 +2959,24 @@ function App() {
       fontWeight: 600,
       color: uc.text
     }
-  }, currentUser)), /*#__PURE__*/React.createElement("button", {
+  }, currentUser)), currentCompany?.key === "lmnhl" && entries.some(e => e.fromExcel) && /*#__PURE__*/React.createElement("button", {
+    onClick: async () => {
+      if (!window.confirm("¿Resetear datos de LMNHL? Esto eliminará las tareas del Excel y dejará solo las reales.")) return;
+      const clean = entries.filter(e => !e.fromExcel);
+      setEntries(clean);
+      showToast("✓ Datos de LMNHL limpiados");
+    },
+    style: {
+      background: "#fef2f2",
+      border: "1.5px solid #fecaca",
+      color: "#b91c1c",
+      borderRadius: "8px",
+      padding: "5px 10px",
+      fontSize: "11px",
+      fontFamily: "inherit",
+      cursor: "pointer"
+    }
+  }, "\uD83E\uDDF9 Limpiar datos Excel"), /*#__PURE__*/React.createElement("button", {
     onClick: () => {
       if (running) {
         showToast("⚠️ Para el cronómetro antes de salir");
