@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Time Tracker · Lidera tu Negocio</title>
+  <title>Time Tracker</title>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     body{background:#f3f0fb}
@@ -47,8 +47,28 @@ var _React = React,
   useState = _React.useState,
   useEffect = _React.useEffect,
   useRef = _React.useRef;
+
+// ── Empresas ──
+var COMPANIES = {
+  ltn: {
+    key: "ltn",
+    name: "Lidera tu Negocio",
+    color: "#3c2b86",
+    accent: "#e61978",
+    users: ["Carla", "Juli", "Mati", "Elena"],
+    defaultClientes: ["Medea", "Maraver", "Kawi", "Academia Premium", "Farmacia Curiel", "Federopticos", "Beatriz Zaragoza", "Aflamas", "Recoambiente", "Otro"]
+  },
+  lmnhl: {
+    key: "lmnhl",
+    name: "Los Martes No Hay Luna",
+    color: "#0f172a",
+    accent: "#f59e0b",
+    users: ["Sheila", "Juli", "Carla", "Mati", "Elena", "Laura", "Estefanía", "Jessy", "Paola"],
+    defaultClientes: ["Otro"]
+  }
+};
 var DEFAULT_CLIENTES = ["Medea", "Maraver", "Kawi", "Academia Premium", "Farmacia Curiel", "Federopticos", "Beatriz Zaragoza", "Aflamas", "Recoambiente", "Otro"];
-var DEFAULT_RESPONSABLES = ["Carli", "Juli", "Mati", "Ele"];
+var DEFAULT_RESPONSABLES = ["Carla", "Juli", "Mati", "Elena"];
 var STATUSES = ["Pendiente", "Proceso", "Realizado", "Pausado"];
 var MONTH_NAMES = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 var MONTH_SHORT = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
@@ -815,20 +835,24 @@ function initials(name) {
   return name.slice(0, 2).toUpperCase();
 }
 
-// ── Firestore REST API (sin SDK, funciona en cualquier hosting) ──
-var _FB_URL = "https://firestore.googleapis.com/v1/projects/timetracker-ltn/databases/(default)/documents/timetracker/main?key=AIzaSyBiMJCGP9L5x3qBTbD2EUZAyMEOS7v8uz8";
-function fbWrite(_x) {
+// ── Firestore REST — un documento por empresa ──
+var _FB_KEY = "AIzaSyBiMJCGP9L5x3qBTbD2EUZAyMEOS7v8uz8";
+var _FB_BASE = "https://firestore.googleapis.com/v1/projects/timetracker-ltn/databases/(default)/documents/timetracker/";
+function fbUrl(companyKey) {
+  return _FB_BASE + companyKey + "?key=" + _FB_KEY;
+}
+function fbWrite(_x, _x2) {
   return _fbWrite.apply(this, arguments);
 }
 function _fbWrite() {
-  _fbWrite = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(data) {
+  _fbWrite = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(companyKey, data) {
     var _t2;
     return _regenerator().w(function (_context2) {
       while (1) switch (_context2.p = _context2.n) {
         case 0:
           _context2.p = 0;
           _context2.n = 1;
-          return fetch(_FB_URL, {
+          return fetch(fbUrl(companyKey), {
             method: "PATCH",
             credentials: "omit",
             headers: {
@@ -865,24 +889,28 @@ function _fbWrite() {
   }));
   return _fbWrite.apply(this, arguments);
 }
-function fbRead() {
+function fbRead(_x3) {
   return _fbRead.apply(this, arguments);
-} // ── Login ──
+} // ── Login — selección de empresa y luego usuario ──
 function _fbRead() {
-  _fbRead = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
+  _fbRead = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(companyKey) {
     var _d$fields$entries, _d$fields$clientes, _d$fields$resps, r, d, _t3;
     return _regenerator().w(function (_context3) {
       while (1) switch (_context3.p = _context3.n) {
         case 0:
           _context3.p = 0;
           _context3.n = 1;
-          return fetch(_FB_URL);
+          return fetch(fbUrl(companyKey), {
+            credentials: "omit",
+            cache: "no-cache"
+          });
         case 1:
           r = _context3.v;
           if (r.ok) {
             _context3.n = 2;
             break;
           }
+          console.error("fbRead HTTP:", r.status);
           return _context3.a(2, null);
         case 2:
           _context3.n = 3;
@@ -903,7 +931,7 @@ function _fbRead() {
         case 5:
           _context3.p = 5;
           _t3 = _context3.v;
-          console.error("fbRead error:", _t3);
+          console.error("fbRead error:", _t3.name, _t3.message);
           return _context3.a(2, null);
       }
     }, _callee3, null, [[0, 5]]);
@@ -912,6 +940,149 @@ function _fbRead() {
 }
 function LoginScreen(_ref) {
   var onLogin = _ref.onLogin;
+  var _useState = useState(null),
+    _useState2 = _slicedToArray(_useState, 2),
+    selectedCompany = _useState2[0],
+    setSelectedCompany = _useState2[1];
+  if (!selectedCompany) {
+    // Step 1: choose company
+    return /*#__PURE__*/React.createElement("div", {
+      style: {
+        minHeight: "100vh",
+        background: "#f3f0fb",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "24px",
+        fontFamily: "system-ui,sans-serif"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        marginBottom: "36px",
+        textAlign: "center"
+      }
+    }, /*#__PURE__*/React.createElement("svg", {
+      width: "32",
+      height: "32",
+      viewBox: "0 0 20 20",
+      fill: "none",
+      style: {
+        marginBottom: "12px"
+      }
+    }, /*#__PURE__*/React.createElement("circle", {
+      cx: "10",
+      cy: "10",
+      r: "8",
+      stroke: "#7c3aed",
+      strokeWidth: "1.5"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M10 6v4l2.5 2.5",
+      stroke: "#7c3aed",
+      strokeWidth: "1.5",
+      strokeLinecap: "round"
+    })), /*#__PURE__*/React.createElement("h1", {
+      style: {
+        fontSize: "26px",
+        fontWeight: 800,
+        color: "#1e1035",
+        marginBottom: "8px",
+        letterSpacing: "-.02em"
+      }
+    }, "Time Tracker"), /*#__PURE__*/React.createElement("p", {
+      style: {
+        fontSize: "14px",
+        color: "#9a7cc5"
+      }
+    }, "\xBFEn qu\xE9 empresa vas a trabajar hoy?")), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        flexDirection: "column",
+        gap: "16px",
+        width: "100%",
+        maxWidth: "440px"
+      }
+    }, Object.values(COMPANIES).map(function (co) {
+      return /*#__PURE__*/React.createElement("button", {
+        key: co.key,
+        onClick: function onClick() {
+          return setSelectedCompany(co);
+        },
+        style: {
+          background: "#fff",
+          border: "2px solid #e4d9f8",
+          borderRadius: "16px",
+          padding: "24px 28px",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          gap: "20px",
+          transition: "all .15s",
+          boxShadow: "0 2px 8px rgba(0,0,0,.06)",
+          textAlign: "left"
+        },
+        onMouseEnter: function onMouseEnter(ev) {
+          ev.currentTarget.style.borderColor = co.accent;
+          ev.currentTarget.style.transform = "translateY(-2px)";
+          ev.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,.1)";
+        },
+        onMouseLeave: function onMouseLeave(ev) {
+          ev.currentTarget.style.borderColor = "#e4d9f8";
+          ev.currentTarget.style.transform = "none";
+          ev.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,.06)";
+        }
+      }, /*#__PURE__*/React.createElement("div", {
+        style: {
+          width: 52,
+          height: 52,
+          borderRadius: "12px",
+          background: co.color,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexShrink: 0
+        }
+      }, /*#__PURE__*/React.createElement("svg", {
+        width: "24",
+        height: "24",
+        viewBox: "0 0 20 20",
+        fill: "none"
+      }, /*#__PURE__*/React.createElement("circle", {
+        cx: "10",
+        cy: "10",
+        r: "8",
+        stroke: co.accent,
+        strokeWidth: "1.5"
+      }), /*#__PURE__*/React.createElement("path", {
+        d: "M10 6v4l2.5 2.5",
+        stroke: co.accent,
+        strokeWidth: "1.5",
+        strokeLinecap: "round"
+      }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+        style: {
+          fontSize: "16px",
+          fontWeight: 800,
+          color: "#1e1035",
+          marginBottom: "4px"
+        }
+      }, co.name), /*#__PURE__*/React.createElement("div", {
+        style: {
+          fontSize: "12px",
+          color: "#9a7cc5"
+        }
+      }, co.users.length, " personas \xB7 Firebase")), /*#__PURE__*/React.createElement("div", {
+        style: {
+          marginLeft: "auto",
+          color: "#c4b5fd",
+          fontSize: "20px"
+        }
+      }, "\u2192"));
+    })));
+  }
+
+  // Step 2: choose user within the selected company
+  var co = selectedCompany;
+  var cols = co.users.length <= 4 ? 2 : 3;
   return /*#__PURE__*/React.createElement("div", {
     style: {
       minHeight: "100vh",
@@ -923,65 +1094,75 @@ function LoginScreen(_ref) {
       padding: "24px",
       fontFamily: "system-ui,sans-serif"
     }
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return setSelectedCompany(null);
+    },
     style: {
-      marginBottom: "32px",
+      alignSelf: "flex-start",
+      marginBottom: "24px",
+      background: "none",
+      border: "1.5px solid #e4d9f8",
+      borderRadius: "8px",
+      padding: "6px 14px",
+      fontSize: "13px",
+      color: "#9a7cc5",
+      cursor: "pointer",
+      fontFamily: "inherit"
+    }
+  }, "\u2190 Volver"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: "28px",
       textAlign: "center"
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
+      width: 52,
+      height: 52,
+      borderRadius: "12px",
+      background: co.color,
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      gap: "10px",
-      marginBottom: "12px"
+      margin: "0 auto 12px"
     }
   }, /*#__PURE__*/React.createElement("svg", {
-    width: "28",
-    height: "28",
+    width: "24",
+    height: "24",
     viewBox: "0 0 20 20",
     fill: "none"
   }, /*#__PURE__*/React.createElement("circle", {
     cx: "10",
     cy: "10",
     r: "8",
-    stroke: "#7c3aed",
+    stroke: co.accent,
     strokeWidth: "1.5"
   }), /*#__PURE__*/React.createElement("path", {
     d: "M10 6v4l2.5 2.5",
-    stroke: "#7c3aed",
+    stroke: co.accent,
     strokeWidth: "1.5",
     strokeLinecap: "round"
-  })), /*#__PURE__*/React.createElement("span", {
+  }))), /*#__PURE__*/React.createElement("h1", {
     style: {
-      fontSize: "13px",
-      fontWeight: 700,
-      letterSpacing: ".15em",
-      textTransform: "uppercase",
-      color: "#7c3aed"
-    }
-  }, "Lidera tu Negocio")), /*#__PURE__*/React.createElement("h1", {
-    style: {
-      fontSize: "26px",
+      fontSize: "20px",
       fontWeight: 800,
       color: "#1e1035",
-      marginBottom: "8px",
-      letterSpacing: "-.02em"
+      marginBottom: "6px"
     }
-  }, "Time Tracker"), /*#__PURE__*/React.createElement("p", {
+  }, co.name), /*#__PURE__*/React.createElement("p", {
     style: {
       fontSize: "14px",
       color: "#9a7cc5"
     }
-  }, "\xBFQui\xE9n eres? Selecciona tu perfil para entrar.")), /*#__PURE__*/React.createElement("div", {
+  }, "\xBFQui\xE9n eres?")), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "grid",
-      gridTemplateColumns: "1fr 1fr",
-      gap: "14px",
+      gridTemplateColumns: "repeat(".concat(cols, ",1fr)"),
+      gap: "12px",
       width: "100%",
-      maxWidth: "380px"
+      maxWidth: cols === 3 ? "480px" : "360px"
     }
-  }, DEFAULT_RESPONSABLES.map(function (name) {
+  }, co.users.map(function (name) {
     var c = USER_COLORS[name] || {
       bg: "#ede9fe",
       text: "#6d28d9",
@@ -991,59 +1172,52 @@ function LoginScreen(_ref) {
     return /*#__PURE__*/React.createElement("button", {
       key: name,
       onClick: function onClick() {
-        return onLogin(name);
+        return onLogin(co, name);
       },
       style: {
         background: "#fff",
         border: "2px solid ".concat(c.border),
-        borderRadius: "16px",
-        padding: "24px 20px",
+        borderRadius: "14px",
+        padding: "18px 12px",
         cursor: "pointer",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: "12px",
+        gap: "10px",
         transition: "all .15s",
-        boxShadow: "0 2px 8px rgba(109,40,217,.06)"
+        boxShadow: "0 2px 6px rgba(109,40,217,.06)"
       },
       onMouseEnter: function onMouseEnter(ev) {
         ev.currentTarget.style.borderColor = c.avatar;
         ev.currentTarget.style.transform = "translateY(-2px)";
-        ev.currentTarget.style.boxShadow = "0 6px 20px rgba(109,40,217,.12)";
       },
       onMouseLeave: function onMouseLeave(ev) {
         ev.currentTarget.style.borderColor = c.border;
         ev.currentTarget.style.transform = "none";
-        ev.currentTarget.style.boxShadow = "0 2px 8px rgba(109,40,217,.06)";
       }
     }, /*#__PURE__*/React.createElement("div", {
       style: {
-        width: 56,
-        height: 56,
+        width: 46,
+        height: 46,
         borderRadius: "50%",
         background: c.bg,
         border: "2px solid ".concat(c.border),
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        fontSize: "18px",
+        fontSize: "15px",
         fontWeight: 800,
         color: c.avatar
       }
     }, initials(name)), /*#__PURE__*/React.createElement("span", {
       style: {
-        fontSize: "15px",
+        fontSize: "13px",
         fontWeight: 700,
-        color: "#1e1035"
+        color: "#1e1035",
+        textAlign: "center"
       }
     }, name));
-  })), /*#__PURE__*/React.createElement("p", {
-    style: {
-      marginTop: "28px",
-      fontSize: "12px",
-      color: "#c4b5fd"
-    }
-  }, "Datos compartidos en tiempo real \xB7 Firebase"));
+  })));
 }
 
 // ── AddableSelect ──
@@ -1054,14 +1228,14 @@ function AddableSelect(_ref2) {
     onAdd = _ref2.onAdd,
     placeholder = _ref2.placeholder,
     disabled = _ref2.disabled;
-  var _useState = useState(false),
-    _useState2 = _slicedToArray(_useState, 2),
-    adding = _useState2[0],
-    setAdding = _useState2[1];
-  var _useState3 = useState(""),
+  var _useState3 = useState(false),
     _useState4 = _slicedToArray(_useState3, 2),
-    newVal = _useState4[0],
-    setNewVal = _useState4[1];
+    adding = _useState4[0],
+    setAdding = _useState4[1];
+  var _useState5 = useState(""),
+    _useState6 = _slicedToArray(_useState5, 2),
+    newVal = _useState6[0],
+    setNewVal = _useState6[1];
   var ref = useRef(null);
   useEffect(function () {
     if (adding && ref.current) ref.current.focus();
@@ -1183,26 +1357,26 @@ function EditModal(_ref3) {
     resps = _ref3.resps,
     onSave = _ref3.onSave,
     onClose = _ref3.onClose;
-  var _useState5 = useState(entry.task),
-    _useState6 = _slicedToArray(_useState5, 2),
-    task = _useState6[0],
-    setTask = _useState6[1];
-  var _useState7 = useState(entry.cliente),
+  var _useState7 = useState(entry.task),
     _useState8 = _slicedToArray(_useState7, 2),
-    cliente = _useState8[0],
-    setCliente = _useState8[1];
-  var _useState9 = useState(entry.responsable),
+    task = _useState8[0],
+    setTask = _useState8[1];
+  var _useState9 = useState(entry.cliente),
     _useState0 = _slicedToArray(_useState9, 2),
-    resp = _useState0[0],
-    setResp = _useState0[1];
-  var _useState1 = useState(entry.status),
+    cliente = _useState0[0],
+    setCliente = _useState0[1];
+  var _useState1 = useState(entry.responsable),
     _useState10 = _slicedToArray(_useState1, 2),
-    status = _useState10[0],
-    setStatus = _useState10[1];
-  var _useState11 = useState(entry.comments || ""),
+    resp = _useState10[0],
+    setResp = _useState10[1];
+  var _useState11 = useState(entry.status),
     _useState12 = _slicedToArray(_useState11, 2),
-    comments = _useState12[0],
-    setComments = _useState12[1];
+    status = _useState12[0],
+    setStatus = _useState12[1];
+  var _useState13 = useState(entry.comments || ""),
+    _useState14 = _slicedToArray(_useState13, 2),
+    comments = _useState14[0],
+    setComments = _useState14[1];
   function toStr(h) {
     if (!h || h === 0) return "";
     var m = Math.round(h * 60);
@@ -1211,18 +1385,18 @@ function EditModal(_ref3) {
       rm = m % 60;
     return rm > 0 ? hr + "h " + rm + "m" : hr + "h";
   }
-  var _useState13 = useState(toStr(entry.hours)),
-    _useState14 = _slicedToArray(_useState13, 2),
-    hoursStr = _useState14[0],
-    setHoursStr = _useState14[1];
-  var _useState15 = useState(toStr(entry.estimatedHours)),
+  var _useState15 = useState(toStr(entry.hours)),
     _useState16 = _slicedToArray(_useState15, 2),
-    estStr = _useState16[0],
-    setEstStr = _useState16[1];
-  var _useState17 = useState(false),
+    hoursStr = _useState16[0],
+    setHoursStr = _useState16[1];
+  var _useState17 = useState(toStr(entry.estimatedHours)),
     _useState18 = _slicedToArray(_useState17, 2),
-    taskErr = _useState18[0],
-    setTaskErr = _useState18[1];
+    estStr = _useState18[0],
+    setEstStr = _useState18[1];
+  var _useState19 = useState(false),
+    _useState20 = _slicedToArray(_useState19, 2),
+    taskErr = _useState20[0],
+    setTaskErr = _useState20[1];
   var s2 = {
     background: "#f8f5ff",
     border: "1.5px solid #ddd6fe",
@@ -1705,10 +1879,10 @@ function StopTaskDialog(_ref6) {
   var elapsed = _ref6.elapsed,
     onSave = _ref6.onSave,
     onClose = _ref6.onClose;
-  var _useState19 = useState("Proceso"),
-    _useState20 = _slicedToArray(_useState19, 2),
-    finalStatus = _useState20[0],
-    setFinalStatus = _useState20[1];
+  var _useState21 = useState("Proceso"),
+    _useState22 = _slicedToArray(_useState21, 2),
+    finalStatus = _useState22[0],
+    setFinalStatus = _useState22[1];
   var hrs = Math.max(elapsed / 3600, 0.004);
   function fmtE(s) {
     return [Math.floor(s / 3600), Math.floor(s % 3600 / 60), s % 60].map(function (n) {
@@ -1974,138 +2148,142 @@ function DeleteConfirmDialog(_ref9) {
 
 // ── Main App ──
 function App() {
-  var _useState21 = useState(false),
-    _useState22 = _slicedToArray(_useState21, 2),
-    fbReady = _useState22[0],
-    setFbReady = _useState22[1];
-  var _useState23 = useState(null),
+  var _useState23 = useState(false),
     _useState24 = _slicedToArray(_useState23, 2),
-    currentUser = _useState24[0],
-    setCurrentUser = _useState24[1];
-  var _useState25 = useState([]),
+    fbReady = _useState24[0],
+    setFbReady = _useState24[1];
+  var _useState25 = useState(null),
     _useState26 = _slicedToArray(_useState25, 2),
-    entries = _useState26[0],
-    setEntries = _useState26[1];
-  var _useState27 = useState(DEFAULT_CLIENTES),
+    currentCompany = _useState26[0],
+    setCurrentCompany = _useState26[1]; // company object
+  var _useState27 = useState(null),
     _useState28 = _slicedToArray(_useState27, 2),
-    clientes = _useState28[0],
-    setClientes = _useState28[1];
-  var _useState29 = useState(DEFAULT_RESPONSABLES),
+    currentUser = _useState28[0],
+    setCurrentUser = _useState28[1];
+  var _useState29 = useState([]),
     _useState30 = _slicedToArray(_useState29, 2),
-    resps = _useState30[0],
-    setResps = _useState30[1];
+    entries = _useState30[0],
+    setEntries = _useState30[1];
+  var _useState31 = useState(DEFAULT_CLIENTES),
+    _useState32 = _slicedToArray(_useState31, 2),
+    clientes = _useState32[0],
+    setClientes = _useState32[1];
+  var _useState33 = useState(DEFAULT_RESPONSABLES),
+    _useState34 = _slicedToArray(_useState33, 2),
+    resps = _useState34[0],
+    setResps = _useState34[1];
 
   // Timer (local per session — not synced)
-  var _useState31 = useState("timer"),
-    _useState32 = _slicedToArray(_useState31, 2),
-    mode = _useState32[0],
-    setMode = _useState32[1];
-  var _useState33 = useState(false),
-    _useState34 = _slicedToArray(_useState33, 2),
-    running = _useState34[0],
-    setRunning = _useState34[1];
-  var _useState35 = useState(0),
+  var _useState35 = useState("timer"),
     _useState36 = _slicedToArray(_useState35, 2),
-    elapsed = _useState36[0],
-    setElapsed = _useState36[1];
-  var _useState37 = useState(null),
+    mode = _useState36[0],
+    setMode = _useState36[1];
+  var _useState37 = useState(false),
     _useState38 = _slicedToArray(_useState37, 2),
-    startTs = _useState38[0],
-    setStartTs = _useState38[1];
-  var _useState39 = useState(null),
+    running = _useState38[0],
+    setRunning = _useState38[1];
+  var _useState39 = useState(0),
     _useState40 = _slicedToArray(_useState39, 2),
-    activeEntryId = _useState40[0],
-    setActiveEntryId = _useState40[1];
-  var _useState41 = useState(""),
+    elapsed = _useState40[0],
+    setElapsed = _useState40[1];
+  var _useState41 = useState(null),
     _useState42 = _slicedToArray(_useState41, 2),
-    task = _useState42[0],
-    setTask = _useState42[1];
-  var _useState43 = useState(false),
+    startTs = _useState42[0],
+    setStartTs = _useState42[1];
+  var _useState43 = useState(null),
     _useState44 = _slicedToArray(_useState43, 2),
-    taskError = _useState44[0],
-    setTaskError = _useState44[1];
-  var _useState45 = useState(DEFAULT_CLIENTES[0]),
+    activeEntryId = _useState44[0],
+    setActiveEntryId = _useState44[1];
+  var _useState45 = useState(""),
     _useState46 = _slicedToArray(_useState45, 2),
-    cliente = _useState46[0],
-    setCliente = _useState46[1];
-  var _useState47 = useState(null),
+    task = _useState46[0],
+    setTask = _useState46[1];
+  var _useState47 = useState(false),
     _useState48 = _slicedToArray(_useState47, 2),
-    resp = _useState48[0],
-    setResp = _useState48[1];
-  var _useState49 = useState("Proceso"),
+    taskError = _useState48[0],
+    setTaskError = _useState48[1];
+  var _useState49 = useState(DEFAULT_CLIENTES[0]),
     _useState50 = _slicedToArray(_useState49, 2),
-    timerStatus = _useState50[0],
-    setTimerStatus = _useState50[1];
-  var _useState51 = useState(""),
+    cliente = _useState50[0],
+    setCliente = _useState50[1];
+  var _useState51 = useState(null),
     _useState52 = _slicedToArray(_useState51, 2),
-    manualHours = _useState52[0],
-    setManualHours = _useState52[1];
-  var _useState53 = useState("Pendiente"),
+    resp = _useState52[0],
+    setResp = _useState52[1];
+  var _useState53 = useState("Proceso"),
     _useState54 = _slicedToArray(_useState53, 2),
-    manualStatus = _useState54[0],
-    setManualStatus = _useState54[1];
+    timerStatus = _useState54[0],
+    setTimerStatus = _useState54[1];
+  var _useState55 = useState(""),
+    _useState56 = _slicedToArray(_useState55, 2),
+    manualHours = _useState56[0],
+    setManualHours = _useState56[1];
+  var _useState57 = useState("Pendiente"),
+    _useState58 = _slicedToArray(_useState57, 2),
+    manualStatus = _useState58[0],
+    setManualStatus = _useState58[1];
 
   // Filters
-  var _useState55 = useState("Todos"),
-    _useState56 = _slicedToArray(_useState55, 2),
-    fMes = _useState56[0],
-    setFMes = _useState56[1];
-  var _useState57 = useState("Todos"),
-    _useState58 = _slicedToArray(_useState57, 2),
-    fCliente = _useState58[0],
-    setFCliente = _useState58[1];
   var _useState59 = useState("Todos"),
     _useState60 = _slicedToArray(_useState59, 2),
-    fResp = _useState60[0],
-    setFResp = _useState60[1];
+    fMes = _useState60[0],
+    setFMes = _useState60[1];
   var _useState61 = useState("Todos"),
     _useState62 = _slicedToArray(_useState61, 2),
-    fStatus = _useState62[0],
-    setFStatus = _useState62[1];
+    fCliente = _useState62[0],
+    setFCliente = _useState62[1];
   var _useState63 = useState("Todos"),
     _useState64 = _slicedToArray(_useState63, 2),
-    t2Cliente = _useState64[0],
-    setT2Cliente = _useState64[1];
+    fResp = _useState64[0],
+    setFResp = _useState64[1];
   var _useState65 = useState("Todos"),
     _useState66 = _slicedToArray(_useState65, 2),
-    t2Resp = _useState66[0],
-    setT2Resp = _useState66[1];
+    fStatus = _useState66[0],
+    setFStatus = _useState66[1];
   var _useState67 = useState("Todos"),
     _useState68 = _slicedToArray(_useState67, 2),
-    t2Year = _useState68[0],
-    setT2Year = _useState68[1];
-  var _useState69 = useState([]),
+    t2Cliente = _useState68[0],
+    setT2Cliente = _useState68[1];
+  var _useState69 = useState("Todos"),
     _useState70 = _slicedToArray(_useState69, 2),
-    t2Months = _useState70[0],
-    setT2Months = _useState70[1];
-  var _useState71 = useState("log"),
+    t2Resp = _useState70[0],
+    setT2Resp = _useState70[1];
+  var _useState71 = useState("Todos"),
     _useState72 = _slicedToArray(_useState71, 2),
-    tab = _useState72[0],
-    setTab = _useState72[1];
-  var _useState73 = useState(""),
+    t2Year = _useState72[0],
+    setT2Year = _useState72[1];
+  var _useState73 = useState([]),
     _useState74 = _slicedToArray(_useState73, 2),
-    toast = _useState74[0],
-    setToast = _useState74[1];
-  var _useState75 = useState(null),
+    t2Months = _useState74[0],
+    setT2Months = _useState74[1];
+  var _useState75 = useState("log"),
     _useState76 = _slicedToArray(_useState75, 2),
-    editEntry = _useState76[0],
-    setEditEntry = _useState76[1];
-  var _useState77 = useState(null),
+    tab = _useState76[0],
+    setTab = _useState76[1];
+  var _useState77 = useState(""),
     _useState78 = _slicedToArray(_useState77, 2),
-    startDialog = _useState78[0],
-    setStartDialog = _useState78[1];
+    toast = _useState78[0],
+    setToast = _useState78[1];
   var _useState79 = useState(null),
     _useState80 = _slicedToArray(_useState79, 2),
-    blockedDialog = _useState80[0],
-    setBlockedDialog = _useState80[1];
+    editEntry = _useState80[0],
+    setEditEntry = _useState80[1];
   var _useState81 = useState(null),
     _useState82 = _slicedToArray(_useState81, 2),
-    deleteConfirm = _useState82[0],
-    setDeleteConfirm = _useState82[1];
-  var _useState83 = useState(false),
+    startDialog = _useState82[0],
+    setStartDialog = _useState82[1];
+  var _useState83 = useState(null),
     _useState84 = _slicedToArray(_useState83, 2),
-    stopDialog = _useState84[0],
-    setStopDialog = _useState84[1];
+    blockedDialog = _useState84[0],
+    setBlockedDialog = _useState84[1];
+  var _useState85 = useState(null),
+    _useState86 = _slicedToArray(_useState85, 2),
+    deleteConfirm = _useState86[0],
+    setDeleteConfirm = _useState86[1];
+  var _useState87 = useState(false),
+    _useState88 = _slicedToArray(_useState87, 2),
+    stopDialog = _useState88[0],
+    setStopDialog = _useState88[1];
   var timerRef = useRef(null);
   var taskRef = useRef(null);
   var skipNextWrite = useRef(false);
@@ -2114,17 +2292,18 @@ function App() {
 
   // Initial load + poll every 8s for changes from other users
   useEffect(function () {
-    function load(_x2) {
+    if (!currentCompany) return;
+    function load(_x4) {
       return _load.apply(this, arguments);
     }
     function _load() {
       _load = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(isFirst) {
-        var d, _d2$fields, r2, d2, ts, ls, s, _t;
+        var d, defaultClientes, defaultResps, _d2$fields, r2, d2, ts, ls, s, _t;
         return _regenerator().w(function (_context) {
           while (1) switch (_context.p = _context.n) {
             case 0:
               _context.n = 1;
-              return fbRead();
+              return fbRead((currentCompany === null || currentCompany === void 0 ? void 0 : currentCompany.key) || "ltn");
             case 1:
               d = _context.v;
               if (!d) {
@@ -2146,11 +2325,13 @@ function App() {
               _context.n = 4;
               break;
             case 2:
+              defaultClientes = (currentCompany === null || currentCompany === void 0 ? void 0 : currentCompany.defaultClientes) || DEFAULT_CLIENTES;
+              defaultResps = (currentCompany === null || currentCompany === void 0 ? void 0 : currentCompany.users) || DEFAULT_RESPONSABLES;
               _context.n = 3;
-              return fbWrite({
+              return fbWrite((currentCompany === null || currentCompany === void 0 ? void 0 : currentCompany.key) || "ltn", {
                 entries: EXCEL_DATA,
-                clientes: DEFAULT_CLIENTES,
-                resps: DEFAULT_RESPONSABLES
+                clientes: defaultClientes,
+                resps: defaultResps
               });
             case 3:
               setEntries(EXCEL_DATA);
@@ -2161,7 +2342,7 @@ function App() {
             case 5:
               _context.p = 5;
               _context.n = 6;
-              return fetch(_FB_URL + "&fields=fields.updatedAt");
+              return fetch(fbUrl((currentCompany === null || currentCompany === void 0 ? void 0 : currentCompany.key) || "ltn") + "&fields=fields.updatedAt");
             case 6:
               r2 = _context.v;
               _context.n = 7;
@@ -2213,7 +2394,7 @@ function App() {
     return function () {
       return clearInterval(pollRef.current);
     };
-  }, []);
+  }, [currentCompany]);
 
   // Write to Firebase whenever data changes
   var isFirstWrite = useRef(true);
@@ -2227,7 +2408,7 @@ function App() {
       skipNextWrite.current = false;
       return;
     }
-    fbWrite({
+    if (currentCompany) fbWrite(currentCompany.key, {
       entries: entries,
       clientes: clientes,
       resps: resps
@@ -2239,7 +2420,7 @@ function App() {
         resps: resps
       }));
     } catch (e) {}
-  }, [entries, clientes, resps, fbReady]);
+  }, [entries, clientes, resps, fbReady, currentCompany]);
 
   // Timer tick
   useEffect(function () {
@@ -2268,9 +2449,12 @@ function App() {
       return [].concat(_toConsumableArray(p), [v]);
     });
   }
-  function handleLogin(name) {
+  function handleLogin(company, name) {
+    setCurrentCompany(company);
     setCurrentUser(name);
     setResp(name);
+    // Set default resps for this company
+    setResps(company.users);
   }
   function play() {
     setTaskError(false);
@@ -2563,7 +2747,7 @@ function App() {
       color: "#9a7cc5"
     }
   }, "Conectando con Firebase\u2026"));
-  if (!currentUser) return /*#__PURE__*/React.createElement(LoginScreen, {
+  if (!currentUser || !currentCompany) return /*#__PURE__*/React.createElement(LoginScreen, {
     onLogin: handleLogin
   });
   function EntryRow(_ref0) {
@@ -2891,9 +3075,9 @@ function App() {
       fontWeight: 700,
       letterSpacing: ".15em",
       textTransform: "uppercase",
-      color: "#7c3aed"
+      color: currentCompany.accent || "#7c3aed"
     }
-  }, "Lidera tu Negocio \xB7 Time Tracker"), /*#__PURE__*/React.createElement("div", {
+  }, currentCompany.name, " \xB7 Time Tracker"), /*#__PURE__*/React.createElement("div", {
     style: {
       flex: 1
     }
@@ -2958,10 +3142,15 @@ function App() {
         return;
       }
       setCurrentUser(null);
+      setCurrentCompany(null);
       setRunning(false);
       setElapsed(0);
       setTask("");
       setActiveEntryId(null);
+      setFbReady(false);
+      setEntries([]);
+      setClientes(DEFAULT_CLIENTES);
+      setResps(DEFAULT_RESPONSABLES);
     },
     style: {
       background: "none",
