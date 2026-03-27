@@ -1790,10 +1790,16 @@ function BlockedDialog({
 // ── Stop Task Dialog ──
 function StopTaskDialog({
   elapsed,
+  taskName,
+  clienteName,
+  clientes,
   onSave,
   onClose
 }) {
   const [finalStatus, setFinalStatus] = useState("Proceso");
+  const [localTask, setLocalTask] = useState(taskName || "");
+  const [localCliente, setLocalCliente] = useState(clienteName || "");
+  const [errors, setErrors] = useState({});
   const hrs = Math.max(elapsed / 3600, 0.004);
   function fmtE(s) {
     return [Math.floor(s / 3600), Math.floor(s % 3600 / 60), s % 60].map(n => String(n).padStart(2, "0")).join(":");
@@ -1806,6 +1812,29 @@ function StopTaskDialog({
       rm = m % 60;
     return rm > 0 ? hr + "h " + rm + "m" : hr + "h";
   }
+  const needsTask = !taskName || !taskName.trim();
+  const needsCliente = !clienteName || !clienteName.trim() || clienteName === "Selecciona cliente";
+  function handleSave() {
+    const errs = {};
+    if (needsTask && !localTask.trim()) errs.task = true;
+    if (needsCliente && (!localCliente || localCliente === "Selecciona cliente")) errs.cliente = true;
+    if (Object.keys(errs).length) {
+      setErrors(errs);
+      return;
+    }
+    onSave(hrs, finalStatus, localTask.trim() || taskName, localCliente || clienteName);
+  }
+  const inp = {
+    width: "100%",
+    padding: "10px 12px",
+    border: "1.5px solid #ddd6fe",
+    borderRadius: "8px",
+    fontSize: "13px",
+    fontFamily: "inherit",
+    outline: "none",
+    boxSizing: "border-box",
+    marginBottom: "4px"
+  };
   return /*#__PURE__*/React.createElement("div", {
     style: {
       position: "fixed",
@@ -1826,14 +1855,16 @@ function StopTaskDialog({
       borderRadius: "16px",
       padding: "28px",
       width: "100%",
-      maxWidth: "440px",
+      maxWidth: "460px",
       boxShadow: "0 8px 40px rgba(109,40,217,.18)",
-      textAlign: "center"
+      textAlign: "center",
+      maxHeight: "90vh",
+      overflowY: "auto"
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "32px",
-      marginBottom: "14px"
+      marginBottom: "10px"
     }
   }, "\u23F9"), /*#__PURE__*/React.createElement("h2", {
     style: {
@@ -1847,8 +1878,8 @@ function StopTaskDialog({
       background: "#f8f5ff",
       border: "1.5px solid #ede9fe",
       borderRadius: "10px",
-      padding: "14px 16px",
-      marginBottom: "20px"
+      padding: "12px 16px",
+      marginBottom: "18px"
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1863,11 +1894,91 @@ function StopTaskDialog({
       fontSize: "12px",
       color: "#9a7cc5"
     }
-  }, "Tiempo registrado: ", /*#__PURE__*/React.createElement("b", null, fmtH(hrs)))), /*#__PURE__*/React.createElement("p", {
+  }, "Tiempo registrado: ", /*#__PURE__*/React.createElement("b", null, fmtH(hrs)))), (needsTask || needsCliente) && /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "#fef9c3",
+      border: "1.5px solid #fde68a",
+      borderRadius: "10px",
+      padding: "14px 16px",
+      marginBottom: "16px",
+      textAlign: "left"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "12px",
+      fontWeight: 700,
+      color: "#a16207",
+      marginBottom: "10px"
+    }
+  }, "\u26A0\uFE0F Completa antes de guardar"), needsTask && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: "10px"
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: {
+      fontSize: "12px",
+      fontWeight: 600,
+      color: "#1e1035",
+      display: "block",
+      marginBottom: "4px"
+    }
+  }, "\xBFQu\xE9 tarea has hecho? *"), /*#__PURE__*/React.createElement("input", {
+    value: localTask,
+    onChange: e => {
+      setLocalTask(e.target.value);
+      setErrors(p => ({
+        ...p,
+        task: false
+      }));
+    },
+    placeholder: "Describe la tarea...",
+    style: {
+      ...inp,
+      borderColor: errors.task ? "#ef4444" : "#fde68a"
+    },
+    autoFocus: true
+  }), errors.task && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "11px",
+      color: "#ef4444"
+    }
+  }, "Obligatorio")), needsCliente && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+    style: {
+      fontSize: "12px",
+      fontWeight: 600,
+      color: "#1e1035",
+      display: "block",
+      marginBottom: "4px"
+    }
+  }, "\xBFPara qu\xE9 cliente? *"), /*#__PURE__*/React.createElement("select", {
+    value: localCliente,
+    onChange: e => {
+      setLocalCliente(e.target.value);
+      setErrors(p => ({
+        ...p,
+        cliente: false
+      }));
+    },
+    style: {
+      ...inp,
+      borderColor: errors.cliente ? "#ef4444" : "#fde68a",
+      cursor: "pointer"
+    }
+  }, /*#__PURE__*/React.createElement("option", {
+    value: ""
+  }, "Selecciona cliente..."), (clientes || []).map(c => /*#__PURE__*/React.createElement("option", {
+    key: c,
+    value: c
+  }, c))), errors.cliente && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "11px",
+      color: "#ef4444"
+    }
+  }, "Obligatorio"))), /*#__PURE__*/React.createElement("p", {
     style: {
       fontSize: "13px",
       color: "#6b5a8e",
-      marginBottom: "16px",
+      marginBottom: "14px",
       fontWeight: 600
     }
   }, "\xBFEn qu\xE9 estado la dejas?"), /*#__PURE__*/React.createElement("div", {
@@ -1921,7 +2032,7 @@ function StopTaskDialog({
       cursor: "pointer"
     }
   }, "Cancelar"), /*#__PURE__*/React.createElement("button", {
-    onClick: () => onSave(hrs, finalStatus),
+    onClick: handleSave,
     style: {
       background: "#6d28d9",
       color: "#fff",
@@ -2334,22 +2445,36 @@ function App() {
     clearInterval(timerRef.current);
     setStopDialog(true);
   }
-  function confirmStop(hours, finalStatus) {
+  function confirmStop(hours, finalStatus, overrideTask, overrideCliente) {
     setStopDialog(false);
     setRunning(false);
+    const finalTask = (overrideTask || task || "").trim() || "(sin título)";
+    const finalCliente = overrideCliente || cliente || "Otro";
     if (activeEntryId) {
       setEntries(p => p.map(e => e.id !== activeEntryId ? e : {
         ...e,
+        task: finalTask,
+        cliente: finalCliente,
         hours: (e.hours || 0) + hours,
         status: finalStatus,
-        date: new Date().toISOString()
+        date: new Date().toISOString(),
+        finishedAt: finalStatus === "Realizado" ? new Date().toISOString() : undefined
       }));
       const msg = finalStatus === "Realizado" ? "✅ ¡Tarea terminada!" : finalStatus === "Pausado" ? "⏸ Tarea pausada" : "🔄 En progreso";
       showToast(msg);
     } else {
+      setEntries(p => [{
+        id: Date.now(),
+        task: finalTask,
+        cliente: finalCliente,
+        responsable: resp || currentUser,
+        status: finalStatus,
+        hours,
+        date: new Date().toISOString(),
+        finishedAt: finalStatus === "Realizado" ? new Date().toISOString() : undefined
+      }, ...p]);
       const msg2 = finalStatus === "Realizado" ? "✅ ¡Tarea terminada!" : "✓ Entrada guardada";
       showToast(msg2);
-      showToast("✓ Entrada guardada");
     }
     setElapsed(0);
     setTask("");
@@ -2841,6 +2966,9 @@ function App() {
     onClose: () => setDeleteConfirm(null)
   }), stopDialog && /*#__PURE__*/React.createElement(StopTaskDialog, {
     elapsed: elapsed,
+    taskName: task,
+    clienteName: cliente,
+    clientes: clientes,
     onSave: confirmStop,
     onClose: cancelStop
   }), reasignDialog && /*#__PURE__*/React.createElement(ReasignDialog, {
