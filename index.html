@@ -2287,6 +2287,13 @@ function App() {
   const [timerStatus, setTimerStatus] = useState("Proceso");
   const [manualHours, setManualHours] = useState("");
   const [manualStatus, setManualStatus] = useState("Pendiente");
+  // Separate state for "Crear tarea" — independent from the running timer
+  const [newTask, setNewTask] = useState("");
+  const [newCliente, setNewCliente] = useState("");
+  const [newResp, setNewResp] = useState("");
+  const [newStatus, setNewStatus] = useState("Pendiente");
+  const [newHours, setNewHours] = useState("");
+  const [newTaskError, setNewTaskError] = useState(false);
 
   // Filters
   const [fMes, setFMes] = useState("Todos");
@@ -2515,26 +2522,29 @@ function App() {
     showToast("⏸ Tarea pausada");
   }
   function saveManual() {
-    if (!task.trim()) {
-      setTaskError(true);
-      if (taskRef.current) taskRef.current.focus();
+    if (!newTask.trim()) {
+      setNewTaskError(true);
       return;
     }
-    const est = hoursFromString(manualHours);
+    const est = hoursFromString(newHours);
     setEntries(p => [{
       id: Date.now(),
-      task: task.trim(),
-      cliente,
-      responsable: resp || currentUser,
-      status: manualStatus,
+      task: newTask.trim(),
+      cliente: newCliente || "Otro",
+      responsable: newResp || currentUser,
+      status: newStatus,
       hours: 0,
       estimatedHours: est || null,
       date: new Date().toISOString(),
       comments: ""
     }, ...p]);
-    setTask("");
-    setManualHours("");
-    showToast("✓ Tarea creada");
+    setNewTask("");
+    setNewCliente("");
+    setNewResp("");
+    setNewHours("");
+    setNewStatus("Pendiente");
+    setNewTaskError(false);
+    showToast("✓ Tarea creada para " + (newResp || currentUser));
   }
   function del(id) {
     setEntries(p => p.filter(e => e.id !== id));
@@ -3182,11 +3192,20 @@ function App() {
   }, [["timer", "⏱ Cronómetro"], ["manual", "✏️ Crear tarea"]].map(([m, lbl]) => /*#__PURE__*/React.createElement("button", {
     key: m,
     onClick: () => {
-      if (!running) {
-        setMode(m);
+      if (m === "timer" && running) return; // can't switch away from timer while running
+      setMode(m);
+      if (m === "timer") {
         setTask("");
         setTaskError(false);
         setActiveEntryId(null);
+      }
+      if (m === "manual") {
+        setNewTask("");
+        setNewCliente("");
+        setNewResp("");
+        setNewStatus("Pendiente");
+        setNewHours("");
+        setNewTaskError(false);
       }
     },
     style: {
@@ -3198,7 +3217,7 @@ function App() {
       fontSize: "12px",
       fontFamily: "inherit",
       fontWeight: mode === m ? 600 : 400,
-      cursor: running ? "not-allowed" : "pointer",
+      cursor: m === "timer" && running ? "not-allowed" : "pointer",
       boxShadow: mode === m ? "0 1px 4px rgba(109,40,217,.1)" : "none"
     }
   }, lbl))), /*#__PURE__*/React.createElement("div", {
@@ -3226,21 +3245,36 @@ function App() {
       color: "#c4b5fd",
       fontWeight: 400
     }
-  }, "(puedes a\xF1adirla despu\xE9s)")), /*#__PURE__*/React.createElement("input", {
+  }, "(puedes a\xF1adirla despu\xE9s)")), mode === "manual" ? /*#__PURE__*/React.createElement("input", {
+    style: {
+      ...sel,
+      cursor: "text",
+      width: "100%",
+      borderColor: newTaskError ? "#ef4444" : undefined
+    },
+    placeholder: "Describe la tarea a asignar\u2026 *",
+    value: newTask,
+    onChange: e => {
+      setNewTask(e.target.value);
+      if (e.target.value.trim()) setNewTaskError(false);
+    },
+    onKeyDown: e => e.key === "Enter" && saveManual(),
+    autoFocus: true
+  }) : /*#__PURE__*/React.createElement("input", {
     ref: taskRef,
     style: {
       ...sel,
       cursor: running && activeEntryId ? "default" : "text",
       width: "100%"
     },
-    placeholder: mode === "manual" ? "Describe la tarea a asignar…" : "¿En qué estás trabajando? (opcional)",
+    placeholder: "\xBFEn qu\xE9 est\xE1s trabajando? (opcional)",
     value: task,
     onChange: e => {
       if (running && activeEntryId) return;
       setTask(e.target.value);
       if (e.target.value.trim()) setTaskError(false);
     },
-    onKeyDown: e => e.key === "Enter" && !running && (mode === "timer" ? play() : saveManual()),
+    onKeyDown: e => e.key === "Enter" && !running && play(),
     disabled: running && !!activeEntryId
   })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -3251,7 +3285,13 @@ function App() {
       letterSpacing: ".1em",
       marginBottom: "4px"
     }
-  }, "Cliente"), /*#__PURE__*/React.createElement(AddableSelect, {
+  }, "Cliente"), mode === "manual" ? /*#__PURE__*/React.createElement(AddableSelect, {
+    value: newCliente,
+    onChange: setNewCliente,
+    options: clientes,
+    onAdd: addCliente,
+    placeholder: "Cliente\u2026"
+  }) : /*#__PURE__*/React.createElement(AddableSelect, {
     value: cliente,
     onChange: setCliente,
     options: clientes,
@@ -3267,7 +3307,13 @@ function App() {
       letterSpacing: ".1em",
       marginBottom: "4px"
     }
-  }, "Responsable"), /*#__PURE__*/React.createElement(AddableSelect, {
+  }, "Responsable"), mode === "manual" ? /*#__PURE__*/React.createElement(AddableSelect, {
+    value: newResp || currentUser,
+    onChange: setNewResp,
+    options: resps,
+    onAdd: addResp,
+    placeholder: "Nombre\u2026"
+  }) : /*#__PURE__*/React.createElement(AddableSelect, {
     value: resp || currentUser,
     onChange: setResp,
     options: resps,
@@ -3301,8 +3347,8 @@ function App() {
     }
   }, "Estado"), /*#__PURE__*/React.createElement("select", {
     style: sel,
-    value: manualStatus,
-    onChange: e => setManualStatus(e.target.value)
+    value: newStatus,
+    onChange: e => setNewStatus(e.target.value)
   }, STATUSES.map(s => /*#__PURE__*/React.createElement("option", {
     key: s
   }, s)))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
@@ -3315,8 +3361,8 @@ function App() {
       marginBottom: "4px"
     }
   }, "Tiempo estimado"), /*#__PURE__*/React.createElement("input", {
-    value: manualHours,
-    onChange: e => setManualHours(e.target.value),
+    value: newHours,
+    onChange: e => setNewHours(e.target.value),
     style: {
       ...sel,
       cursor: "text",
@@ -3400,7 +3446,14 @@ function App() {
       cursor: "pointer",
       whiteSpace: "nowrap"
     }
-  }, "Crear tarea \u2192")))), /*#__PURE__*/React.createElement("div", {
+  }, "Crear tarea \u2192"), running && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "11px",
+      color: "#10b981",
+      marginTop: "4px",
+      fontWeight: 600
+    }
+  }, "\u23F1 Tu cron\xF3metro sigue corriendo")))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "inline-flex",
       gap: "2px",
