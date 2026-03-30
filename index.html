@@ -3448,12 +3448,63 @@ function App() {
     }
   }, "Crear tarea \u2192"), running && /*#__PURE__*/React.createElement("div", {
     style: {
-      fontSize: "11px",
-      color: "#10b981",
-      marginTop: "4px",
-      fontWeight: 600
+      display: "flex",
+      alignItems: "center",
+      gap: "10px",
+      marginTop: "6px",
+      background: "#f0fdf4",
+      border: "1.5px solid #bbf7d0",
+      borderRadius: "10px",
+      padding: "10px 14px"
     }
-  }, "\u23F1 Tu cron\xF3metro sigue corriendo")))), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: "monospace",
+      fontSize: "18px",
+      fontWeight: 700,
+      color: "#6d28d9",
+      minWidth: "80px"
+    }
+  }, fmtElapsed(elapsed)), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: "12px",
+      color: "#15803d",
+      flex: 1
+    }
+  }, "\u23F1 Cron\xF3metro corriendo \xB7 ", /*#__PURE__*/React.createElement("b", null, task || "tarea en curso")), /*#__PURE__*/React.createElement("button", {
+    className: "pbtn",
+    onClick: stop,
+    style: {
+      width: "36px",
+      height: "36px",
+      borderRadius: "50%",
+      border: "none",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      background: "#7c3aed",
+      boxShadow: "0 2px 8px rgba(124,58,237,.3)",
+      flexShrink: 0
+    }
+  }, React.createElement("svg", {
+    width: 10,
+    height: 10,
+    viewBox: "0 0 10 10",
+    fill: "white"
+  }, React.createElement("rect", {
+    x: 0,
+    y: 0,
+    width: 3.5,
+    height: 10,
+    rx: 1
+  }), React.createElement("rect", {
+    x: 6.5,
+    y: 0,
+    width: 3.5,
+    height: 10,
+    rx: 1
+  }))))))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "inline-flex",
       gap: "2px",
