@@ -2318,58 +2318,85 @@ function App() {
   const lastTs = useRef(null);
   const pollRef = useRef(null);
 
-  // Firebase sync en segundo plano — la app ya está visible
+  // Carga inicial desde Firebase (fuente de verdad) con fallback a localStorage
   useEffect(() => {
     if (!currentCompany) return;
     const lsKey = "ltn-tt-" + currentCompany.key;
-    async function syncFirebase(isFirst) {
+    async function initialLoad() {
+      // Intento 1: Firebase
       const d = await fbRead(currentCompany.key);
-      if (!d) return; // Firebase no disponible, trabajamos con localStorage
-      if (isFirst) {
-        if (d.entries && d.entries.length > 0) {
-          skipNextWrite.current = true;
-          if (d.entries) setEntries(d.entries);
-          if (d.clientes) setClientes(d.clientes);
-          if (d.resps) setResps(d.resps);
-          // Actualizar localStorage con datos de Firebase
+      if (d && d.entries !== undefined) {
+        // Firebase respondió — es la fuente de verdad
+        skipNextWrite.current = true;
+        if (d.entries.length > 0 || true) {
+          // siempre usar Firebase si responde
+          setEntries(d.entries || []);
+          setClientes(d.clientes && d.clientes.length > 0 ? d.clientes : currentCompany.defaultClientes || DEFAULT_CLIENTES);
+          setResps(d.resps && d.resps.length > 0 ? d.resps : currentCompany.users || DEFAULT_RESPONSABLES);
           try {
             localStorage.setItem(lsKey, JSON.stringify(d));
           } catch (e) {}
-        } else {
-          // Primera vez — sembrar Firebase
-          // LTN arranca con datos históricos del Excel; LMNHL arranca vacío
-          const snap = JSON.parse(localStorage.getItem(lsKey) || "{}");
-          const seedEntries = snap.entries || (currentCompany.key === "ltn" ? EXCEL_DATA : []);
-          await fbWrite(currentCompany.key, {
-            entries: seedEntries,
-            clientes: snap.clientes || currentCompany.defaultClientes || DEFAULT_CLIENTES,
-            resps: snap.resps || currentCompany.users || DEFAULT_RESPONSABLES
-          });
-          if (currentCompany.key !== "ltn") setEntries([]);
         }
-      } else {
-        // Poll — comprobar si hay cambios de otras usuarias
+        setFbReady(true);
+      } else if (d === null) {
+        // Firebase no respondió — usar localStorage como fallback
         try {
-          const r2 = await fetch(fbUrl(currentCompany.key) + "&fields=fields.updatedAt", {
-            credentials: "omit"
-          });
-          const d2 = await r2.json();
-          const ts = d2?.fields?.updatedAt?.stringValue;
-          if (ts && ts !== lastTs.current) {
-            lastTs.current = ts;
-            skipNextWrite.current = true;
-            if (d.entries) setEntries(d.entries);
-            if (d.clientes) setClientes(d.clientes);
-            if (d.resps) setResps(d.resps);
-            try {
-              localStorage.setItem(lsKey, JSON.stringify(d));
-            } catch (e) {}
+          const ls = localStorage.getItem(lsKey);
+          if (ls) {
+            const s = JSON.parse(ls);
+            setEntries(s.entries || []);
+            setClientes(s.clientes || currentCompany.defaultClientes || DEFAULT_CLIENTES);
+            setResps(s.resps || currentCompany.users || DEFAULT_RESPONSABLES);
+          } else {
+            setEntries(currentCompany.key === "ltn" ? EXCEL_DATA : []);
+            setClientes(currentCompany.defaultClientes || DEFAULT_CLIENTES);
+            setResps(currentCompany.users || DEFAULT_RESPONSABLES);
           }
-        } catch (e) {/* poll silencioso */}
+        } catch (e) {
+          setEntries(currentCompany.key === "ltn" ? EXCEL_DATA : []);
+        }
+        setFbReady(true);
+      } else {
+        // Firebase devolvió doc sin entries (doc vacío) — sembrar
+        const ls = localStorage.getItem(lsKey);
+        const snap = ls ? JSON.parse(ls) : {};
+        const seedEntries = snap.entries || (currentCompany.key === "ltn" ? EXCEL_DATA : []);
+        const seedClientes = snap.clientes || currentCompany.defaultClientes || DEFAULT_CLIENTES;
+        const seedResps = snap.resps || currentCompany.users || DEFAULT_RESPONSABLES;
+        await fbWrite(currentCompany.key, {
+          entries: seedEntries,
+          clientes: seedClientes,
+          resps: seedResps
+        });
+        setEntries(seedEntries);
+        setClientes(seedClientes);
+        setResps(seedResps);
+        setFbReady(true);
       }
     }
-    syncFirebase(true);
-    pollRef.current = setInterval(() => syncFirebase(false), 8000);
+    async function poll() {
+      const d = await fbRead(currentCompany.key);
+      if (!d) return;
+      try {
+        const r2 = await fetch(fbUrl(currentCompany.key) + "&fields=fields.updatedAt", {
+          credentials: "omit"
+        });
+        const d2 = await r2.json();
+        const ts = d2?.fields?.updatedAt?.stringValue;
+        if (ts && ts !== lastTs.current) {
+          lastTs.current = ts;
+          skipNextWrite.current = true;
+          setEntries(d.entries || []);
+          if (d.clientes) setClientes(d.clientes);
+          if (d.resps) setResps(d.resps);
+          try {
+            localStorage.setItem(lsKey, JSON.stringify(d));
+          } catch (e) {}
+        }
+      } catch (e) {/* poll silencioso */}
+    }
+    initialLoad();
+    pollRef.current = setInterval(poll, 8000);
     return () => clearInterval(pollRef.current);
   }, [currentCompany]);
 
@@ -2439,7 +2466,7 @@ function App() {
     setCurrentCompany(company);
     setCurrentUser(name);
     setResp(name);
-    setFbReady(true); // show app immediately, Firebase syncs in background
+    setFbReady(false); // wait for Firebase to load real data
   }
   function play() {
     setTaskError(false);
@@ -2705,6 +2732,77 @@ function App() {
   if (!currentUser || !currentCompany) return /*#__PURE__*/React.createElement(LoginScreen, {
     onLogin: handleLogin
   });
+
+  // Loading — esperando datos de Firebase (máximo 1-2 segundos)
+  if (!fbReady) return /*#__PURE__*/React.createElement("div", {
+    style: {
+      minHeight: "100vh",
+      background: "#f3f0fb",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontFamily: "system-ui,sans-serif",
+      flexDirection: "column",
+      gap: "16px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 52,
+      height: 52,
+      borderRadius: "12px",
+      background: currentCompany.color,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "24",
+    height: "24",
+    viewBox: "0 0 20 20",
+    fill: "none"
+  }, /*#__PURE__*/React.createElement("circle", {
+    cx: "10",
+    cy: "10",
+    r: "8",
+    stroke: currentCompany.accent,
+    strokeWidth: "1.5"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M10 6v4l2.5 2.5",
+    stroke: currentCompany.accent,
+    strokeWidth: "1.5",
+    strokeLinecap: "round"
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "15px",
+      fontWeight: 700,
+      color: "#1e1035",
+      marginBottom: "6px"
+    }
+  }, currentCompany.name), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "13px",
+      color: "#9a7cc5"
+    }
+  }, "Cargando datos de ", currentUser, "\u2026")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: "6px"
+    }
+  }, [0, 1, 2].map(i => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    style: {
+      width: 8,
+      height: 8,
+      borderRadius: "50%",
+      background: "#c4b5fd",
+      animation: "pulse 1.2s infinite",
+      animationDelay: i * 0.2 + "s"
+    }
+  }))));
   function EntryRow({
     e,
     showDel = true
