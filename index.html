@@ -2401,13 +2401,10 @@ function App() {
   }, [currentCompany]);
 
   // Write to Firebase whenever data changes
-  const isFirstWrite = useRef(true);
+  // NOTA: solo skipNextWrite controla el skip — isFirstWrite eliminado porque causaba
+  // que skipNextWrite quedara "cargado" y bloqueara la siguiente escritura real del usuario
   useEffect(() => {
     if (!fbReady) return;
-    if (isFirstWrite.current) {
-      isFirstWrite.current = false;
-      return;
-    }
     if (skipNextWrite.current) {
       skipNextWrite.current = false;
       return;
