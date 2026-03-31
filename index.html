@@ -37,7 +37,7 @@ const COMPANIES = {
     color: "#3c2b86",
     accent: "#e61978",
     users: ["Carla", "Juli", "Mati", "Elena", "Sheila", "Estefanía", "Jessy", "Paola"],
-    defaultClientes: ["Medea", "Maraver", "Kawi", "Academia Premium", "Farmacia Curiel", "Federopticos", "Beatriz Zaragoza", "Aflamas", "Recoambiente", "Otro"]
+    defaultClientes: ['Academia Premium', 'Aflamas', 'Beatriz Zaragoza', 'Bilbo Inform', 'Farmacia Curiel', 'Federopticos', 'Kawi', 'kreiLabs', 'Maraver', 'Medea', 'Medio Ambiente Castro', 'Recoambiente', 'Otro']
   },
   lmnhl: {
     key: "lmnhl",
@@ -45,29 +45,69 @@ const COMPANIES = {
     color: "#0f172a",
     accent: "#f59e0b",
     users: ["Sheila", "Juli", "Carla", "Mati", "Elena", "Laura", "Estefanía", "Jessy", "Paola"],
-    defaultClientes: ["Kawi Piscinas", "ROMIVIC", "Fábrica de Sonrisas", "Medea Estética", "Lorenzo Arquitectura", "DocRys", "Seguí Arquitectos", "FisioDomicili", "CleanUp", "Avecan", "SERDOC", "OLVISSA", "Otro"]
+    defaultClientes: ['Avecan', 'CleanUp', 'DocRys', 'FisioDomicili', 'Fábrica de Sonrisas', 'Kawi Piscinas', 'Lorenzo Arquitectura', 'Medea Estética', 'Medio Ambiente Castro', 'OLVISSA', 'ROMIVIC', 'Seguí Arquitectos', 'SERDOC', 'Otro']
   }
 };
 const DEFAULT_CLIENTES = ["Medea", "Maraver", "Kawi", "Academia Premium", "Farmacia Curiel", "Federopticos", "Beatriz Zaragoza", "Aflamas", "Recoambiente", "Otro"];
 
 // ── Normalización de nombres de cliente (unifica variantes) ──
 const CLIENT_ALIASES = {
-  // LMNHL
+  // Kawi
   "kawi": "Kawi Piscinas",
   "Kawi": "Kawi Piscinas",
   "kawi piscinas": "Kawi Piscinas",
+  "Kawi piscinas": "Kawi Piscinas",
+  // DocRys
   "docrys": "DocRys",
   "Docrys": "DocRys",
+  "doc rys": "DocRys",
+  // FisioDomicili
   "fisiodomicil": "FisioDomicili",
   "Fisiodomicil": "FisioDomicili",
+  "fisio domicili": "FisioDomicili",
+  "fisiodomicili": "FisioDomicili",
+  "Fisiodomicili": "FisioDomicili",
+  // CleanUp
   "cleanup": "CleanUp",
   "Cleanup": "CleanUp",
+  "clean up": "CleanUp",
+  // Medea Estética
   "medea estetica": "Medea Estética",
   "medea estética": "Medea Estética",
-  "Medea Estética": "Medea Estética",
+  "Medea estetica": "Medea Estética",
+  "Medea estética": "Medea Estética",
+  "medea": "Medea Estética",
+  "Medea": "Medea Estética",
+  // Lorenzo Arquitectura
+  "lorenzo arquitectos": "Lorenzo Arquitectura",
+  "Lorenzo Arquitectos": "Lorenzo Arquitectura",
+  "lorenzo arquitectura": "Lorenzo Arquitectura",
+  "lorenzo": "Lorenzo Arquitectura",
+  "Lorenzo": "Lorenzo Arquitectura",
+  // ROMIVIC
+  "romivic": "ROMIVIC",
+  "Romivic": "ROMIVIC",
+  // Fábrica de Sonrisas
+  "fabrica de sonrisas": "Fábrica de Sonrisas",
+  "fábrica de sonrisas": "Fábrica de Sonrisas",
+  "fabrica sonrisas": "Fábrica de Sonrisas",
+  "sonrisas": "Fábrica de Sonrisas",
+  // Seguí Arquitectos
+  "segui arquitectos": "Seguí Arquitectos",
+  "Segui Arquitectos": "Seguí Arquitectos",
+  "segui": "Seguí Arquitectos",
+  "seguí": "Seguí Arquitectos",
+  // Avecan
+  "avecan": "Avecan",
+  // SERDOC
+  "serdoc": "SERDOC",
+  "Serdoc": "SERDOC",
+  // OLVISSA
+  "olvissa": "OLVISSA",
+  "Olvissa": "OLVISSA",
+  // Pispas Motos
   "pispas motos": "Pispas Motos",
-  // LTN
-  "medea": "Medea"
+  "pispas": "Pispas Motos"
 };
 function normalizeCliente(c) {
   if (!c) return c;
