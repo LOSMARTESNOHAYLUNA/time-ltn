@@ -2331,7 +2331,11 @@ function App() {
         if (d.entries.length > 0 || true) {
           // siempre usar Firebase si responde
           setEntries(d.entries || []);
-          setClientes(d.clientes && d.clientes.length > 0 ? d.clientes : currentCompany.defaultClientes || DEFAULT_CLIENTES);
+          // Fusionar clientes de Firebase con los predeterminados para que no falte ninguno
+          const fbClientes = d.clientes && d.clientes.length > 0 ? d.clientes : [];
+          const defaults = currentCompany.defaultClientes || DEFAULT_CLIENTES;
+          const merged = [...new Set([...defaults, ...fbClientes])];
+          setClientes(merged);
           setResps(d.resps && d.resps.length > 0 ? d.resps : currentCompany.users || DEFAULT_RESPONSABLES);
           try {
             localStorage.setItem(lsKey, JSON.stringify(d));
