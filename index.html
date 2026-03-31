@@ -2401,11 +2401,13 @@ function App() {
         if (d.entries.length > 0 || true) {
           // siempre usar Firebase si responde
           setEntries(normalizeEntries(d.entries || []));
-          // Fusionar clientes de Firebase con los predeterminados para que no falte ninguno
-          const fbClientes = d.clientes && d.clientes.length > 0 ? d.clientes : [];
+          // Usar solo la lista oficial — normalizar y deduplicar cualquier alias de Firebase
           const defaults = currentCompany.defaultClientes || DEFAULT_CLIENTES;
-          const merged = [...new Set([...defaults, ...fbClientes])];
-          setClientes(merged);
+          const fbClientes = (d.clientes || []).map(normalizeCliente); // normalizar nombres viejos
+          // Añadir solo clientes de Firebase que no sean alias conocidos (clientes nuevos reales)
+          const extraClientes = fbClientes.filter(c => c && !defaults.includes(c) && c !== "Otro");
+          const merged = [...defaults.slice(0, -1), ...extraClientes, "Otro"]; // Otro siempre al final
+          setClientes([...new Set(merged)]);
           setResps(d.resps && d.resps.length > 0 ? d.resps : currentCompany.users || DEFAULT_RESPONSABLES);
           try {
             localStorage.setItem(lsKey, JSON.stringify(d));
