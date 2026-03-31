@@ -49,6 +49,36 @@ const COMPANIES = {
   }
 };
 const DEFAULT_CLIENTES = ["Medea", "Maraver", "Kawi", "Academia Premium", "Farmacia Curiel", "Federopticos", "Beatriz Zaragoza", "Aflamas", "Recoambiente", "Otro"];
+
+// ── Normalización de nombres de cliente (unifica variantes) ──
+const CLIENT_ALIASES = {
+  // LMNHL
+  "kawi": "Kawi Piscinas",
+  "Kawi": "Kawi Piscinas",
+  "kawi piscinas": "Kawi Piscinas",
+  "docrys": "DocRys",
+  "Docrys": "DocRys",
+  "fisiodomicil": "FisioDomicili",
+  "Fisiodomicil": "FisioDomicili",
+  "cleanup": "CleanUp",
+  "Cleanup": "CleanUp",
+  "medea estetica": "Medea Estética",
+  "medea estética": "Medea Estética",
+  "Medea Estética": "Medea Estética",
+  "pispas motos": "Pispas Motos",
+  // LTN
+  "medea": "Medea"
+};
+function normalizeCliente(c) {
+  if (!c) return c;
+  return CLIENT_ALIASES[c] || CLIENT_ALIASES[c.toLowerCase()] || c;
+}
+function normalizeEntries(entries) {
+  return entries.map(e => ({
+    ...e,
+    cliente: normalizeCliente(e.cliente)
+  }));
+}
 const DEFAULT_RESPONSABLES = ["Carla", "Juli", "Mati", "Elena"];
 const STATUSES = ["Pendiente", "Proceso", "Realizado", "Pausado"];
 const MONTH_NAMES = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
@@ -2330,7 +2360,7 @@ function App() {
         skipNextWrite.current = true;
         if (d.entries.length > 0 || true) {
           // siempre usar Firebase si responde
-          setEntries(d.entries || []);
+          setEntries(normalizeEntries(d.entries || []));
           // Fusionar clientes de Firebase con los predeterminados para que no falte ninguno
           const fbClientes = d.clientes && d.clientes.length > 0 ? d.clientes : [];
           const defaults = currentCompany.defaultClientes || DEFAULT_CLIENTES;
@@ -2390,7 +2420,7 @@ function App() {
         if (ts && ts !== lastTs.current) {
           lastTs.current = ts;
           skipNextWrite.current = true;
-          setEntries(d.entries || []);
+          setEntries(normalizeEntries(d.entries || []));
           if (d.clientes) setClientes(d.clientes);
           if (d.resps) setResps(d.resps);
           try {
@@ -2422,7 +2452,7 @@ function App() {
       }));
     } catch (e) {}
     if (currentCompany) fbWrite(currentCompany.key, {
-      entries,
+      entries: normalizeEntries(entries),
       clientes,
       resps
     });
