@@ -2409,7 +2409,6 @@ function App() {
           const merged = [...defaults.slice(0, -1), ...extraClientes, "Otro"]; // Otro siempre al final
           const finalList = [...new Set(merged)];
         setClientes(finalList);
-        setCliente(c => c || finalList[0] || "");
           setResps(d.resps && d.resps.length > 0 ? d.resps : currentCompany.users || DEFAULT_RESPONSABLES);
           try {
             localStorage.setItem(lsKey, JSON.stringify(d));
@@ -2558,7 +2557,7 @@ function App() {
     setStopDialog(false);
     setRunning(false);
     const finalTask = (overrideTask || task || "").trim() || "(sin titulo)";
-    const finalCliente = overrideCliente || (cliente && cliente !== "" ? cliente : clientes && clientes.length > 0 ? clientes[0] : "Otro");
+    const finalCliente = overrideCliente || cliente || "Otro";
     if (activeEntryId) {
       setEntries(p => p.map(e => e.id !== activeEntryId ? e : {
         ...e,
