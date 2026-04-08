@@ -2352,7 +2352,7 @@ function App() {
   const [activeEntryId, setActiveEntryId] = useState(null);
   const [task, setTask] = useState("");
   const [taskError, setTaskError] = useState(false);
-  const [cliente, setCliente] = useState(DEFAULT_CLIENTES[0]);
+  const [cliente, setCliente] = useState("");
   const [resp, setResp] = useState(null);
   const [timerStatus, setTimerStatus] = useState("Proceso");
   const [manualHours, setManualHours] = useState("");
@@ -2407,7 +2407,9 @@ function App() {
           // Anadir solo clientes de Firebase que no sean alias conocidos (clientes nuevos reales)
           const extraClientes = fbClientes.filter(c => c && !defaults.includes(c) && c !== "Otro");
           const merged = [...defaults.slice(0, -1), ...extraClientes, "Otro"]; // Otro siempre al final
-          setClientes([...new Set(merged)]);
+          const finalList = [...new Set(merged)];
+        setClientes(finalList);
+        setCliente(c => c || finalList[0] || "");
           setResps(d.resps && d.resps.length > 0 ? d.resps : currentCompany.users || DEFAULT_RESPONSABLES);
           try {
             localStorage.setItem(lsKey, JSON.stringify(d));
@@ -2556,7 +2558,7 @@ function App() {
     setStopDialog(false);
     setRunning(false);
     const finalTask = (overrideTask || task || "").trim() || "(sin titulo)";
-    const finalCliente = overrideCliente || cliente || "Otro";
+    const finalCliente = overrideCliente || (cliente && cliente !== "" ? cliente : clientes && clientes.length > 0 ? clientes[0] : "Otro");
     if (activeEntryId) {
       setEntries(p => p.map(e => e.id !== activeEntryId ? e : {
         ...e,
